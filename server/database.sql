@@ -1,0 +1,6 @@
+CREATE DATABASE garage;
+
+CREATE TABLE car(
+  car_id SERIAL PRIMARY KEY,
+  description VARCHAR(255)
+);
