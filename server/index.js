@@ -1,32 +1,36 @@
 const express = require("express");
 const app = express();
 const cors = require("cors");
+const { PORT, CLIENT_URL } = require('./constants')
+const cookieParser = require('cookie-parser');
 const pool = require("./db")
+const passport = require('passport');
 
 //middleware
-app.use(cors())
+app.use(cors({ origin: CLIENT_URL, credentials: true }))
 app.use(express.json())
+app.use(cookieParser());
+app.use(passport.initialize());
+
 
 
 //ROUTES//
+const employeeRoutes = require('./routes/employee')
 
 //register and login routes
 
+app.use("/api", employeeRoutes);
 app.use("/auth", require("./routes/jwtAuth"));
 
 
 //dashboard route
 
-app.use("/dashboard", require("./routes/dashboard"))
+app.use("/dashboard", require('./routes/dashboard'))
 
 
-
-
-
-
-
-
-
+app.listen(PORT, () => {
+  console.log(`Le serveur est en marche au port ${PORT}`)
+});
 
 
 
@@ -44,16 +48,11 @@ app.post("/todos", async (req, res) => {
     const newCar = await pool.query("INSERT INTO car (description) VALUES($1) RETURNING *",
       [description]
     );
-
     res.json(newCar.rows[0])
   } catch (error) {
     console.error(error.message)
   }
 })
-
-app.listen(5000, () => {
-  console.log("Le serveur a démarrer au port 5000")
-});
 
 
 //get all todos
@@ -110,3 +109,30 @@ app.delete("/todos/:id", async (req, res) => {
     console.error(error.message)
   }
 })
+
+/* auth 
+
+const express = require('express');
+const adminRoutes = require('./admin');
+const employeeRoutes = require('./employee');
+const authRoutes = require('./auth');
+
+const app = express();
+
+// Autres configurations de l'application
+
+// Routes pour l'administration
+app.use('/admin', adminRoutes);
+
+// Routes pour les employés
+app.use('/employee', employeeRoutes);
+
+// Routes d'authentification
+app.use('/auth', authRoutes);
+
+// Autres routes de l'application
+
+// Démarrage du serveur
+app.listen(3000, () => {
+  console.log('Serveur démarré sur le port 3000');
+});*/

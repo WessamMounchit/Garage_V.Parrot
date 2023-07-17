@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { Link } from "react-router-dom";
 import { toast } from 'react-toastify';
+import { onLogin } from '../api/auth';
 
 
 const Login = ({ setAuth }) => {
+  const [role, setRole] = useState("")
 
   const [inputs, setInputs] = useState({
     email: "",
@@ -18,32 +20,22 @@ const Login = ({ setAuth }) => {
   const onSubmitForm = async e => {
     e.preventDefault();
     try {
-      const body = { email, password };
-      const response = await fetch(
-        "http://localhost:5000/auth/login",
-        {
-          method: "POST",
-          headers: {
-            "Content-type": "application/json"
-          },
-          body: JSON.stringify(body)
-        }
-      );
+      const loginData = { email, password };
+      const response = await onLogin(loginData)
+      setRole(response.data.role) /*test*/
 
-      const parseRes = await response.json();
+      toast.success("login successfully!")
 
-      if (parseRes.token) {
-        localStorage.setItem("token", parseRes.token)
-
+      if (response.token) {
+        localStorage.setItem("token", response.token)
         setAuth(true)
-        toast.success("login successfully!")
       } else {
         setAuth(false)
-        toast.error(parseRes)
       }
-
-    } catch (err) {
-      console.error(err.message);
+      
+    } catch (error) {
+      console.error(error.message);
+      toast.error(error.response.data.errors[0].msg)
     }
   };
 
@@ -51,6 +43,7 @@ const Login = ({ setAuth }) => {
   return (
     <>
       <h1 className='text-center my-5'>Login</h1>
+      <p>salut l'{role}</p> {/* <== test */}
       <form onSubmit={onSubmitForm}>
         <input
           type='email'

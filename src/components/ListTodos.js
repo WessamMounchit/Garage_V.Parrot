@@ -1,70 +1,41 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react';
 import EditTodo from './EditTodo';
+import { useDispatch, useSelector } from 'react-redux';
+import { deleteTask, getTask } from '../redux/slices/todoSlice';
 
 const ListTodos = () => {
+  const state = useSelector(state => state.todo);
 
-  const [todos, setTodos] = useState([])
+  console.log(state)
 
-  //Delete a todo
-
-  const deleteTodo = async id => {
-    try {
-      const deleteTodo = await fetch(`http://localhost:5000/todos/${id}`, 
-      {
-        method: "DELETE"
-      });
-      
-
-      setTodos(todos.filter(todo => todo.car_id !== id))
-    } catch (error) {
-      console.error(error.message)
-    }
-  }
-
-
-  const getTodos = async () => {
-    try {
-      const response = await fetch("http://localhost:5000/todos");
-      const jsonData = await response.json();
-
-      setTodos(jsonData);
-    } catch (error) {
-      console.error(error.message);
-    }
-  };
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    getTodos()
-  }, []);
+    dispatch(getTask());
+  }, [dispatch]);
 
-  console.log(todos)
   return (
     <>
       <table className="table mt-5 text-center">
-    <thead>
-      <tr>
-        <th>Description</th>
-        <th>Edit</th>
-        <th>Delete</th>
-      </tr>
-    </thead>
-    <tbody>
-      {/*<tr>
-        <td>John</td>
-        <td>Doe</td>
-        <td>john@example.com</td>
-      </tr> */}
-      {todos.map(todo => (
-        <tr key={todo.car_id}>
-          <td>{todo.description}</td>
-          <td><EditTodo todo={todo} /></td>
-          <td><button className='btn btn-danger' onClick={() => deleteTodo(todo.car_id)}>Delete</button></td>
-        </tr>
-      ))}
-    </tbody>
-  </table>
+        <thead>
+          <tr>
+            <th>Description</th>
+            <th>Edit</th>
+            <th>Delete</th>
+          </tr>
+        </thead>
+        <tbody>
+          {state.todos.map(todo => (
+            <tr key={todo.car_id}>
+              <td>{todo.description}</td>
+              <td><EditTodo /></td>
+              <td><button className='btn btn-danger' onClick={() => dispatch(deleteTask(todo.car_id))}>Delete</button></td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </>
-  )
-}
+  );
+};
 
-export default ListTodos
+export default ListTodos;

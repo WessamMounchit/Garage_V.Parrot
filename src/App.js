@@ -1,16 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
-import Header from './components/Header';
-import HeroSection from './components/HeroSection.js';
-import ServicesSection from './components/ServicesSection';
-import AboutSection from './components/AboutSection';
-import ContactSection from './components/ContactSection';
-import Footer from './components/Footer';
-import InputTodo from './components/InputTodo';
-import ListTodos from './components/ListTodos';
-import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
+import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Home from './pages/Home';
 import Login from './components/Login';
 import Register from './components/Register';
 import Dashboard from './components/Dashboard';
@@ -43,21 +36,10 @@ function App() {
   })
 
   return (
-    <Router>
-      <div className="App">
-        <Header />
-        <HeroSection />
-        <ServicesSection />
-        <AboutSection />
-        <ContactSection />
-        <Footer />
-        <div className="container">
-          <InputTodo />
-          <ListTodos />
-        </div>
-        <div className="container">
+    <BrowserRouter>
           <ToastContainer />
           <Routes>
+            <Route path='/' element={<Home />} />
             <Route exact path="/login" element={!isAuthenticated ? (
                   <Login setAuth={setAuth} />
                 ) : (
@@ -75,9 +57,7 @@ function App() {
                   <Navigate to="/login" />
                 )} caseSensitive />
           </Routes>
-        </div>
-      </div>
-    </Router>
+    </BrowserRouter>
   );
 }
 
