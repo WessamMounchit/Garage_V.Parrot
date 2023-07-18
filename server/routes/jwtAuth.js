@@ -3,20 +3,19 @@ const pool = require("../db");
 const bcrypt = require("bcryptjs")
 const jwtGenerator = require("../utils/jwtGenerator")
 const validInfo = require("../middleware/validInfo")
-const authorization = require("../middleware/authorization")
 
 //registering
 
-router.post("/register",validInfo, async (req, res) => {
+router.post("/register", validInfo, async (req, res) => {
   try {
-    
+
     //1. destructure the request.body (name, email, password)
 
     const { name, email, password } = req.body;
 
     //2. check if the user exist (if exist then throw error)
 
-    const user = await pool.query("SELECT * FROM users WHERE user_email = $1",[
+    const user = await pool.query("SELECT * FROM users WHERE user_email = $1", [
       email
     ]);
 
@@ -29,13 +28,13 @@ router.post("/register",validInfo, async (req, res) => {
     const saltRound = 10;
     const salt = await bcrypt.genSalt(saltRound);
 
-    const bcryptPassword =  await bcrypt.hash(password, salt)
+    const bcryptPassword = await bcrypt.hash(password, salt)
 
     //4. enter the user inside our database
 
     const newUser = await pool.query
-    ("INSERT INTO users (user_name, user_email, user_password) VALUES ($1, $2, $3) RETURNING *",
-    [name, email, bcryptPassword])
+      ("INSERT INTO users (user_name, user_email, user_password) VALUES ($1, $2, $3) RETURNING *",
+        [name, email, bcryptPassword])
     //5. generating our jwt token
 
     const token = jwtGenerator(newUser.rows[0].user_id)
@@ -50,9 +49,9 @@ router.post("/register",validInfo, async (req, res) => {
 
 //login route
 
-router.post("/login",validInfo, async (req, res) => {
+router.post("/login", validInfo, async (req, res) => {
   try {
-    
+
     //1. destructure the req.body
 
     const { email, password } = req.body;
@@ -86,14 +85,4 @@ router.post("/login",validInfo, async (req, res) => {
     res.status(500).send("server error");
   }
 })
-
-router.get("/is-verify", authorization, async (req, res) => {
-  try {
-    res.json(true)
-  } catch (error) {
-    console.error(error.message);
-    res.status(500).send("server error");
-  }
-})
-
 module.exports = router;

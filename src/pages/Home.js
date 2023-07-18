@@ -5,8 +5,6 @@ import ServicesSection from '../components/ServicesSection';
 import AboutSection from '../components/AboutSection';
 import ContactSection from '../components/ContactSection';
 import Footer from '../components/Footer';
-import InputTodo from '../components/InputTodo';
-import ListTodos from '../components/ListTodos';
 
 
 const Home = () => {
@@ -18,8 +16,6 @@ const Home = () => {
     <AboutSection />
     <ContactSection />
     <Footer />
-    <InputTodo />
-    <ListTodos />
     </>
 )
 }
