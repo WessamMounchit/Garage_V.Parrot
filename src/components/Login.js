@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
-import { Link } from "react-router-dom";
 import { toast } from 'react-toastify';
 import { onLogin } from '../api/auth';
+import { useDispatch } from 'react-redux';
+import { authenticateUser } from '../redux/slices/authSlice';
+import secureLocalStorage from  "react-secure-storage";
 
 
-const Login = ({ setAuth }) => {
-  const [role, setRole] = useState("")
+
+const Login = () => {
 
   const [inputs, setInputs] = useState({
     email: "",
@@ -14,24 +16,26 @@ const Login = ({ setAuth }) => {
 
   const { email, password } = inputs
 
+  const dispatch = useDispatch()
+
+
   const onChange = e =>
     setInputs({ ...inputs, [e.target.name]: e.target.value });
+
 
   const onSubmitForm = async e => {
     e.preventDefault();
     try {
-      const loginData = { email, password };
-      const response = await onLogin(loginData)
-      setRole(response.data.role) /*test*/
+      const response = await onLogin({email, password})
+       const { role, name } = response.data
+ 
+      dispatch(authenticateUser())
+      secureLocalStorage.setItem('isAuth', 'true')
+      secureLocalStorage.setItem('role', role)
+      secureLocalStorage.setItem('email', email)
+      secureLocalStorage.setItem('name', name)
 
-      toast.success("login successfully!")
-
-      if (response.token) {
-        localStorage.setItem("token", response.token)
-        setAuth(true)
-      } else {
-        setAuth(false)
-      }
+      toast.success(response.data.info)
       
     } catch (error) {
       console.error(error.message);
@@ -43,7 +47,6 @@ const Login = ({ setAuth }) => {
   return (
     <>
       <h1 className='text-center my-5'>Login</h1>
-      <p>salut l'{role}</p> {/* <== test */}
       <form onSubmit={onSubmitForm}>
         <input
           type='email'
@@ -63,7 +66,6 @@ const Login = ({ setAuth }) => {
         />
         <button className='btn btn-success btn-block'>Submit</button>
       </form>
-      <Link to="/register">Register</Link>
     </>
   );
 };

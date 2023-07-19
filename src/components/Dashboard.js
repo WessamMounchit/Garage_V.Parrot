@@ -1,37 +1,21 @@
-import React, { useEffect, useState } from 'react'
+import { useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
+import { unauthenticateUser } from '../redux/slices/authSlice';
+import secureLocalStorage from 'react-secure-storage';
 
 
-const Dashboard = ({ setAuth }) => {
+const Dashboard = () => {
 
-  const [name, setName] = useState("");
+  const dispatch = useDispatch()
 
-  async function getName() {
-    try {
-      const response = await fetch("http://localhost:5000/dashboard/", {
-        method: "GET",
-        headers: { token: localStorage.token }
-      })
-
-      const parseRes = await response.json()
-
-      setName(parseRes.user_name)
-    } catch (error) {
-      console.error(error.message)
-    }
-  }
+  const name = secureLocalStorage.getItem('name')
 
   const logout = (e) => {
     e.preventDefault()
-    localStorage.removeItem("token")
-    setAuth(false)
-    toast.success("Logged out successfully!")
+    secureLocalStorage.clear()
+    dispatch(unauthenticateUser())
+    toast.success("Deconnexion realisée avec succès")
   }
-
-  useEffect(() => {
-    getName()
-  }, [])
-
 
   return (
     <>

@@ -1,7 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit'
+import secureLocalStorage from 'react-secure-storage'
 
 const userAuthFromLocalStorage = () => {
-  const isAuth = localStorage.getItem('isAuth')
+  const isAuth = secureLocalStorage.getItem('isAuth')
 
   if (isAuth && JSON.parse(isAuth) === true) {
     return true
@@ -9,7 +10,6 @@ const userAuthFromLocalStorage = () => {
 
   return false
 }
-
 
 const initialState = {
   isAuth: userAuthFromLocalStorage(),

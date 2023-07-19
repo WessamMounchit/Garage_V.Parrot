@@ -48,7 +48,8 @@ exports.login = async (req, res) => {
       {
       success: true,
       info: 'Connexion réalisée avec succès',
-      role: user.role
+      role: user.role,
+      name: user.user_name
     })
   } catch (error) {
     console.log(error.message)

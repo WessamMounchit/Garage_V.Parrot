@@ -1,60 +1,42 @@
-import React, { useState, useEffect } from 'react';
-import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
+import { BrowserRouter, Route, Routes, Navigate, Outlet } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Home from './pages/Home';
 import Login from './components/Login';
 import Register from './components/Register';
 import Dashboard from './components/Dashboard';
+import { useSelector } from 'react-redux'
 
 function App() {
 
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-
-  const setAuth = (boolean) => {
-    setIsAuthenticated(boolean);
-  };
-
-  async function isAuth() {
-    try {
-      const response = await fetch("http://localhost:5000/auth/is-verify", {
-        method: "GET",
-        headers: { token: localStorage.token }
-      })
-
-      const parseRes = await response.json()
-
-      parseRes === true ? setIsAuthenticated(true) : setIsAuthenticated(false)
-    } catch (error) {
-      console.error(error.messsage)
-    }
+  const PrivateRoutes = () => {
+    const { isAuth } = useSelector((state) => state.auth)
+    return <>{isAuth ? <Outlet /> : <Navigate to='/login' />}</>
   }
-
-  useEffect(() => {
-    isAuth()
-  })
-
+  
+  const RestrictedRoutes = () => {
+    const { isAuth } = useSelector((state) => state.auth)
+  
+    return <>{!isAuth ? <Outlet /> : <Navigate to='/' />}</>
+  }
+  
   return (
     <BrowserRouter>
       <ToastContainer />
       <Routes>
-        <Route path='/' element={<Home />} />
-        <Route exact path="/login" element={!isAuthenticated ? (
-          <Login setAuth={setAuth} />
-        ) : (
-          <Navigate to="/dashboard" />
-        )
-        } caseSensitive />
-        <Route exact path="/register" element={!isAuthenticated ? (
-          <Register setAuth={setAuth} />
-        ) : (
-          <Navigate to="/dashboard" />
-        )} caseSensitive />
-        <Route exact path="/dashboard" element={isAuthenticated ? (
-          <Dashboard setAuth={setAuth} />
-        ) : (
-          <Navigate to="/login" />
-        )} caseSensitive />
+
+
+      <Route element={<PrivateRoutes />}>
+          <Route path='/' exact element={<Dashboard />} />
+          <Route path='/register' exact element={<Register />} />
+      </Route>
+
+      <Route element={<RestrictedRoutes />}>
+        <Route path='/home' exact element={<Home />} />
+        <Route path='/login' exact element={<Login />} />
+      </Route>
+
+
       </Routes>
     </BrowserRouter>
   );
