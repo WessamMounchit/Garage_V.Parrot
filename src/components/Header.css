@@ -1,0 +1,43 @@
+/* header.css */
+
+/* Style pour la navbar */
+header {
+  background-color: #343a40;
+}
+
+.navbar-brand {
+  font-size: 1.5rem;
+}
+
+.navbar-nav {
+  align-items: center;
+}
+
+.nav-link {
+  color: #fff;
+  font-size: 1.2rem;
+  margin: 0 15px;
+  transition: color 0.2s ease-in-out;
+}
+
+.nav-link:hover {
+  color: #ffc107; /* Couleur au survol */
+}
+
+/* Style pour le bouton "Login" */
+.header-right {
+  display: flex;
+  align-items: center;
+}
+
+.btn-primary {
+  background-color: #ffc107;
+  border-color: #ffc107;
+  font-size: 1.1rem;
+  transition: background-color 0.2s ease-in-out, border-color 0.2s ease-in-out;
+}
+
+.btn-primary:hover {
+  background-color: #ffcd38; /* Couleur au survol */
+  border-color: #ffcd38; /* Couleur au survol */
+}

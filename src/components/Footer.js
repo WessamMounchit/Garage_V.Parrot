@@ -5,7 +5,7 @@ function Footer() {
   return (
     <footer className="py-4 bg-dark text-white text-center">
       <div className="container">
-        <p>Tous droits réservés &copy; 2023 Garage XYZ</p>
+        <p>Tous droits réservés &copy; 2023 Garage Viencent Parrot</p>
       </div>
     </footer>
   );

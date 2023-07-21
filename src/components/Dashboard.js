@@ -2,6 +2,7 @@ import { useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
 import { unauthenticateUser } from '../redux/slices/authSlice';
 import secureLocalStorage from 'react-secure-storage';
+import { onLogout } from '../api/auth';
 
 
 const Dashboard = () => {
@@ -10,11 +11,20 @@ const Dashboard = () => {
 
   const name = secureLocalStorage.getItem('name')
 
-  const logout = (e) => {
-    e.preventDefault()
-    secureLocalStorage.clear()
-    dispatch(unauthenticateUser())
-    toast.success("Deconnexion realisée avec succès")
+  const logout = async e => {
+    try {
+      e.preventDefault()
+
+      const response = await onLogout()
+      console.log(response)
+      secureLocalStorage.clear()
+      dispatch(unauthenticateUser())
+
+      toast.success(response.data.message)
+
+    } catch (error) {
+      console.error(error.message);
+    }
   }
 
   return (

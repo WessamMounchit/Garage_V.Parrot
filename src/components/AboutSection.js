@@ -1,5 +1,5 @@
-// components/AboutSection.js
 import React from 'react';
+import './AboutSection.css';
 
 function AboutSection() {
   return (
@@ -15,7 +15,7 @@ function AboutSection() {
               clientèle. Laissez-nous prendre soin de votre véhicule et profitez de la tranquillité d'esprit sur la route.</p>
           </div>
           <div className="col-md-6">
-            <img src="about.jpg" className="img-fluid" alt="À propos de nous" />
+            <img src="https://images.pexels.com/photos/1325710/pexels-photo-1325710.jpeg?auto=compress&cs=tinysrgb&w=600" className="img-fluid" alt="À propos de nous" />
           </div>
         </div>
       </div>

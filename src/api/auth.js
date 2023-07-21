@@ -18,3 +18,11 @@ export async function onLogin(registrationData) {
     registrationData
   )
 }
+
+//LOGOUT
+
+export async function onLogout() {
+  return await axios.get(
+    'http://localhost:5000/api/logout',
+  )
+}
