@@ -17,9 +17,7 @@ const TestimonialForm = ({ onAddTestimonial }) => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    // Vous pouvez implémenter ici la logique d'ajout du témoignage dans la base de données ou dans un tableau, etc.
     onAddTestimonial({ ...testimonialData });
-    // Réinitialiser le formulaire après l'ajout
     setTestimonialData({
       name: '',
       comment: '',

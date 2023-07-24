@@ -7,6 +7,7 @@ import ContactSection from '../components/ContactSection';
 import Footer from '../components/Footer';
 import CarListing from '../components/CarListing';
 import Testimonials from '../components/TestimonialForm';
+import CarForm from '../components/CarForm';
 
 
 const Home = () => {
@@ -16,6 +17,7 @@ const Home = () => {
     <HeroSection />
     <ServicesSection />
     <CarListing />
+    <CarForm />
     <Testimonials />
     <AboutSection />
     <ContactSection />
