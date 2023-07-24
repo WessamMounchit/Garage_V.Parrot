@@ -1,5 +1,5 @@
-import axios from 'axios';
 import React, { useState } from 'react';
+import { onAddCar } from '../api/cars';
 
 const CarForm = () => {
   const [carData, setCarData] = useState({
@@ -56,6 +56,7 @@ const CarForm = () => {
 
     try {
       const formData = new FormData();
+
       formData.append('model', carData.model);
       formData.append('price', carData.price);
       formData.append('year', carData.year);
@@ -73,15 +74,7 @@ const CarForm = () => {
         formData.append(`equipment`, equipment);
       });
       
-      const response = await axios.post('http://localhost:5000/api/cars', formData , {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      } );
-
-      console.log(response)
-  
-      //onAddCar(response.data);
+      onAddCar(formData)
   
       setCarData({
         model: '',
