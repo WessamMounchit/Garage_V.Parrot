@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import Modal from 'react-modal';
 import './CarListing.css';
-import { onGetCars } from '../api/cars';
+import { onDeleteCar, onGetCars } from '../api/cars';
 import EditCar from './EditCar';
 import AddCar from './AddCar';
+import { toast } from 'react-toastify';
 
 const CarListing = () => {
 
@@ -71,6 +72,24 @@ const CarListing = () => {
     } catch (error) {
       console.error(error);
     }
+  };
+
+   const handleDeleteCar = async (carId) => {
+      try {
+        const response = await onDeleteCar(carId)
+        toast.success(response.data.info)
+
+      } catch (error) {
+        toast.error(error.response.data.error)
+      }
+
+      onGetCars()
+        .then((response) => {
+          setCars(response.data);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
   };
  
   const filteredCars = cars.filter((car) => {
@@ -153,7 +172,7 @@ const CarListing = () => {
       <button className="btn btn-success m-2" onClick={() => setIsAddModalOpen(true)}>Ajouter une voiture</button>
       <div className="row">
         {filteredCars.map((car) => (
-          <div key={car.id} className="col-md-4 mb-4">
+          <div key={car.car_id} className="col-md-4 mb-4">
             <div className="card">
               <img src={car.image_path} className="card-img-top" alt={car.model} />
               <div className="card-body">
@@ -162,7 +181,7 @@ const CarListing = () => {
                 <p className="card-text">Année : {car.year}</p>
                 <p className="card-text">Kilométrage : {car.mileage}.km</p>
                 <button className="btn btn-warning m-2" onClick={() => handleModalOpen(car)}>Modifier</button>
-                {/* <button className="btn btn-success">En savoir plus</button> */}
+                <button className="btn btn-danger" onClick={() => {handleDeleteCar(car.car_id); console.log(car.car_id)}}>Supprimer</button>
               </div>
             </div>
           </div>

@@ -14,7 +14,7 @@ const db = require('../db')
 
     await db.query(query, values);
 
-    res.status(201).json({info: 'Voiture ajouté avec succès'});
+    res.status(201).json({info: 'Voiture ajoutée avec succès'});
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
@@ -83,7 +83,23 @@ exports.updateCar = async (req, res) => {
 
     await db.query(query, values);
 
-    res.status(200).json({info: 'Voiture modifié avec succès'});
+    res.status(200).json({info: 'Voiture modifiée avec succès'});
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
+exports.deleteCar = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const query = `DELETE FROM cars WHERE car_id = $1`;
+
+    const values = [id];
+
+    await db.query(query, values);
+
+    res.status(201).json({info: 'Voiture supprimée avec succès'});
   } catch (err) {
     res.status(500).json({ error: err.message });
   }

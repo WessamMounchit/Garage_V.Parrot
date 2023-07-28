@@ -1,6 +1,6 @@
 const express = require('express');
 const upload = require('../middleware/multerConfig')
-const { addCar, getCar, updateCar } = require('../controllers/cars');
+const { addCar, getCar, updateCar, deleteCar } = require('../controllers/cars');
 const { validationMiddleware } = require('../middleware/validation-middleware');
 const router = express.Router();
 
@@ -17,6 +17,6 @@ router.put('/updateCar/:id', validationMiddleware, upload.fields([
   { name: 'gallery', maxCount: 10 }
 ]), updateCar);
 
-
+router.delete('/deleteCar/:id', validationMiddleware, deleteCar)
 
 module.exports = router;

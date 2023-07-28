@@ -25,3 +25,8 @@ export async function onUpdateCar(carId, formData) {
     },
   });
 }
+
+//DELETE CAR
+export async function onDeleteCar(carId) {
+  return await axios.delete(`http://localhost:5000/api/deleteCar/${carId}`)
+}
