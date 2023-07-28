@@ -1,15 +1,71 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import './ServicesSection.css'; // Import du fichier CSS
+import { onGetServices } from '../api/services';
+import Modal from 'react-modal';
+import AddService from './AddService';
 
 function ServicesSection() {
+
+  const [services, setServices] = useState([]);
+
+  useEffect(() => {
+    onGetServices()
+      .then((response) => {
+        setServices(response.data);
+        console.log(services)
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }, []);
+
+  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+
+  const handleAddService = async () => {
+    try {
+      onGetServices()
+        .then((response) => {
+          setServices(response.data);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+      
+      setIsAddModalOpen(false)
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+
+
+
   return (
-    <section id="services" className="py-5">
-      <div className="container">
-        <div className="row">
-          <div className="col-md-4">
+    <>
+      <button className="btn btn-success m-2" onClick={() => setIsAddModalOpen(true)}>Ajouter un service</button>
+      <section id="services" className="py-5">
+        <div className="container">
+          <div className="row">
+            {services.map((service) => (
+              <div key={service.service_id} className="col-md-4">
+                <div className="card mb-4">
+                  <img
+                    src={service.image_path}
+                    className="card-img-top"
+                    alt="Service 1"
+                  />
+                  <div className="card-body">
+                    <h5 className="card-title">{service.title}</h5>
+                    <p className="card-text">{service.description}</p>
+                  </div>
+                </div>
+              </div>
+            ))}
+
+            {/*           <div className="col-md-4">
             <div className="card mb-4">
               <img
-                src="https://images.pexels.com/photos/2244746/pexels-photo-2244746.jpeg?auto=compress&cs=tinysrgb&w=600" // Remplacez cette URL par l'URL de votre image pour le service 1
+                src="https://images.pexels.com/photos/2244746/pexels-photo-2244746.jpeg?auto=compress&cs=tinysrgb&w=600"
                 className="card-img-top"
                 alt="Service 1"
               />
@@ -24,7 +80,22 @@ function ServicesSection() {
           <div className="col-md-4">
             <div className="card mb-4">
               <img
-                src="https://images.pexels.com/photos/3807277/pexels-photo-3807277.jpeg?auto=compress&cs=tinysrgb&w=600" // Remplacez cette URL par l'URL de votre image pour le service 2
+                src="https://images.pexels.com/photos/2244746/pexels-photo-2244746.jpeg?auto=compress&cs=tinysrgb&w=600"
+                className="card-img-top"
+                alt="Service 1"
+              />
+              <div className="card-body">
+                <h5 className="card-title">Réparation automobile</h5>
+                <p className="card-text">
+                  Nous offrons une large gamme de services de réparation automobile pour tous types de véhicules.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div className="col-md-4">
+            <div className="card mb-4">
+              <img
+                src="https://images.pexels.com/photos/3807277/pexels-photo-3807277.jpeg?auto=compress&cs=tinysrgb&w=600" 
                 className="card-img-top"
                 alt="Service 2"
               />
@@ -39,7 +110,7 @@ function ServicesSection() {
           <div className="col-md-4">
             <div className="card mb-4">
               <img
-                src="https://images.pexels.com/photos/3806249/pexels-photo-3806249.jpeg?auto=compress&cs=tinysrgb&w=600" // Remplacez cette URL par l'URL de votre image pour le service 3
+                src="https://images.pexels.com/photos/3806249/pexels-photo-3806249.jpeg?auto=compress&cs=tinysrgb&w=600" 
                 className="card-img-top"
                 alt="Service 3"
               />
@@ -51,9 +122,17 @@ function ServicesSection() {
               </div>
             </div>
           </div>
+ */}        </div>
         </div>
-      </div>
-    </section>
+      </section>
+
+      <Modal isOpen={isAddModalOpen} onRequestClose={() => setIsAddModalOpen(false)}>
+        <h2>Ajouter un service</h2>
+        <AddService onSubmit={handleAddService} />
+        <button className="btn btn-danger m-2" onClick={() => setIsAddModalOpen(false)}>Fermer</button>
+      </Modal>
+
+    </>
   );
 }
 

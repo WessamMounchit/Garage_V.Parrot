@@ -181,7 +181,7 @@ const CarListing = () => {
                 <p className="card-text">Année : {car.year}</p>
                 <p className="card-text">Kilométrage : {car.mileage}.km</p>
                 <button className="btn btn-warning m-2" onClick={() => handleModalOpen(car)}>Modifier</button>
-                <button className="btn btn-danger" onClick={() => {handleDeleteCar(car.car_id); console.log(car.car_id)}}>Supprimer</button>
+                <button className="btn btn-danger" onClick={() => {handleDeleteCar(car.car_id)}}>Supprimer</button>
               </div>
             </div>
           </div>

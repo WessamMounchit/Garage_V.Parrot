@@ -23,10 +23,12 @@ require('./middleware/passport-middleware');
 //ROUTES IMPORTS//
 const employeeRoutes = require('./routes/employee');
 const carsRoutes = require('./routes/cars')
+const servicesRoutes = require('./routes/services')
 
 //ROUTES//
 app.use("/api", employeeRoutes);
 app.use("/api", carsRoutes)
+app.use("/api", servicesRoutes)
 app.use("/auth", require("./routes/jwtAuth"));
 
 app.listen(PORT, () => {

@@ -20,3 +20,11 @@ CREATE DATABASE jwt;
     features TEXT[],
     equipment TEXT[]
 );
+
+  CREATE TABLE IF NOT EXISTS services
+(
+    service_id SERIAL PRIMARY KEY,
+    title VARCHAR(100) NOT NULL,
+    description VARCHAR(255) NOT NULL,
+    image_path VARCHAR(255) NOT NULL
+);

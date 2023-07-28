@@ -18,11 +18,13 @@ const AddCar = ( { onSubmit }) => {
   const handleImageChange = (e) => {
     const selectedFile = e.target.files[0];
     setImage(selectedFile);
+    console.log(selectedFile)
   };
 
   const handleGalleryChange = (event) => {
     const selectedFiles = [...event.target.files];
     setGallery(selectedFiles);
+    console.log(selectedFiles)
   };
 
 
