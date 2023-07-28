@@ -89,11 +89,11 @@ const EditCar = ({ car, onSubmit }) => {
         try {
           const response = await onUpdateCar(carData.car_id, formData);
           toast.success(response.data.info)
+          onSubmit()
         } catch (error) {
           toast.error(error.response.data.error)
         }
       }
-      onSubmit()
             
     } catch (error) {
       console.error(error);

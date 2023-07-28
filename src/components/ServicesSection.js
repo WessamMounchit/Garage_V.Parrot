@@ -3,10 +3,16 @@ import './ServicesSection.css'; // Import du fichier CSS
 import { onGetServices } from '../api/services';
 import Modal from 'react-modal';
 import AddService from './AddService';
+import EditService from './EditService';
 
 function ServicesSection() {
 
   const [services, setServices] = useState([]);
+  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+  const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
+  const [selectedService, setSelectedService] = useState(null);
+
+
 
   useEffect(() => {
     onGetServices()
@@ -19,7 +25,16 @@ function ServicesSection() {
       });
   }, []);
 
-  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+  const handleModalOpen = (service) => {
+    setSelectedService({ ...service });
+    setIsUpdateModalOpen(true);
+  };
+
+  const handleModalClose = () => {
+    setSelectedService(null);
+    setIsUpdateModalOpen(false);
+  };
+
 
   const handleAddService = async () => {
     try {
@@ -30,14 +45,28 @@ function ServicesSection() {
         .catch((error) => {
           console.error(error);
         });
-      
+
       setIsAddModalOpen(false)
     } catch (error) {
       console.error(error);
     }
   };
 
+  const handleUpdateCar = async () => {
+    try {
+      onGetServices()
+        .then((response) => {
+          setServices(response.data);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
 
+      handleModalClose();
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
 
   return (
@@ -58,6 +87,7 @@ function ServicesSection() {
                     <h5 className="card-title">{service.title}</h5>
                     <p className="card-text">{service.description}</p>
                   </div>
+                  <button className="btn btn-warning m-2" onClick={() => handleModalOpen(service)}>Modifier</button>
                 </div>
               </div>
             ))}
@@ -130,6 +160,12 @@ function ServicesSection() {
         <h2>Ajouter un service</h2>
         <AddService onSubmit={handleAddService} />
         <button className="btn btn-danger m-2" onClick={() => setIsAddModalOpen(false)}>Fermer</button>
+      </Modal>
+
+      <Modal isOpen={isUpdateModalOpen} onRequestClose={handleModalClose}>
+        <h2>Modifier la voiture</h2>
+        {selectedService && <EditService service={selectedService} onSubmit={handleUpdateCar} />}
+        <button className="btn btn-danger m-2" onClick={handleModalClose}>Fermer</button>
       </Modal>
 
     </>

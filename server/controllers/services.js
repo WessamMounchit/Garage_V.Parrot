@@ -40,22 +40,49 @@ const db = require('../db')
   }
 };
 
-
 exports.updateService = async (req, res) => {
   try {
     const { id } = req.params;
-    const { title, description } = req.body;
-    const image_path = req.files['image'][0].path;
-    await db.query(
-      "UPDATE services SET title = $1, description = $2, image_path = $3 WHERE service_id = $4",
-      [title, description, image_path, id]
-    );
+    const updateFields = { ...req.body };
+    console.log(req)
+
+     if (req.file) {
+      updateFields.image_path = req.file.path;
+    }
+ 
+    const emptyFields = [];
+    Object.keys(updateFields).forEach((key) => {
+      if (!updateFields[key]) {
+        emptyFields.push(key);
+      }
+    });
+
+    if (emptyFields.length > 0) {
+      return res.status(400).json({ error: `Les champs suivants sont vides : ${emptyFields.join(', ')}` });
+    }
+
+    let setQuery = '';
+    const values = [];
+
+    Object.keys(updateFields).forEach((key, index) => {
+      if (index !== 0) {
+        setQuery += ', ';
+      }
+      setQuery += `${key} = $${index + 1}`;
+      values.push(updateFields[key]);
+    });
+
+    const query = `UPDATE services SET ${setQuery} WHERE service_id = $${values.length + 1} RETURNING *`;
+    values.push(id);
+
+    await db.query(query, values);
 
     res.status(200).json({info: 'Service modifié avec succès'});
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
 };
+
 
 exports.deleteService = async (req, res) => {
   try {
