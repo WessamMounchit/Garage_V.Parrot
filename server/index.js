@@ -4,6 +4,9 @@ const cors = require("cors");
 const { PORT, CLIENT_URL } = require('./constants')
 const cookieParser = require('cookie-parser');
 const passport = require('passport');
+const path = require('path');
+
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // Middleware pour gérer les requêtes multipart/form-data
 app.use(express.urlencoded({ extended: true }));
