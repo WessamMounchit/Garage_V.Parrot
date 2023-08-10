@@ -9,10 +9,8 @@ exports.createEmployee = async (req, res) => {
   const { email, password, name} = req.body;
   try {
 
-    // Hasher le mot de passe
     const hashedPassword = await hash(password, 10)
 
-    // Créer l'employé dans la base de données avec le rôle "employee"
     await db.query('INSERT INTO users (user_email, user_password, role, user_name) VALUES ($1, $2, $3, $4) RETURNING *',[
       email,
       hashedPassword,

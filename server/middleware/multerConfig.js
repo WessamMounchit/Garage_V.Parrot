@@ -12,6 +12,16 @@ const storage = multer.diskStorage({
   },
 });
 
-const upload = multer({ storage: storage });
+const fileFilter = (req, file, cb) => {
+  if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/png') {
+      cb(null, true);
+  } else {
+      cb(new multer.MulterError('LIMIT_UNEXPECTED_FILE', 'Ce fichier n\'est pas une image'), false);
+  }
+}
+const upload = multer({ 
+  storage: storage,
+  fileFilter: fileFilter
+ });
 
 module.exports = upload;

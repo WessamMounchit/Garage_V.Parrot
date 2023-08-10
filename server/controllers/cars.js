@@ -27,7 +27,6 @@ const db = require('../db')
     const result = await db.query(query);
     const cars = result.rows;
 
-    // Remplacer l'URL du chemin de l'image par le chemin local sur le serveur
     const carsWithLocalImagePath = cars.map((car) => {
       return {
         ...car,
@@ -47,15 +46,15 @@ exports.updateCar = async (req, res) => {
   try {
     const { id } = req.params;
     const updateFields = { ...req.body };
-
+    
     if (req.files['image_path'] && req.files['image_path'][0]) {
       updateFields.image_path = req.files['image_path'][0].path;
     }
-
+    
     if (req.files['gallery'] && req.files['gallery'].length > 0) {
       updateFields.gallery = req.files['gallery'].map((file) => file.path);
     }
-
+    
     const emptyFields = [];
     Object.keys(updateFields).forEach((key) => {
       if (!updateFields[key]) {

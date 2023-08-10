@@ -1,15 +1,16 @@
 import React, { useState } from 'react';
-import { onAddCar } from '../api/cars';
 import { toast } from 'react-toastify';
+import { Form, Button } from 'react-bootstrap';
+import { onAddCar } from '../api/cars';
 
-const AddCar = ( { onSubmit }) => {
+const AddCar = ({ onSubmit }) => {
   const [carData, setCarData] = useState({
     model: '',
     price: '',
     year: '',
     mileage: '',
     features: [],
-    equipment: []
+    equipment: [],
   });
 
   const [gallery, setGallery] = useState([]);
@@ -18,15 +19,14 @@ const AddCar = ( { onSubmit }) => {
   const handleImageChange = (e) => {
     const selectedFile = e.target.files[0];
     setImage(selectedFile);
-    console.log(selectedFile)
+    console.log(selectedFile);
   };
 
   const handleGalleryChange = (event) => {
     const selectedFiles = [...event.target.files];
     setGallery(selectedFiles);
-    console.log(selectedFiles)
+    console.log(selectedFiles);
   };
-
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -77,125 +77,99 @@ const AddCar = ( { onSubmit }) => {
         formData.append(`equipment`, equipment);
       });
 
-      const response = await onAddCar(formData)
-      toast.success(response.data.info)
-      onSubmit()
-/*       setCarData({
-        model: '',
-        price: '',
-        year: '',
-        mileage: '',
-        features: [],
-        equipment: []
-      });
+      const response = await onAddCar(formData);
+      toast.success(response.data.info);
+      onSubmit();
 
-      setGallery([])
-      setImage(null)
- */
     } catch (error) {
-      toast.error(error.response.data.error)
+      toast.error(error.response.data.error);
       console.error(error);
     }
   };
 
-
   return (
-    <form onSubmit={handleSubmit}>
-      <div className="mb-3">
-        <label htmlFor="model">Modèle</label>
-        <input
+    <Form onSubmit={handleSubmit}>
+      <Form.Group className="mb-3" controlId="model">
+        <Form.Label>Modèle</Form.Label>
+        <Form.Control
           type="text"
-          id="model"
           name="model"
           value={carData.model}
           onChange={handleInputChange}
-          className="form-control"
+          placeholder="Entrez le modèle"
         />
-      </div>
-
-      <div className="mb-3">
-        <label htmlFor="price">Prix</label>
-        <input
+      </Form.Group>
+      <Form.Group className="mb-3" controlId="price">
+        <Form.Label>Prix</Form.Label>
+        <Form.Control
           type="number"
-          id="price"
           name="price"
           value={carData.price}
           onChange={handleInputChange}
-          className="form-control"
+          placeholder="Entrez le prix"
         />
-      </div>
-
-      <div className="mb-3">
-        <label htmlFor="year">Année de mise en circulation</label>
-        <input
+      </Form.Group>
+      <Form.Group className="mb-3" controlId="year">
+        <Form.Label>Année de mise en circulation</Form.Label>
+        <Form.Control
           type="number"
-          id="year"
           name="year"
           value={carData.year}
           onChange={handleInputChange}
-          className="form-control"
+          placeholder="Entrez l'année de mise en circulation"
         />
-      </div>
-
-      <div className="mb-3">
-        <label htmlFor="mileage">Kilométrage</label>
-        <input
+      </Form.Group>
+      <Form.Group className="mb-3" controlId="mileage">
+        <Form.Label>Kilométrage</Form.Label>
+        <Form.Control
           type="number"
-          id="mileage"
           name="mileage"
           value={carData.mileage}
           onChange={handleInputChange}
-          className="form-control"
+          placeholder="Entrez le kilométrage"
         />
-      </div>
-
-      <div className="mb-3">
-        <label htmlFor="image">Image Principale</label>
-        <input
+      </Form.Group>
+      <Form.Group className="mb-3" controlId="image">
+        <Form.Label>Image Principale</Form.Label>
+        <Form.Control
           type="file"
-          id="image"
           onChange={handleImageChange}
           name="image"
-          className="form-control"
+          accept="image/png, image/jpeg"
         />
-      </div>
-
-      <div className="mb-3">
-        <label htmlFor="gallery">Galerie d'images</label>
-        <input
+      </Form.Group>
+      <Form.Group className="mb-3" controlId="gallery">
+        <Form.Label>Galerie d'images</Form.Label>
+        <Form.Control
           type="file"
-          id="gallery"
           onChange={handleGalleryChange}
           name="gallery"
           multiple
-          className="form-control"
+          accept="image/png, image/jpeg"
         />
-      </div>
-
-      <div className="mb-3">
-        <label htmlFor="features">Caractéristiques (séparées par des retours à la ligne)</label>
-        <textarea
-          id="features"
+      </Form.Group>
+      <Form.Group className="mb-3" controlId="features">
+        <Form.Label>Caractéristiques (séparées par des retours à la ligne)</Form.Label>
+        <Form.Control
+          as="textarea"
           name="features"
           value={carData.features.join('\n')}
           onChange={handleFeaturesChange}
-          className="form-control"
         />
-      </div>
-      
-      <div className="mb-3">
-        <label htmlFor="equipment">Équipements et Options (séparés par des retours à la ligne)</label>
-        <textarea
-          id="equipment"
+      </Form.Group>
+      <Form.Group className="mb-3" controlId="equipment">
+        <Form.Label>Équipements et Options (séparés par des retours à la ligne)</Form.Label>
+        <Form.Control
+          as="textarea"
           name="equipment"
           value={carData.equipment.join('\n')}
           onChange={handleEquipmentChange}
-          className="form-control"
         />
-      </div>
-
-      <button type="submit" className="btn btn-primary">Ajouter la voiture</button>
-    </form>
+      </Form.Group>
+      <Button variant="primary" type="submit">
+        Ajouter la voiture
+      </Button>
+    </Form>
   );
 };
 

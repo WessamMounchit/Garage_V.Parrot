@@ -28,3 +28,34 @@ CREATE DATABASE jwt;
     description VARCHAR(255) NOT NULL,
     image_path VARCHAR(255) NOT NULL
 );
+ 
+  CREATE TABLE IF NOT EXISTS testimonials
+(
+    testimonial_id SERIAL PRIMARY KEY,
+    first_name VARCHAR(50) NOT NULL,
+    last_name VARCHAR(50) NOT NULL,
+    job VARCHAR(50) NOT NULL,
+    description VARCHAR(255) NOT NULL,
+    mark VARCHAR(2) NOT NULL,
+    image_path VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE opening_hours (
+  day VARCHAR(10) NOT NULL PRIMARY KEY,
+  morning_open VARCHAR(5),
+  morning_close VARCHAR(5),
+  afternoon_open VARCHAR(5),
+  afternoon_close VARCHAR(5)
+);
+
+INSERT INTO opening_hours (day, morning_open, morning_close, afternoon_open, afternoon_close)
+VALUES
+  ('lundi', '08:45', '12:00', '14:00', '18:00'),
+  ('mardi', '08:45', '12:00', '14:00', '18:00'),
+  ('mercredi', '08:45', '12:00', '14:00', '18:00'),
+  ('jeudi', NULL, NULL, NULL, NULL),
+  ('vendredi', NULL, NULL, NULL, NULL),
+  ('samedi', '08:45', '12:00', '14:00', '18:00'),
+  ('dimanche', '08:45', '12:00', '14:00', '18:00');
+
+

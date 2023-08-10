@@ -1,45 +1,45 @@
 const { SERVER_URL } = require('../constants');
 const db = require('../db')
 
- exports.addService = async (req, res) => {
+ exports.addTestimonial = async (req, res) => {
   try {
-    const { title, description } = req.body;
+    const { first_name, last_name, job, description, mark } = req.body;
     const image_path = req.file.path
 
-    const query = `INSERT INTO services (title, description, image_path)
-                   VALUES ($1, $2, $3) RETURNING *`;
+    const query = `INSERT INTO testimonials (first_name, last_name, job, description, mark, image_path)
+                   VALUES ($1, $2, $3, $4, $5, $6) RETURNING *`;
 
-    const values = [title, description, image_path];
+    const values = [first_name, last_name, job, description, mark, image_path];
 
     await db.query(query, values);
 
-    res.status(201).json({info: 'Service ajouté avec succès'});
+    res.status(201).json({info: 'Avis ajouté avec succès'});
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
 };
  
 
-  exports.getService = async (req, res) => {
+  exports.getTestimonial = async (req, res) => {
   try {
-    const query = 'SELECT * FROM services';
+    const query = 'SELECT * FROM testimonials';
     const result = await db.query(query);
-    const services = result.rows;
+    const testimonials = result.rows;
 
-    const servicesWithLocalImagePath = services.map((service) => {
+    const testimonialsWithLocalImagePath = testimonials.map((testimonial) => {
       return {
-        ...service,
-        image_path: `${SERVER_URL}/${service.image_path}`,
+        ...testimonial,
+        image_path: `${SERVER_URL}/${testimonial.image_path}`,
       };
     });
 
-    res.json(servicesWithLocalImagePath);
+    res.json(testimonialsWithLocalImagePath);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 };
 
-exports.updateService = async (req, res) => {
+exports.updateTestimonial = async (req, res) => {
   try {
     const { id } = req.params;
     const updateFields = { ...req.body };
@@ -70,29 +70,29 @@ exports.updateService = async (req, res) => {
       values.push(updateFields[key]);
     });
 
-    const query = `UPDATE services SET ${setQuery} WHERE service_id = $${values.length + 1} RETURNING *`;
+    const query = `UPDATE testimonials SET ${setQuery} WHERE testimonial_id = $${values.length + 1} RETURNING *`;
     values.push(id);
 
     await db.query(query, values);
 
-    res.status(200).json({info: 'Service modifié avec succès'});
+    res.status(200).json({info: 'Avis modifié avec succès'});
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
 };
 
 
-exports.deleteService = async (req, res) => {
+exports.deleteTestimonial = async (req, res) => {
   try {
     const { id } = req.params;
 
-    const query = `DELETE FROM services WHERE service_id = $1`;
+    const query = `DELETE FROM testimonials WHERE testimonial_id = $1`;
 
     const values = [id];
 
     await db.query(query, values);
 
-    res.status(201).json({info: 'Service supprimé avec succès'});
+    res.status(201).json({info: 'Avis supprimé avec succès'});
   } catch (err) {
     res.status(500).json({ error: err.message });
   }

@@ -1,8 +1,34 @@
 import React from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import './Header.css'
+import { useDispatch, useSelector } from 'react-redux';
+import { onLogout } from '../api/auth';
+import secureLocalStorage from 'react-secure-storage';
+import { unauthenticateUser } from '../redux/slices/authSlice';
+import { toast } from 'react-toastify';
 
 function Header() {
+
+  const { isAuth } = useSelector((state) => state.auth)
+  const dispatch = useDispatch()
+
+  const logout = async e => {
+    try {
+      e.preventDefault()
+
+      const response = await onLogout()
+      console.log(response)
+      secureLocalStorage.clear()
+      dispatch(unauthenticateUser())
+
+      toast.success(response.data.message)
+
+    } catch (error) {
+      console.error(error.message);
+    }
+  }
+
+
   return (
     <header>
       <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -30,11 +56,15 @@ function Header() {
           </div>
         </div>
         <div className="header-right">
-          <Link to='/login'>
+          {isAuth ? <button type="button" className="btn btn-primary m-2" onClick={e => logout(e)}>
+              Logout
+            </button> : 
+            (<Link to='/login'>
             <button type="button" className="btn btn-primary m-2">
               Login
             </button>
-          </Link>
+          </Link>)
+          }
         </div>
       </nav>
     </header>

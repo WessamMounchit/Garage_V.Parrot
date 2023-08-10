@@ -1,39 +1,41 @@
-// components/ContactSection.js
 import React from 'react';
+import { Container, Row, Col, Form, Button } from 'react-bootstrap';
 
 function ContactSection() {
   return (
     <section id="contact" className="py-5">
-      <div className="container">
+      <Container>
         <h2 className="text-center mb-4">Contactez-nous</h2>
-        <div className="row">
-          <div className="col-md-6">
-            <form>
-              <div className="form-group">
-                <label htmlFor="name">Nom</label>
-                <input type="text" className="form-control" id="name" placeholder="Votre nom" />
-              </div>
-              <div className="form-group">
-                <label htmlFor="email">Adresse e-mail</label>
-                <input type="email" className="form-control" id="email" placeholder="Votre adresse e-mail" />
-              </div>
-              <div className="form-group">
-                <label htmlFor="message">Message</label>
-                <textarea className="form-control" id="message" rows="5" placeholder="Votre message"></textarea>
-              </div>
-              <button type="submit" className="btn btn-primary">Envoyer</button>
-            </form>
-          </div>
-          <div className="col-md-6">
+        <Row>
+          <Col md={6}>
+            <Form>
+              <Form.Group controlId="name">
+                <Form.Label>Nom</Form.Label>
+                <Form.Control type="text" placeholder="Votre nom" />
+              </Form.Group>
+              <Form.Group controlId="email">
+                <Form.Label>Adresse e-mail</Form.Label>
+                <Form.Control type="email" placeholder="Votre adresse e-mail" />
+              </Form.Group>
+              <Form.Group controlId="message">
+                <Form.Label>Message</Form.Label>
+                <Form.Control as="textarea" rows={5} placeholder="Votre message" />
+              </Form.Group>
+              <Button variant="primary" type="submit">
+                Envoyer
+              </Button>
+            </Form>
+          </Col>
+          <Col md={6}>
             <h4>Informations de contact</h4>
             <ul className="list-unstyled">
               <li><i className="fa fa-map-marker"></i> Adresse: 123 Rue du Garage, Ville, Pays</li>
               <li><i className="fa fa-phone"></i> Téléphone: +1234567890</li>
-              <li><i className="fa fa-envelope"></i> Email: info@garageXYZ.com</li>
+              <li><i className="fa fa-envelope"></i> Email: info@garageVincentParrot.com</li>
             </ul>
-          </div>
-        </div>
-      </div>
+          </Col>
+        </Row>
+      </Container>
     </section>
   );
 }

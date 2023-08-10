@@ -6,22 +6,22 @@ import AboutSection from '../components/AboutSection';
 import ContactSection from '../components/ContactSection';
 import Footer from '../components/Footer';
 import CarListing from '../components/CarListing';
-import Testimonials from '../components/TestimonialForm';
+import Testimonial from '../components/Testimonial';
 
 
 const Home = () => {
   return (
     <>
-    <Header />
-    <HeroSection />
-    <ServicesSection />
-    <CarListing />
-    <Testimonials />
-    <AboutSection />
-    <ContactSection />
-    <Footer />
+      <Header />
+      <HeroSection />
+      <ServicesSection />
+      <CarListing />
+      <Testimonial />
+      <AboutSection />
+      <ContactSection />
+      <Footer />
     </>
-)
+  )
 }
 
 export default Home

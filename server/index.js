@@ -24,12 +24,24 @@ require('./middleware/passport-middleware');
 const employeeRoutes = require('./routes/employee');
 const carsRoutes = require('./routes/cars')
 const servicesRoutes = require('./routes/services')
+const testimonialsRoutes = require('./routes/testimonials')
+const openingHoursRoutes = require('./routes/openingHours');
+const multer = require("multer");
 
 //ROUTES//
 app.use("/api", employeeRoutes);
 app.use("/api", carsRoutes)
 app.use("/api", servicesRoutes)
+app.use("/api", testimonialsRoutes)
+app.use("/api", openingHoursRoutes)
 app.use("/auth", require("./routes/jwtAuth"));
+
+//MULTEUR ERRORS
+app.use((err, req, res, next) => {
+  if (err instanceof multer.MulterError) {
+    res.status(400).json({ error: 'Veuillez fournir une image valide' });
+  }
+});
 
 app.listen(PORT, () => {
   console.log(`Le serveur est en marche au port ${PORT}`)

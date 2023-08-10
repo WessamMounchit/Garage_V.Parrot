@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import { onUpdateCar } from '../api/cars';
 import { toast } from 'react-toastify';
+import { Form, Button } from 'react-bootstrap';
+import { onUpdateCar } from '../api/cars';
 
 const EditCar = ({ car, onSubmit }) => {
 
-   const [carData, setCarData] = useState({
+  const [carData, setCarData] = useState({
     car_id: car.car_id,
     model: car.model,
     price: car.price,
@@ -13,10 +14,9 @@ const EditCar = ({ car, onSubmit }) => {
     features: car.features,
     equipment: car.equipment
   });
- 
+
   const [gallery, setGallery] = useState([]);
   const [image, setImage] = useState('');
-
 
   const handleImageChange = (e) => {
     const selectedFile = e.target.files[0];
@@ -35,7 +35,6 @@ const EditCar = ({ car, onSubmit }) => {
       [name]: value,
     });
   };
-
 
   const handleFeaturesChange = (event) => {
     const { value } = event.target;
@@ -61,11 +60,6 @@ const EditCar = ({ car, onSubmit }) => {
     try {
       const formData = new FormData();
 
-      /* formData.append('model', carData.model);
-      formData.append('price', carData.price);
-      formData.append('year', carData.year);
-      formData.append('mileage', carData.mileage); */
-
       Object.keys(carData).forEach((key) => {
         if (carData[key] !== car[key]) {
           formData.append(key, carData[key]);
@@ -84,7 +78,7 @@ const EditCar = ({ car, onSubmit }) => {
       carData.equipment !== car.equipment && carData.equipment.forEach((equipment) => {
         formData.append(`equipment`, equipment);
       });
-
+      
       if (formData.entries().next().done === false) {
         try {
           const response = await onUpdateCar(carData.car_id, formData);
@@ -92,9 +86,10 @@ const EditCar = ({ car, onSubmit }) => {
           onSubmit()
         } catch (error) {
           toast.error(error.response.data.error)
+          console.log(error)
         }
       }
-            
+      
     } catch (error) {
       console.error(error);
     }
@@ -107,103 +102,90 @@ const EditCar = ({ car, onSubmit }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <div className="mb-3">
-        <label htmlFor="model">Modèle</label>
-        <input
+    <Form onSubmit={handleSubmit}>
+      <Form.Group className="mb-3" controlId="model">
+        <Form.Label>Modèle</Form.Label>
+        <Form.Control
           type="text"
-          id="model"
           name="model"
           value={carData.model}
           onChange={handleInputChange}
           className="form-control"
         />
-      </div>
-      <div className="mb-3">
-        <label htmlFor="price">Prix</label>
-        <input
+      </Form.Group>
+      <Form.Group className="mb-3" controlId="price">
+        <Form.Label>Prix</Form.Label>
+        <Form.Control
           type="number"
-          id="price"
           name="price"
           value={carData.price}
           onChange={handleInputChange}
           className="form-control"
         />
-      </div>
-
-      <div className="mb-3">
-        <label htmlFor="year">Année de mise en circulation</label>
-        <input
+      </Form.Group>
+      <Form.Group className="mb-3" controlId="year">
+        <Form.Label>Année de mise en circulation</Form.Label>
+        <Form.Control
           type="number"
-          id="year"
           name="year"
           value={carData.year}
           onChange={handleInputChange}
           className="form-control"
         />
-      </div>
-
-      <div className="mb-3">
-        <label htmlFor="mileage">Kilométrage</label>
-        <input
+      </Form.Group>
+      <Form.Group className="mb-3" controlId="mileage">
+        <Form.Label>Kilométrage</Form.Label>
+        <Form.Control
           type="number"
-          id="mileage"
           name="mileage"
           value={carData.mileage}
           onChange={handleInputChange}
           className="form-control"
         />
-      </div>
-
-      <div className="mb-3">
-        <label htmlFor="image">Image Principale :</label>
+      </Form.Group>
+      <Form.Group className="mb-3" controlId="image">
+        <Form.Label>Image Principale :</Form.Label>
         <p>{getFileNameFromPath(car.image_path)}</p>
-        <input
+        <Form.Control
           type="file"
-          id="image"
           onChange={handleImageChange}
           name="image"
-          className="form-control"
+          accept="image/png, image/jpeg"
         />
-      </div>
-
-      <div className="mb-3">
-        <label htmlFor="gallery">Galerie d'images :</label>
+      </Form.Group>
+      <Form.Group className="mb-3" controlId="gallery">
+        <Form.Label>Galerie d'images :</Form.Label>
         {car.gallery.map((image) => (<p>{getFileNameFromPath(image)}</p>))}
-        <input
+        <Form.Control
           type="file"
-          id="gallery"
           onChange={handleGalleryChange}
           name="gallery"
           multiple
-          className="form-control"
+          accept="image/png, image/jpeg"
         />
-      </div>
-
-      <div className="mb-3">
-        <label htmlFor="features">Caractéristiques (séparées par des retours à la ligne)</label>
-        <textarea
-          id="features"
+      </Form.Group>
+      <Form.Group className="mb-3" controlId="features">
+        <Form.Label>Caractéristiques (séparées par des retours à la ligne)</Form.Label>
+        <Form.Control
+          as="textarea"
           name="features"
           value={carData.features.join('\n')}
           onChange={handleFeaturesChange}
-          className="form-control"
         />
-      </div>
-
-      <div className="mb-3">
-        <label htmlFor="equipment">Équipements et Options (séparés par des retours à la ligne)</label>
-        <textarea
-          id="equipment"
+      </Form.Group>
+      <Form.Group className="mb-3" controlId="equipment">
+        <Form.Label>Équipements et Options (séparés par des retours à la ligne)</Form.Label>
+        <Form.Control
+          as="textarea"
           name="equipment"
           value={carData.equipment.join('\n')}
           onChange={handleEquipmentChange}
-          className="form-control"
         />
-      </div>
-
-      <button type="submit" className="btn btn-success">Enregistrer</button>
-    </form>
+      </Form.Group>
+      <Button variant="success" type="submit">
+        Enregistrer
+      </Button>
+    </Form>
   );
 };
 

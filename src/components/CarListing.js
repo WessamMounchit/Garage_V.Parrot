@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import Modal from 'react-modal';
 import './CarListing.css';
 import { onDeleteCar, onGetCars } from '../api/cars';
 import EditCar from './EditCar';
 import AddCar from './AddCar';
 import { toast } from 'react-toastify';
+import { Modal, Button, Row, Col, Form } from 'react-bootstrap';
 
 const CarListing = () => {
 
@@ -117,62 +117,57 @@ const CarListing = () => {
   return (
     <div className="container mt-5">
       <h2>Liste des véhicules d'occasion</h2>
-      <div className="row mb-4">
-        <div className="col-md-3">
-          <input
+      <Row className="mb-4">
+        <Col md={3}>
+          <Form.Control
             type="number"
             name="minPrice"
             value={filters.minPrice}
             onChange={handleFilterChange}
             placeholder="Prix min"
-            className="form-control"
           />
-        </div>
-        <div className="col-md-3">
-          <input
+        </Col>
+        <Col md={3}>
+          <Form.Control
             type="number"
             name="maxPrice"
             value={filters.maxPrice}
             onChange={handleFilterChange}
             placeholder="Prix max"
-            className="form-control"
           />
-        </div>
-        <div className="col-md-3">
-          <input
+        </Col>
+        <Col md={3}>
+          <Form.Control
             type="number"
             name="minYear"
             value={filters.minYear}
             onChange={handleFilterChange}
             placeholder="Année min"
-            className="form-control"
           />
-        </div>
-        <div className="col-md-3">
-          <input
+        </Col>
+        <Col md={3}>
+          <Form.Control
             type="number"
             name="maxYear"
             value={filters.maxYear}
             onChange={handleFilterChange}
             placeholder="Année max"
-            className="form-control"
           />
-        </div>
-        <div className="col-md-3 mt-3">
-          <input
+        </Col>
+        <Col md={3} className="mt-3">
+          <Form.Control
             type="number"
             name="maxMileage"
             value={filters.maxMileage}
             onChange={handleFilterChange}
             placeholder="Kilométrage max"
-            className="form-control"
           />
-        </div>
-      </div>
-      <button className="btn btn-success m-2" onClick={() => setIsAddModalOpen(true)}>Ajouter une voiture</button>
-      <div className="row">
+        </Col>
+      </Row>
+      <img src='Add.svg' alt='Ajouter une voiture' className="btn m-2" onClick={() => setIsAddModalOpen(true)} />
+      <Row>
         {filteredCars.map((car) => (
-          <div key={car.car_id} className="col-md-4 mb-4">
+          <Col md={4} key={car.car_id} className="mb-4">
             <div className="card">
               <img src={car.image_path} className="card-img-top" alt={car.model} />
               <div className="card-body">
@@ -180,26 +175,38 @@ const CarListing = () => {
                 <p className="card-text">Prix : {car.price}€</p>
                 <p className="card-text">Année : {car.year}</p>
                 <p className="card-text">Kilométrage : {car.mileage}.km</p>
-                <button className="btn btn-warning m-2" onClick={() => handleModalOpen(car)}>Modifier</button>
-                <button className="btn btn-danger" onClick={() => {handleDeleteCar(car.car_id)}}>Supprimer</button>
+                <img src='Edit.svg' alt='Modifier une voiture' className="btn m-2" onClick={() => handleModalOpen(car)} />
+                <img src='Delete.svg' alt='Supprimer une voiture' className="btn m-2" onClick={() => { handleDeleteCar(car.car_id) }} />
               </div>
             </div>
-          </div>
+          </Col>
         ))}
+      </Row>
+
+      <Modal show={isUpdateModalOpen} onHide={handleModalClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Modifier la voiture</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          {selectedCar && <EditCar car={selectedCar} onSubmit={handleUpdateCar} />}
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="danger" onClick={handleModalClose}>Fermer</Button>
+        </Modal.Footer>
+      </Modal>
+
+      <Modal show={isAddModalOpen} onHide={() => setIsAddModalOpen(false)}>
+        <Modal.Header closeButton>
+          <Modal.Title>Ajouter une voiture</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <AddCar onSubmit={handleAddCar} />
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="danger" onClick={() => setIsAddModalOpen(false)}>Fermer</Button>
+        </Modal.Footer>
+      </Modal>
       </div>
-
-      <Modal isOpen={isUpdateModalOpen} onRequestClose={handleModalClose}>
-        <h2>Modifier la voiture</h2>
-        {selectedCar && <EditCar car={selectedCar} onSubmit={handleUpdateCar} />}
-        <button className="btn btn-danger m-2" onClick={handleModalClose}>Fermer</button>
-      </Modal>
-
-      <Modal isOpen={isAddModalOpen} onRequestClose={() => setIsAddModalOpen(false)}>
-        <h2>Ajouter une voiture</h2>
-        <AddCar onSubmit={handleAddCar} />
-        <button className="btn btn-danger m-2" onClick={() => setIsAddModalOpen(false)}>Fermer</button>
-      </Modal>
-    </div>
   );
 };
 export default CarListing;

@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { toast } from 'react-toastify';
+import { Form, Button } from 'react-bootstrap';
 import { onAddService } from '../api/services';
 
-const AddService = ( { onSubmit }) => {
+const AddService = ({ onSubmit }) => {
   const [serviceData, setServiceData] = useState({
     title: '',
     description: ''
@@ -16,7 +17,6 @@ const AddService = ( { onSubmit }) => {
     console.log(selectedFile);
   };
 
-
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setServiceData({
@@ -24,7 +24,6 @@ const AddService = ( { onSubmit }) => {
       [name]: value,
     });
   };
-
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -36,52 +35,50 @@ const AddService = ( { onSubmit }) => {
       formData.append('description', serviceData.description);
       formData.append('image_path', image_path);
 
-      const response = await onAddService(formData)
-      toast.success(response.data.info)
-      onSubmit()
+      const response = await onAddService(formData);
+      toast.success(response.data.info);
+      onSubmit();
     } catch (error) {
-      toast.error(error.response.data.error)
+      toast.error(error.response.data.error);
       console.error(error);
     }
   };
 
-
   return (
-    <form onSubmit={handleSubmit}>
-      <div className="mb-3">
-        <label htmlFor="title">Titre du service</label>
-        <input
+    <Form onSubmit={handleSubmit}>
+      <Form.Group className="mb-3" controlId="title">
+        <Form.Label>Titre du service</Form.Label>
+        <Form.Control
           type="text"
-          id="title"
           name="title"
           value={serviceData.title}
           onChange={handleInputChange}
-          className="form-control"
+          placeholder="Entrez le titre du service"
         />
-      </div>
-      <div className="mb-3">
-        <label htmlFor="description">Description du service</label>
-        <textarea
-          id="description"
+      </Form.Group>
+      <Form.Group className="mb-3" controlId="description">
+        <Form.Label>Description du service</Form.Label>
+        <Form.Control
+          as="textarea"
           name="description"
           value={serviceData.description}
           onChange={handleInputChange}
-          className="form-control"
+          placeholder="Entrez la description du service"
         />
-      </div>
-      <div className="mb-3">
-        <label htmlFor="image">Image du service</label>
-        <input
+      </Form.Group>
+      <Form.Group className="mb-3" controlId="image">
+        <Form.Label>Image du service</Form.Label>
+        <Form.Control
           type="file"
-          id="image_path"
           onChange={handleImageChange}
           name="image_path"
-          className="form-control"
+          accept="image/png, image/jpeg"
         />
-      </div>
-
-      <button type="submit" className="btn btn-primary">Ajouter le service</button>
-    </form>
+      </Form.Group>
+      <Button variant="primary" type="submit">
+        Ajouter le service
+      </Button>
+    </Form>
   );
 };
 

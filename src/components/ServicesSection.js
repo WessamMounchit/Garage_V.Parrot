@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import './ServicesSection.css'; // Import du fichier CSS
-import { onGetServices } from '../api/services';
-import Modal from 'react-modal';
+import './ServicesSection.css';
+import { onDeleteService, onGetServices } from '../api/services';
+import { Modal, Carousel, Button } from 'react-bootstrap';
 import AddService from './AddService';
 import EditService from './EditService';
+import { toast } from 'react-toastify';
+import { useSelector } from 'react-redux';
 
 function ServicesSection() {
 
@@ -11,6 +13,7 @@ function ServicesSection() {
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
   const [selectedService, setSelectedService] = useState(null);
+  const { isAuth } = useSelector(state => state.auth)
 
 
 
@@ -18,7 +21,6 @@ function ServicesSection() {
     onGetServices()
       .then((response) => {
         setServices(response.data);
-        console.log(services)
       })
       .catch((error) => {
         console.error(error);
@@ -68,15 +70,34 @@ function ServicesSection() {
     }
   };
 
+  const handleDeleteCar = async (serviceId) => {
+    try {
+      const response = await onDeleteService(serviceId)
+      toast.success(response.data.info)
+
+    } catch (error) {
+      toast.error(error.response.data.error)
+    }
+
+    onGetServices()
+      .then((response) => {
+        setServices(response.data);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
+
 
   return (
     <>
-      <button className="btn btn-success m-2" onClick={() => setIsAddModalOpen(true)}>Ajouter un service</button>
+      {console.log(isAuth)}
       <section id="services" className="py-5">
         <div className="container">
-          <div className="row">
+          <img src='Add.svg' alt='Ajouter' className="btn m-2" onClick={() => setIsAddModalOpen(true)} />
+          <Carousel data-bs-theme="dark">
             {services.map((service) => (
-              <div key={service.service_id} className="col-md-4">
+              <Carousel.Item key={service.service_id}>
                 <div className="card mb-4">
                   <img
                     src={service.image_path}
@@ -84,92 +105,43 @@ function ServicesSection() {
                     alt="Service 1"
                   />
                   <div className="card-body">
-                    <h5 className="card-title">{service.title}</h5>
-                    <p className="card-text">{service.description}</p>
+                    <h5 className="card-title text-center">{service.title}</h5>
+                    <p className="card-text text-center">{service.description}</p>
                   </div>
-                  <button className="btn btn-warning m-2" onClick={() => handleModalOpen(service)}>Modifier</button>
+                  <div className='flex justify-center'>
+                    <img src='Edit.svg' alt='Modifier' className="btn m-2" width="55" height="55" onClick={() => handleModalOpen(service)} />
+                    <img src='Delete.svg' alt='Supprimer' className="btn m-2" width="55" height="55" onClick={() => { handleDeleteCar(service.service_id) }} />
+                  </div>
                 </div>
-              </div>
+              </Carousel.Item>
             ))}
-
-            {/*           <div className="col-md-4">
-            <div className="card mb-4">
-              <img
-                src="https://images.pexels.com/photos/2244746/pexels-photo-2244746.jpeg?auto=compress&cs=tinysrgb&w=600"
-                className="card-img-top"
-                alt="Service 1"
-              />
-              <div className="card-body">
-                <h5 className="card-title">Réparation automobile</h5>
-                <p className="card-text">
-                  Nous offrons une large gamme de services de réparation automobile pour tous types de véhicules.
-                </p>
-              </div>
-            </div>
-          </div>
-          <div className="col-md-4">
-            <div className="card mb-4">
-              <img
-                src="https://images.pexels.com/photos/2244746/pexels-photo-2244746.jpeg?auto=compress&cs=tinysrgb&w=600"
-                className="card-img-top"
-                alt="Service 1"
-              />
-              <div className="card-body">
-                <h5 className="card-title">Réparation automobile</h5>
-                <p className="card-text">
-                  Nous offrons une large gamme de services de réparation automobile pour tous types de véhicules.
-                </p>
-              </div>
-            </div>
-          </div>
-          <div className="col-md-4">
-            <div className="card mb-4">
-              <img
-                src="https://images.pexels.com/photos/3807277/pexels-photo-3807277.jpeg?auto=compress&cs=tinysrgb&w=600" 
-                className="card-img-top"
-                alt="Service 2"
-              />
-              <div className="card-body">
-                <h5 className="card-title">Entretien préventif</h5>
-                <p className="card-text">
-                  Notre équipe expérimentée propose des services d'entretien préventif pour garder votre véhicule en bon état.
-                </p>
-              </div>
-            </div>
-          </div>
-          <div className="col-md-4">
-            <div className="card mb-4">
-              <img
-                src="https://images.pexels.com/photos/3806249/pexels-photo-3806249.jpeg?auto=compress&cs=tinysrgb&w=600" 
-                className="card-img-top"
-                alt="Service 3"
-              />
-              <div className="card-body">
-                <h5 className="card-title">Diagnostic avancé</h5>
-                <p className="card-text">
-                  Nous utilisons des outils de diagnostic de pointe pour identifier rapidement les problèmes de votre véhicule.
-                </p>
-              </div>
-            </div>
-          </div>
- */}        </div>
+          </Carousel>
         </div>
       </section>
-
-      <Modal isOpen={isAddModalOpen} onRequestClose={() => setIsAddModalOpen(false)}>
-        <h2>Ajouter un service</h2>
-        <AddService onSubmit={handleAddService} />
-        <button className="btn btn-danger m-2" onClick={() => setIsAddModalOpen(false)}>Fermer</button>
+      <Modal show={isAddModalOpen} onHide={() => setIsAddModalOpen(false)}>
+        <Modal.Header closeButton>
+          <Modal.Title>Ajouter un service</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <AddService onSubmit={handleAddService} />
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="danger" onClick={() => setIsAddModalOpen(false)}>Fermer</Button>
+        </Modal.Footer>
       </Modal>
 
-      <Modal isOpen={isUpdateModalOpen} onRequestClose={handleModalClose}>
-        <h2>Modifier la voiture</h2>
-        {selectedService && <EditService service={selectedService} onSubmit={handleUpdateCar} />}
-        <button className="btn btn-danger m-2" onClick={handleModalClose}>Fermer</button>
+      <Modal show={isUpdateModalOpen} onHide={handleModalClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Modifier le service</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          {selectedService && <EditService service={selectedService} onSubmit={handleUpdateCar} />}
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="danger" onClick={handleModalClose}>Fermer</Button>
+        </Modal.Footer>
       </Modal>
-
     </>
   );
 }
-
 export default ServicesSection;
