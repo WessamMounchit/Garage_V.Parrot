@@ -5,6 +5,7 @@ import { onDeleteTestimonial, onGetTestimonials } from '../api/testimonials';
 import AddTestimonial from './AddTestimonial';
 import EditTestimonial from './EditTestimonial';
 import { toast } from 'react-toastify';
+import { useSelector } from 'react-redux';
 
 const Testimonial = () => {
 
@@ -12,6 +13,8 @@ const Testimonial = () => {
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
   const [selectedTestimonial, setSelectedTestimonial] = useState(null);
+  const { isAuth } = useSelector((state) => state.auth);
+
 
   useEffect(() => {
     onGetTestimonials()
@@ -84,7 +87,7 @@ const Testimonial = () => {
 
   return (
     <>
-      <img src='Add.svg' alt='Ajouter un avis' className="btn m-2" onClick={() => setIsAddModalOpen(true)} />
+      {isAuth && <img src='Add.svg' alt='Ajouter un avis' className="btn m-2" onClick={() => setIsAddModalOpen(true)} />}
       <div className="container mt-5 mb-5">
         <Carousel>
           {testimonials.map((testimonial) => (
@@ -97,8 +100,8 @@ const Testimonial = () => {
                 <div className="ratings">
                   <i>{testimonial.mark}</i>
                 </div>
-                <img src='Edit.svg' alt='Modifier un avis' className="btn m-2" onClick={() => handleModalOpen(testimonial)} />
-                <img src='Delete.svg' alt='Supprimer un avis' className="btn m-2" onClick={() => { handleDeleteTestimonial(testimonial.testimonial_id) }} />
+                {isAuth && <img src='Edit.svg' alt='Modifier un avis' className="btn m-2" onClick={() => handleModalOpen(testimonial)} />}
+                {isAuth && <img src='Delete.svg' alt='Supprimer un avis' className="btn m-2" onClick={() => { handleDeleteTestimonial(testimonial.testimonial_id) }} />}
               </div>
             </Carousel.Item>
           ))}
