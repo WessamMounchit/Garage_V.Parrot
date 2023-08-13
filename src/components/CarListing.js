@@ -5,10 +5,13 @@ import EditCar from './EditCar';
 import AddCar from './AddCar';
 import { toast } from 'react-toastify';
 import { Modal, Button, Row, Col, Form } from 'react-bootstrap';
+import { useSelector } from 'react-redux';
 
 const CarListing = () => {
 
   const [cars, setCars] = useState([]);
+  const { isAuth } = useSelector((state) => state.auth);
+
 
   const [filters, setFilters] = useState({
     minPrice: '',
@@ -164,7 +167,7 @@ const CarListing = () => {
           />
         </Col>
       </Row>
-      <img src='Add.svg' alt='Ajouter une voiture' className="btn m-2" onClick={() => setIsAddModalOpen(true)} />
+      { isAuth && <img src='Add.svg' alt='Ajouter une voiture' className="btn m-2" onClick={() => setIsAddModalOpen(true)} />}
       <Row>
         {filteredCars.map((car) => (
           <Col md={4} key={car.car_id} className="mb-4">
@@ -175,8 +178,8 @@ const CarListing = () => {
                 <p className="card-text">Prix : {car.price}€</p>
                 <p className="card-text">Année : {car.year}</p>
                 <p className="card-text">Kilométrage : {car.mileage}.km</p>
-                <img src='Edit.svg' alt='Modifier une voiture' className="btn m-2" onClick={() => handleModalOpen(car)} />
-                <img src='Delete.svg' alt='Supprimer une voiture' className="btn m-2" onClick={() => { handleDeleteCar(car.car_id) }} />
+                { isAuth && <img src='Edit.svg' alt='Modifier une voiture' className="btn m-2" onClick={() => handleModalOpen(car)} />}
+                { isAuth && <img src='Delete.svg' alt='Supprimer une voiture' className="btn m-2" onClick={() => { handleDeleteCar(car.car_id) }} />}
               </div>
             </div>
           </Col>
