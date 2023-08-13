@@ -91,7 +91,6 @@ function ServicesSection() {
 
   return (
     <>
-      {console.log(isAuth)}
       <section id="services" className="py-5">
         <div className="container">
           <img src='Add.svg' alt='Ajouter' className="btn m-2" onClick={() => setIsAddModalOpen(true)} />
