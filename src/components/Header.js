@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import './Header.css'
 import { useDispatch, useSelector } from 'react-redux';
@@ -6,10 +6,14 @@ import { onLogout } from '../api/auth';
 import secureLocalStorage from 'react-secure-storage';
 import { unauthenticateUser } from '../redux/slices/authSlice';
 import { toast } from 'react-toastify';
+import { Button, Modal } from 'react-bootstrap';
+import Login from './Login';
 
 function Header() {
 
   const { isAuth } = useSelector((state) => state.auth)
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   const dispatch = useDispatch()
 
   const logout = async e => {
@@ -28,16 +32,18 @@ function Header() {
     }
   }
 
+  const closeModal = () => setIsModalOpen(false);
+
   const authButton = isAuth ? (
     <button type="button" className="btn btn-primary m-2" onClick={e => logout(e)}>
       Logout
     </button>
   ) : (
-    <Link to="/login">
-      <button type="button" className="btn btn-primary m-2">
+    //<Link to="/login">
+      <button type="button" className="btn btn-primary m-2" onClick={() => setIsModalOpen(true)}>
         Login
       </button>
-    </Link>
+    //</Link>
   );
 
   return (
@@ -70,6 +76,17 @@ function Header() {
           {authButton}
         </div>
       </nav>
+      <Modal show={isModalOpen} onHide={() => setIsModalOpen(false)}>
+        <Modal.Header closeButton>
+          <Modal.Title>Login</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Login closeModal={closeModal}  />
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="danger" onClick={() => setIsModalOpen(false)}>Fermer</Button>
+        </Modal.Footer>
+      </Modal>
     </header>
   );
 }

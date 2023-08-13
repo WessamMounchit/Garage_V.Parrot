@@ -4,11 +4,9 @@ import { onLogin } from '../api/auth';
 import { useDispatch } from 'react-redux';
 import { authenticateUser } from '../redux/slices/authSlice';
 import secureLocalStorage from  "react-secure-storage";
-import { Navigate } from 'react-router-dom';
 
 
-
-const Login = () => {
+const Login = ({ closeModal }) => {
 
   const [inputs, setInputs] = useState({
     email: "",
@@ -16,8 +14,6 @@ const Login = () => {
   })
 
   const { email, password } = inputs
-
-  const [redirectToHome, setRedirectToHome] = useState(false);
 
   const dispatch = useDispatch()
 
@@ -38,8 +34,8 @@ const Login = () => {
       secureLocalStorage.setItem('email', email)
       secureLocalStorage.setItem('name', name)
 
+      closeModal()
       toast.success(response.data.info)
-      setRedirectToHome(true);
       
     } catch (error) {
       console.error(error.message);
@@ -47,13 +43,9 @@ const Login = () => {
     }
   };
 
-  if (redirectToHome) {
-    return <Navigate to="/" />;
-  }
 
   return (
     <>
-      <h1 className='text-center my-5'>Login</h1>
       <form onSubmit={onSubmitForm}>
         <input
           type='email'
@@ -71,7 +63,7 @@ const Login = () => {
           value={password}
           onChange={e => onChange(e)}
         />
-        <button className='btn btn-success btn-block'>Submit</button>
+        <button className='btn btn-success btn-block'>Se connecter</button>
       </form>
     </>
   );
