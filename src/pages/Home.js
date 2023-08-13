@@ -7,6 +7,7 @@ import ContactSection from '../components/ContactSection';
 import Footer from '../components/Footer';
 import CarListing from '../components/CarListing';
 import Testimonial from '../components/Testimonial';
+import CollapsibleExample from '../components/CollapsibleExample';
 
 
 const Home = () => {
@@ -15,6 +16,7 @@ const Home = () => {
       <Header />
       <HeroSection />
       <ServicesSection />
+      <CollapsibleExample />
       <CarListing />
       <Testimonial />
       <AboutSection />

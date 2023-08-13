@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { onEmployeeRegistration } from '../api/auth';
 
-const Register = () => {
+const Register = ({ closeRegisterModal }) => {
   
   const [inputs, setInputs] = useState({
     email: '',
@@ -25,6 +24,7 @@ const Register = () => {
       const response = await onEmployeeRegistration(registrationData);
 
       if (response.data.success) {
+        closeRegisterModal()
         toast.success(response.data.message)
       } else {
       }
@@ -36,7 +36,6 @@ const Register = () => {
 
   return (
     <>
-      <h1 className="text-center my-5">Register</h1>
       <form onSubmit={onSubmitForm}>
         <input
           type="email"
@@ -63,14 +62,9 @@ const Register = () => {
           onChange={onChange}
         />
         <button type="submit" className="btn btn-success btn-block">
-          Submit
+          Enregister l'employé
         </button>
       </form>
-      <Link to='/login'>
-        <button type="button" className="btn btn-primary m-2">
-          Login
-        </button>
-      </Link>
     </>
   );
 };

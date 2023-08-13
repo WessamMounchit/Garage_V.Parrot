@@ -1,19 +1,23 @@
 import React, { useState } from 'react';
-import { Link, NavLink } from 'react-router-dom';
-import './Header.css'
+import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { onLogout } from '../api/auth';
 import secureLocalStorage from 'react-secure-storage';
 import { unauthenticateUser } from '../redux/slices/authSlice';
 import { toast } from 'react-toastify';
-import { Button, Modal } from 'react-bootstrap';
+import { Button, Modal, Nav, Navbar, Container, Offcanvas } from 'react-bootstrap';
 import Login from './Login';
+import Register from './Register';
 
 function Header() {
 
   const { isAuth } = useSelector((state) => state.auth)
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
   const [isRegisterModalOpen, setIsRegisterModalOpen] = useState(false);
+  const expand = 'xl'; //false, 'sm', 'md', 'lg', 'xl', 'xxl'
+  const role = secureLocalStorage.getItem('role')
+
+
 
   const dispatch = useDispatch()
 
@@ -34,58 +38,77 @@ function Header() {
   }
 
   const closeLoginModal = () => setIsLoginModalOpen(false);
+  const closeRegisterModal = () => setIsRegisterModalOpen(false);
 
   const authButton = isAuth ? (
     <button type="button" className="btn btn-primary m-2" onClick={e => logout(e)}>
-      Logout
+      Se déconnecter
     </button>
   ) : (
     //<Link to="/login">
-      <button type="button" className="btn btn-primary m-2" onClick={() => setIsLoginModalOpen(true)}>
-        Login
-      </button>
+    <button type="button" className="btn btn-primary m-2" onClick={() => setIsLoginModalOpen(true)}>
+      Espace professionel
+    </button>
     //</Link>
   );
 
   return (
     <header>
-      <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div className="container">
-          <Link className="navbar-brand" to="/home">Garage Vincent Parrot</Link>
-          <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span className="navbar-toggler-icon"></span>
-          </button>
-          <div className="collapse navbar-collapse" id="navbarNav">
-            <ul className="navbar-nav ml-auto">
-              <li className="nav-item">
-                <NavLink className="nav-link" exact to="/home" activeClassName="active">Accueil</NavLink>
-              </li>
-              <li className="nav-item">
-                <NavLink className="nav-link" to="/home" activeClassName="active">Services</NavLink>
-              </li>
-              <li className="nav-item">
-                <NavLink className="nav-link" to="/home" activeClassName="active">À propos</NavLink>
-              </li>
-              <li className="nav-item">
-                <NavLink className="nav-link" to="/home" activeClassName="active">Contact</NavLink>
-              </li>
-            </ul>
-          </div>
-        </div>
-        <div className="header-right">
-          {authButton}
-        </div>
-      </nav>
+      <Navbar expand={expand} className="bg-body-tertiary mb-3">
+        <Container fluid>
+          <Navbar.Brand href="#">Garage Vincent Parrot</Navbar.Brand>
+          <Navbar.Toggle aria-controls={`offcanvasNavbar-expand-${expand}`} />
+          <Navbar.Offcanvas
+            id={`offcanvasNavbar-expand-${expand}`}
+            aria-labelledby={`offcanvasNavbarLabel-expand-${expand}`}
+            placement="end"
+          >
+            <Offcanvas.Header closeButton>
+              <Offcanvas.Title id={`offcanvasNavbarLabel-expand-${expand}`}>
+                Garage Vincent Parrot
+              </Offcanvas.Title>
+            </Offcanvas.Header>
+            <Offcanvas.Body>
+              <Nav className="justify-content-end flex-grow-1 pe-3">
+                <Nav.Link href="#action1">Accueil</Nav.Link>
+                <Nav.Link href="#action2">Services</Nav.Link>
+                <Nav.Link href="#action3">À propos</Nav.Link>
+                <Nav.Link href="#action4">Contact</Nav.Link>
+                <Nav.Item>{authButton}</Nav.Item>
+                {isAuth && role === 'admin' && <Nav.Item>
+                  <button
+                    type="button"
+                    className="btn btn-primary m-2"
+                    onClick={() => setIsRegisterModalOpen(true)}>
+                    Créer un compte employé
+                  </button>
+                </Nav.Item>}
+              </Nav>
+            </Offcanvas.Body>
+          </Navbar.Offcanvas>
+        </Container>
+      </Navbar>
       <Modal show={isLoginModalOpen} onHide={() => setIsLoginModalOpen(false)}>
         <Modal.Header closeButton>
-          <Modal.Title>Login</Modal.Title>
+          <Modal.Title>Se connecter à son espace professionel</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Login closeLoginModal={closeLoginModal}  />
+          <Login closeLoginModal={closeLoginModal} />
         </Modal.Body>
         <Modal.Footer>
           <Button variant="danger" onClick={() => setIsLoginModalOpen(false)}>Fermer</Button>
+        </Modal.Footer>
+      </Modal>
+
+      <Modal show={isRegisterModalOpen} onHide={() => setIsRegisterModalOpen(false)}>
+        <Modal.Header closeButton>
+          <Modal.Title>Créer un compte employé</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Register closeRegisterModal={closeRegisterModal} />
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="danger" onClick={() => setIsRegisterModalOpen(false)}>Fermer</Button>
         </Modal.Footer>
       </Modal>
     </header>
