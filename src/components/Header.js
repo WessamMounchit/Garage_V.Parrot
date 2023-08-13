@@ -12,7 +12,8 @@ import Login from './Login';
 function Header() {
 
   const { isAuth } = useSelector((state) => state.auth)
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
+  const [isRegisterModalOpen, setIsRegisterModalOpen] = useState(false);
 
   const dispatch = useDispatch()
 
@@ -32,7 +33,7 @@ function Header() {
     }
   }
 
-  const closeModal = () => setIsModalOpen(false);
+  const closeLoginModal = () => setIsLoginModalOpen(false);
 
   const authButton = isAuth ? (
     <button type="button" className="btn btn-primary m-2" onClick={e => logout(e)}>
@@ -40,7 +41,7 @@ function Header() {
     </button>
   ) : (
     //<Link to="/login">
-      <button type="button" className="btn btn-primary m-2" onClick={() => setIsModalOpen(true)}>
+      <button type="button" className="btn btn-primary m-2" onClick={() => setIsLoginModalOpen(true)}>
         Login
       </button>
     //</Link>
@@ -76,15 +77,15 @@ function Header() {
           {authButton}
         </div>
       </nav>
-      <Modal show={isModalOpen} onHide={() => setIsModalOpen(false)}>
+      <Modal show={isLoginModalOpen} onHide={() => setIsLoginModalOpen(false)}>
         <Modal.Header closeButton>
           <Modal.Title>Login</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Login closeModal={closeModal}  />
+          <Login closeLoginModal={closeLoginModal}  />
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="danger" onClick={() => setIsModalOpen(false)}>Fermer</Button>
+          <Button variant="danger" onClick={() => setIsLoginModalOpen(false)}>Fermer</Button>
         </Modal.Footer>
       </Modal>
     </header>

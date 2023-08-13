@@ -6,7 +6,7 @@ import { authenticateUser } from '../redux/slices/authSlice';
 import secureLocalStorage from  "react-secure-storage";
 
 
-const Login = ({ closeModal }) => {
+const Login = ({ closeLoginModal }) => {
 
   const [inputs, setInputs] = useState({
     email: "",
@@ -34,7 +34,7 @@ const Login = ({ closeModal }) => {
       secureLocalStorage.setItem('email', email)
       secureLocalStorage.setItem('name', name)
 
-      closeModal()
+      closeLoginModal()
       toast.success(response.data.info)
       
     } catch (error) {
