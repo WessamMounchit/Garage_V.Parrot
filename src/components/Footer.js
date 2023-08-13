@@ -2,11 +2,17 @@ import React, { useEffect, useState } from 'react';
 import { Button, Modal } from 'react-bootstrap';
 import { onGetopeningHours } from '../api/openingHours';
 import EditOpeningHours from './EditOpeningHours';
+import secureLocalStorage from 'react-secure-storage';
+import { useSelector } from 'react-redux';
 
 function Footer() {
 
   const [openingHours, setOpeningHours] = useState([]);
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
+  const { isAuth } = useSelector((state) => state.auth);
+  const role = secureLocalStorage.getItem('role')
+
+
   
   const compareDaysOfWeek = (day1, day2) => {
     const daysOfWeek = ['lundi', 'mardi', 'mercredi', 'jeudi', 'vendredi', 'samedi', 'dimanche'];
@@ -79,7 +85,11 @@ useEffect(() => {
         <div className="container">
           <p>Tous droits réservés &copy; 2023 Garage Viencent Parrot</p>
           <div>
-            <Button variant="warning" className="m-2" onClick={() => setIsUpdateModalOpen(true)}>Modifier les horraires</Button>
+            {isAuth && role === 'admin' && (
+            <Button variant="warning" className="m-2" onClick={() => setIsUpdateModalOpen(true)}>
+              Modifier les horraires
+              </Button>
+            )}
             <h3>Horaires d'ouverture :</h3>
             {openingHours.map(formatOpeningHours)}
           </div>

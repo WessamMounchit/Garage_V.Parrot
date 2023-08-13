@@ -4,6 +4,7 @@ import { onLogin } from '../api/auth';
 import { useDispatch } from 'react-redux';
 import { authenticateUser } from '../redux/slices/authSlice';
 import secureLocalStorage from  "react-secure-storage";
+import { Navigate } from 'react-router-dom';
 
 
 
@@ -15,6 +16,8 @@ const Login = () => {
   })
 
   const { email, password } = inputs
+
+  const [redirectToHome, setRedirectToHome] = useState(false);
 
   const dispatch = useDispatch()
 
@@ -36,6 +39,7 @@ const Login = () => {
       secureLocalStorage.setItem('name', name)
 
       toast.success(response.data.info)
+      setRedirectToHome(true);
       
     } catch (error) {
       console.error(error.message);
@@ -43,6 +47,9 @@ const Login = () => {
     }
   };
 
+  if (redirectToHome) {
+    return <Navigate to="/" />;
+  }
 
   return (
     <>

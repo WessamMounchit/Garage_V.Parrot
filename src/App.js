@@ -26,15 +26,10 @@ function App() {
       <Routes>
 
 
-      <Route element={<PrivateRoutes />}>
-          <Route path='/' exact element={<Dashboard />} />
+          <Route path='/' exact element={<Home />} />
           <Route path='/register' exact element={<Register />} />
-      </Route>
 
-      <Route element={<RestrictedRoutes />}>
-        <Route path='/home' exact element={<Home />} />
         <Route path='/login' exact element={<Login />} />
-      </Route>
 
 
       </Routes>

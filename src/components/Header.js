@@ -28,6 +28,17 @@ function Header() {
     }
   }
 
+  const authButton = isAuth ? (
+    <button type="button" className="btn btn-primary m-2" onClick={e => logout(e)}>
+      Logout
+    </button>
+  ) : (
+    <Link to="/login">
+      <button type="button" className="btn btn-primary m-2">
+        Login
+      </button>
+    </Link>
+  );
 
   return (
     <header>
@@ -56,15 +67,7 @@ function Header() {
           </div>
         </div>
         <div className="header-right">
-          {isAuth ? <button type="button" className="btn btn-primary m-2" onClick={e => logout(e)}>
-              Logout
-            </button> : 
-            (<Link to='/login'>
-            <button type="button" className="btn btn-primary m-2">
-              Login
-            </button>
-          </Link>)
-          }
+          {authButton}
         </div>
       </nav>
     </header>

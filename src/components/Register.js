@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { onEmployeeRegistration } from '../api/auth';
 
-const Register = ({ setAuth }) => {
+const Register = () => {
   
   const [inputs, setInputs] = useState({
     email: '',
@@ -25,10 +25,8 @@ const Register = ({ setAuth }) => {
       const response = await onEmployeeRegistration(registrationData);
 
       if (response.data.success) {
-        setAuth(true);
-        toast.success('Registered Successfully!');
+        toast.success(response.data.message)
       } else {
-        setAuth(false);
       }
     } catch (error) {
       console.error(error.message);

@@ -93,7 +93,7 @@ function ServicesSection() {
     <>
       <section id="services" className="py-5">
         <div className="container">
-          <img src='Add.svg' alt='Ajouter' className="btn m-2" onClick={() => setIsAddModalOpen(true)} />
+          {isAuth && <img src='Add.svg' alt='Ajouter' className="btn m-2" onClick={() => setIsAddModalOpen(true)} />}
           <Carousel data-bs-theme="dark">
             {services.map((service) => (
               <Carousel.Item key={service.service_id}>
@@ -108,8 +108,8 @@ function ServicesSection() {
                     <p className="card-text text-center">{service.description}</p>
                   </div>
                   <div className='flex justify-center'>
-                    <img src='Edit.svg' alt='Modifier' className="btn m-2" width="55" height="55" onClick={() => handleModalOpen(service)} />
-                    <img src='Delete.svg' alt='Supprimer' className="btn m-2" width="55" height="55" onClick={() => { handleDeleteCar(service.service_id) }} />
+                    {isAuth && <img src='Edit.svg' alt='Modifier' className="btn m-2" width="55" height="55" onClick={() => handleModalOpen(service)} />}
+                    {isAuth && <img src='Delete.svg' alt='Supprimer' className="btn m-2" width="55" height="55" onClick={() => { handleDeleteCar(service.service_id) }} />}
                   </div>
                 </div>
               </Carousel.Item>
