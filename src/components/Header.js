@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { onLogout } from '../api/auth';
 import secureLocalStorage from 'react-secure-storage';
@@ -14,7 +13,7 @@ function Header() {
   const { isAuth } = useSelector((state) => state.auth)
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
   const [isRegisterModalOpen, setIsRegisterModalOpen] = useState(false);
-  const expand = 'xl'; //false, 'sm', 'md', 'lg', 'xl', 'xxl'
+  const expand = 'md'; //false, 'sm', 'md', 'lg', 'xl', 'xxl'
   const role = secureLocalStorage.getItem('role')
 
 

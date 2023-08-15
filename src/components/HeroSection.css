@@ -26,7 +26,7 @@
 #hero .btn {
   font-size: 1.2rem;
   padding: 10px 30px;
-  background-color: #ffc107; /* Couleur du bouton */
+  /*background-color: #ffc107; /* Couleur du bouton */
   border: none;
   border-radius: 5px;
   color: #fff;
@@ -51,3 +51,9 @@
     font-size: 1.2rem;
   }
 }
+
+.car-image {
+  max-width: 100%;
+  height: auto;
+}
+
