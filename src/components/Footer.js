@@ -7,7 +7,11 @@ import { useSelector } from 'react-redux';
 
 function Footer() {
 
-  const [openingHours, setOpeningHours] = useState([]);
+  const [openingHours, setOpeningHours] = useState({
+    loading: false,
+    error: false,
+    data: undefined
+  });
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
   const { isAuth } = useSelector((state) => state.auth);
   const role = secureLocalStorage.getItem('role')
@@ -19,16 +23,31 @@ function Footer() {
     return daysOfWeek.indexOf(day1) - daysOfWeek.indexOf(day2);
   };
 
-useEffect(() => {
+  useEffect(() => {
+    setOpeningHours({...openingHours, loading: true});
     onGetopeningHours()
       .then((response) => {
         const sortedOpeningHours = response.data.sort((a, b) => compareDaysOfWeek(a.day, b.day));
-        setOpeningHours(sortedOpeningHours);
+        setOpeningHours({loading: false, error: false, data: sortedOpeningHours});
       })
       .catch((error) => {
-        console.error(error);
+        setOpeningHours({loading: false, error: true, data: undefined});
       });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const refreshOpeningHours = () =>{
+    setOpeningHours({...openingHours, loading: true});
+    onGetopeningHours()
+      .then((response) => {
+        const sortedOpeningHours = response.data.sort((a, b) => compareDaysOfWeek(a.day, b.day));
+        setOpeningHours({loading: false, error: false, data: sortedOpeningHours});
+      })
+      .catch((error) => {
+        setOpeningHours({loading: false, error: true, data: undefined});
+      });
+  }
+
 
   const formatOpeningHours = (openingHour) => {
     const {
@@ -64,19 +83,19 @@ useEffect(() => {
 
   const handleUpdateOpeningHours = async () => {
     try {
-      onGetopeningHours()
-      .then((response) => {
-        const sortedOpeningHours = response.data.sort((a, b) => compareDaysOfWeek(a.day, b.day));
-        setOpeningHours(sortedOpeningHours);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+      refreshOpeningHours()
       setIsUpdateModalOpen(false);
     } catch (error) {
       console.error(error);
     }
   };
+
+  let content;
+  if(openingHours.loading) content = <img src="spinner.svg" alt='chargement' />
+  else if(openingHours.error) content = <p>Une erreur est survenue...</p>
+  else if(openingHours.data?.length === 0) content = <p>Aucune voiture disponible</p>
+  else if(openingHours.data?.length > 0) {
+    content = openingHours.data.map(formatOpeningHours)}
 
 
   return (
@@ -91,7 +110,7 @@ useEffect(() => {
               </Button>
             )}
             <h3>Horaires d'ouverture :</h3>
-            {openingHours.map(formatOpeningHours)}
+            {content}
           </div>
         </div>
       </footer>
@@ -101,7 +120,7 @@ useEffect(() => {
           <Modal.Title>Modifier les horaires d'ouverture</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <EditOpeningHours openingHours={openingHours} onSubmit={handleUpdateOpeningHours} />
+          <EditOpeningHours openingHours={openingHours.data} onSubmit={handleUpdateOpeningHours} />
         </Modal.Body>
         <Modal.Footer>
           <Button variant="danger" className="m-2" onClick={() => setIsUpdateModalOpen(false)}>Fermer</Button>
