@@ -9,7 +9,11 @@ import { useSelector } from 'react-redux';
 
 const CarListing = () => {
 
-  const [cars, setCars] = useState([]);
+  const [cars, setCars] = useState({
+    loading: false,
+    error: false,
+    data: undefined
+  });
   const { isAuth } = useSelector((state) => state.auth);
 
 
@@ -22,14 +26,28 @@ const CarListing = () => {
   });
 
   useEffect(() => {
+    setCars({...cars, loading: true});
     onGetCars()
       .then((response) => {
-        setCars(response.data);
+        setCars({loading: false, error: false, data: response.data});
       })
       .catch((error) => {
-        console.error(error);
+        setCars({loading: false, error: true, data: undefined});
       });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const refreshCars = () =>{
+    setCars({...cars, loading: true});
+      onGetCars()
+        .then((response) => {
+          setCars({loading: false, error: false, data: response.data});
+          console.log(cars.loading)
+        })
+        .catch((error) => {
+          setCars({loading: false, error: true, data: undefined});
+        });
+  }
 
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
@@ -47,14 +65,7 @@ const CarListing = () => {
 
    const handleUpdateCar = async () => {
     try {
-      onGetCars()
-        .then((response) => {
-          setCars(response.data);
-        })
-        .catch((error) => {
-          console.error(error);
-        });
-      
+      refreshCars()
       handleModalClose();
     } catch (error) {
       console.error(error);
@@ -63,14 +74,7 @@ const CarListing = () => {
 
    const handleAddCar = async () => {
     try {
-      onGetCars()
-        .then((response) => {
-          setCars(response.data);
-        })
-        .catch((error) => {
-          console.error(error);
-        });
-      
+      refreshCars()
       setIsAddModalOpen(false)
     } catch (error) {
       console.error(error);
@@ -86,16 +90,10 @@ const CarListing = () => {
         toast.error(error.response.data.error)
       }
 
-      onGetCars()
-        .then((response) => {
-          setCars(response.data);
-        })
-        .catch((error) => {
-          console.error(error);
-        });
+      refreshCars()
   };
  
-  const filteredCars = cars.filter((car) => {
+  const filteredCars = cars.data?.filter((car) => {
     const price = parseFloat(car.price.replace(',', ''));
     const year = parseInt(car.year);
     const mileage = parseInt(car.mileage.replace(' km', '').replace(',', ''));
@@ -116,6 +114,29 @@ const CarListing = () => {
       [name]: value,
     });
   };
+
+  let content;
+  if(cars.loading) content = <img src="spinner.svg" alt='chargement' />
+  else if(cars.error) content = <p>Une erreur est survenue...</p>
+  else if(cars.data?.length === 0) content = <p>Aucune voiture disponible</p>
+  else if(cars.data?.length > 0) {
+    content = filteredCars?.map((car) => (
+      <Col md={4} key={car.car_id} className="mb-4">
+        <div className="card">
+          <img src={car.image_path} className="card-img-top" alt={car.model} />
+          <div className="card-body">
+            <h5 className="card-title">{car.model}</h5>
+            <p className="card-text">Prix : {car.price}€</p>
+            <p className="card-text">Année : {car.year}</p>
+            <p className="card-text">Kilométrage : {car.mileage}.km</p>
+            { isAuth && <img src='Edit.svg' alt='Modifier une voiture' className="btn m-2" onClick={() => handleModalOpen(car)} />}
+            { isAuth && <img src='Delete.svg' alt='Supprimer une voiture' className="btn m-2" onClick={() => { handleDeleteCar(car.car_id) }} />}
+          </div>
+        </div>
+      </Col>
+    ))}
+
+
 
   return (
     <div className="container mt-5">
@@ -169,21 +190,7 @@ const CarListing = () => {
       </Row>
       { isAuth && <img src='Add.svg' alt='Ajouter une voiture' className="btn m-2" onClick={() => setIsAddModalOpen(true)} />}
       <Row>
-        {filteredCars.map((car) => (
-          <Col md={4} key={car.car_id} className="mb-4">
-            <div className="card">
-              <img src={car.image_path} className="card-img-top" alt={car.model} />
-              <div className="card-body">
-                <h5 className="card-title">{car.model}</h5>
-                <p className="card-text">Prix : {car.price}€</p>
-                <p className="card-text">Année : {car.year}</p>
-                <p className="card-text">Kilométrage : {car.mileage}.km</p>
-                { isAuth && <img src='Edit.svg' alt='Modifier une voiture' className="btn m-2" onClick={() => handleModalOpen(car)} />}
-                { isAuth && <img src='Delete.svg' alt='Supprimer une voiture' className="btn m-2" onClick={() => { handleDeleteCar(car.car_id) }} />}
-              </div>
-            </div>
-          </Col>
-        ))}
+        {content}
       </Row>
 
       <Modal show={isUpdateModalOpen} onHide={handleModalClose}>
