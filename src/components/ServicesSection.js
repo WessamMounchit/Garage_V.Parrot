@@ -9,7 +9,11 @@ import { useSelector } from 'react-redux';
 
 function ServicesSection() {
 
-  const [services, setServices] = useState([]);
+  const [services, setServices] = useState({
+    loading: false,
+    error: false,
+    data: undefined
+  });
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
   const [selectedService, setSelectedService] = useState(null);
@@ -18,14 +22,29 @@ function ServicesSection() {
 
 
   useEffect(() => {
+    setServices({...services, loading: true});
     onGetServices()
       .then((response) => {
-        setServices(response.data);
+        setServices({loading: false, error: false, data: response.data});
       })
       .catch((error) => {
-        console.error(error);
+        setServices({loading: false, error: true, data: undefined});
       });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const refreshServices = () =>{
+    setServices({...services, loading: true});
+      onGetServices()
+        .then((response) => {
+          setServices({loading: false, error: false, data: response.data});
+          console.log(services.loading)
+        })
+        .catch((error) => {
+          setServices({loading: false, error: true, data: undefined});
+        });
+  }
+
 
   const handleModalOpen = (service) => {
     setSelectedService({ ...service });
@@ -40,13 +59,7 @@ function ServicesSection() {
 
   const handleAddService = async () => {
     try {
-      onGetServices()
-        .then((response) => {
-          setServices(response.data);
-        })
-        .catch((error) => {
-          console.error(error);
-        });
+      refreshServices()
 
       setIsAddModalOpen(false)
     } catch (error) {
@@ -56,14 +69,7 @@ function ServicesSection() {
 
   const handleUpdateCar = async () => {
     try {
-      onGetServices()
-        .then((response) => {
-          setServices(response.data);
-        })
-        .catch((error) => {
-          console.error(error);
-        });
-
+      refreshServices()
       handleModalClose();
     } catch (error) {
       console.error(error);
@@ -78,15 +84,33 @@ function ServicesSection() {
     } catch (error) {
       toast.error(error.response.data.error)
     }
-
-    onGetServices()
-      .then((response) => {
-        setServices(response.data);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+    refreshServices()
   };
+
+  let content;
+  if(services.loading) content = <img src="spinner.svg" alt='chargement' />
+  else if(services.error) content = <p>Une erreur est survenue...</p>
+  else if(services.data?.length === 0) content = <p>Aucun service</p>
+  else if(services.data?.length > 0) {
+    content = services.data.map((service) => (
+      <Carousel.Item key={service.service_id}>
+        <div className="card mb-4">
+          <img
+            src={service.image_path}
+            className="card-img-top"
+            alt="Service 1"
+          />
+          <div className="card-body">
+            <h5 className="card-title text-center">{service.title}</h5>
+            <p className="card-text text-center">{service.description}</p>
+          </div>
+          <div className='flex justify-center'>
+            {isAuth && <img src='Edit.svg' alt='Modifier' className="btn m-2" width="55" height="55" onClick={() => handleModalOpen(service)} />}
+            {isAuth && <img src='Delete.svg' alt='Supprimer' className="btn m-2" width="55" height="55" onClick={() => { handleDeleteCar(service.service_id) }} />}
+          </div>
+        </div>
+      </Carousel.Item>
+    ))}
 
 
   return (
@@ -95,25 +119,7 @@ function ServicesSection() {
         <div className="container">
           {isAuth && <img src='Add.svg' alt='Ajouter' className="btn m-2" onClick={() => setIsAddModalOpen(true)} />}
           <Carousel data-bs-theme="dark">
-            {services.map((service) => (
-              <Carousel.Item key={service.service_id}>
-                <div className="card mb-4">
-                  <img
-                    src={service.image_path}
-                    className="card-img-top"
-                    alt="Service 1"
-                  />
-                  <div className="card-body">
-                    <h5 className="card-title text-center">{service.title}</h5>
-                    <p className="card-text text-center">{service.description}</p>
-                  </div>
-                  <div className='flex justify-center'>
-                    {isAuth && <img src='Edit.svg' alt='Modifier' className="btn m-2" width="55" height="55" onClick={() => handleModalOpen(service)} />}
-                    {isAuth && <img src='Delete.svg' alt='Supprimer' className="btn m-2" width="55" height="55" onClick={() => { handleDeleteCar(service.service_id) }} />}
-                  </div>
-                </div>
-              </Carousel.Item>
-            ))}
+            {content}
           </Carousel>
         </div>
       </section>
