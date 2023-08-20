@@ -13,7 +13,7 @@ function Header() {
   const { isAuth } = useSelector((state) => state.auth)
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
   const [isRegisterModalOpen, setIsRegisterModalOpen] = useState(false);
-  const expand = 'md'; //false, 'sm', 'md', 'lg', 'xl', 'xxl'
+  const expand = 'lg'; //false, 'sm', 'md', 'lg', 'xl', 'xxl'
   const role = secureLocalStorage.getItem('role')
 
 

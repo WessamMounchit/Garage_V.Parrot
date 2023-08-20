@@ -16,6 +16,13 @@ const CarListing = () => {
   });
   const { isAuth } = useSelector((state) => state.auth);
 
+  const [currentPage, setCurrentPage] = useState(1);
+  const carsPerPage = 4; // Nombre d'éléments par page
+  const indexOfLastCar = currentPage * carsPerPage;
+  const indexOfFirstCar = indexOfLastCar - carsPerPage;
+
+
+
 
   const [filters, setFilters] = useState({
     minPrice: '',
@@ -26,27 +33,27 @@ const CarListing = () => {
   });
 
   useEffect(() => {
-    setCars({...cars, loading: true});
+    setCars({ ...cars, loading: true });
     onGetCars()
       .then((response) => {
-        setCars({loading: false, error: false, data: response.data});
+        setCars({ loading: false, error: false, data: response.data });
       })
       .catch((error) => {
-        setCars({loading: false, error: true, data: undefined});
+        setCars({ loading: false, error: true, data: undefined });
       });
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const refreshCars = () =>{
-    setCars({...cars, loading: true});
-      onGetCars()
-        .then((response) => {
-          setCars({loading: false, error: false, data: response.data});
-          console.log(cars.loading)
-        })
-        .catch((error) => {
-          setCars({loading: false, error: true, data: undefined});
-        });
+  const refreshCars = () => {
+    setCars({ ...cars, loading: true });
+    onGetCars()
+      .then((response) => {
+        setCars({ loading: false, error: false, data: response.data });
+        console.log(cars.loading)
+      })
+      .catch((error) => {
+        setCars({ loading: false, error: true, data: undefined });
+      });
   }
 
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
@@ -63,7 +70,7 @@ const CarListing = () => {
     setIsUpdateModalOpen(false);
   };
 
-   const handleUpdateCar = async () => {
+  const handleUpdateCar = async () => {
     try {
       refreshCars()
       handleModalClose();
@@ -72,7 +79,7 @@ const CarListing = () => {
     }
   };
 
-   const handleAddCar = async () => {
+  const handleAddCar = async () => {
     try {
       refreshCars()
       setIsAddModalOpen(false)
@@ -81,18 +88,18 @@ const CarListing = () => {
     }
   };
 
-   const handleDeleteCar = async (carId) => {
-      try {
-        const response = await onDeleteCar(carId)
-        toast.success(response.data.info)
+  const handleDeleteCar = async (carId) => {
+    try {
+      const response = await onDeleteCar(carId)
+      toast.success(response.data.info)
 
-      } catch (error) {
-        toast.error(error.response.data.error)
-      }
+    } catch (error) {
+      toast.error(error.response.data.error)
+    }
 
-      refreshCars()
+    refreshCars()
   };
- 
+
   const filteredCars = cars.data?.filter((car) => {
     const price = parseFloat(car.price.replace(',', ''));
     const year = parseInt(car.year);
@@ -114,13 +121,16 @@ const CarListing = () => {
       [name]: value,
     });
   };
+  console.log(filteredCars)
+  const currentCars = filteredCars?.slice(indexOfFirstCar, indexOfLastCar);
+
 
   let content;
-  if(cars.loading) content = <img src="spinner.svg" alt='chargement' />
-  else if(cars.error) content = <p>Une erreur est survenue...</p>
-  else if(cars.data?.length === 0) content = <p>Aucune voiture disponible</p>
-  else if(cars.data?.length > 0) {
-    content = filteredCars?.map((car) => (
+  if (cars.loading) content = <img src="spinner.svg" alt='chargement' />
+  else if (cars.error) content = <p>Une erreur est survenue...</p>
+  else if (cars.data?.length === 0) content = <p>Aucune voiture disponible</p>
+  else if (cars.data?.length > 0) {
+    content = currentCars?.map((car) => (
       <Col md={4} key={car.car_id} className="mb-4">
         <div className="card">
           <img src={car.image_path} className="card-img-top" alt={car.model} />
@@ -129,12 +139,30 @@ const CarListing = () => {
             <p className="card-text">Prix : {car.price}€</p>
             <p className="card-text">Année : {car.year}</p>
             <p className="card-text">Kilométrage : {car.mileage}.km</p>
-            { isAuth && <img src='Edit.svg' alt='Modifier une voiture' className="btn m-2" onClick={() => handleModalOpen(car)} />}
-            { isAuth && <img src='Delete.svg' alt='Supprimer une voiture' className="btn m-2" onClick={() => { handleDeleteCar(car.car_id) }} />}
+            {isAuth && <img src='Edit.svg' alt='Modifier une voiture' className="btn m-2" onClick={() => handleModalOpen(car)} />}
+            {isAuth && <img src='Delete.svg' alt='Supprimer une voiture' className="btn m-2" onClick={() => { handleDeleteCar(car.car_id) }} />}
           </div>
         </div>
       </Col>
-    ))}
+    ))
+  }
+
+  const pageNumbers = [];
+  for (let i = 1; i <= Math.ceil(filteredCars?.length / carsPerPage); i++) {
+    pageNumbers.push(i);
+  }
+
+  const renderPageNumbers = pageNumbers.map((number) => (
+    <li
+      key={number}
+      className={`page-item${currentPage === number ? ' active' : ''}`}
+      onClick={() => setCurrentPage(number)}
+    >
+      <button className="page-link">
+        {number}
+      </button>
+    </li>
+  ));
 
 
 
@@ -188,10 +216,36 @@ const CarListing = () => {
           />
         </Col>
       </Row>
-      { isAuth && <img src='Add.svg' alt='Ajouter une voiture' className="btn m-2" onClick={() => setIsAddModalOpen(true)} />}
+      {isAuth && <img src='Add.svg' alt='Ajouter une voiture' className="btn m-2" onClick={() => setIsAddModalOpen(true)} />}
       <Row>
         {content}
       </Row>
+
+      <div className="pagination justify-content-center">
+        <ul className="pagination">
+          <li className="page-item">
+            <button className="page-link" onClick={() => setCurrentPage(1)}>
+              &laquo;
+            </button>
+          </li>
+          <li className={`page-item${currentPage === 1 ? ' disabled' : ''}`}>
+            <button className="page-link" onClick={() => setCurrentPage(currentPage - 1)}>
+              &lt;
+            </button>
+          </li>
+          {renderPageNumbers}
+          <li className={`page-item${currentPage === Math.ceil(filteredCars?.length / carsPerPage) ? ' disabled' : ''}`}>
+            <button className="page-link" onClick={() => setCurrentPage(currentPage + 1)}>
+              &gt;
+            </button>
+          </li>
+          <li className="page-item">
+            <button className="page-link" onClick={() => setCurrentPage(Math.ceil(filteredCars?.length / carsPerPage))}>
+              &raquo;
+            </button>
+          </li>
+        </ul>
+      </div>
 
       <Modal show={isUpdateModalOpen} onHide={handleModalClose}>
         <Modal.Header closeButton>
@@ -216,7 +270,7 @@ const CarListing = () => {
           <Button variant="danger" onClick={() => setIsAddModalOpen(false)}>Fermer</Button>
         </Modal.Footer>
       </Modal>
-      </div>
+    </div>
   );
 };
 export default CarListing;
