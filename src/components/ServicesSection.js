@@ -19,6 +19,8 @@ function ServicesSection() {
   const [selectedService, setSelectedService] = useState(null);
   const { isAuth } = useSelector(state => state.auth)
 
+  console.log(services)
+
 
 
   useEffect(() => {

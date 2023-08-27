@@ -153,7 +153,7 @@ const AddCar = ({ onSubmit }) => {
         <Form.Control
           as="textarea"
           name="features"
-          value={carData.features.join('\n')}
+          //value={carData.features.join('\n')}
           onChange={handleFeaturesChange}
         />
       </Form.Group>
@@ -162,7 +162,7 @@ const AddCar = ({ onSubmit }) => {
         <Form.Control
           as="textarea"
           name="equipment"
-          value={carData.equipment.join('\n')}
+          //value={carData.equipment.join('\n')}
           onChange={handleEquipmentChange}
         />
       </Form.Group>

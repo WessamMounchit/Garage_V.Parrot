@@ -7,13 +7,15 @@ import { toast } from 'react-toastify';
 import { Button, Modal, Nav, Navbar, Container, Offcanvas } from 'react-bootstrap';
 import Login from './Login';
 import Register from './Register';
+import { Link } from 'react-router-dom';
+import './Header.css'
 
 function Header() {
 
   const { isAuth } = useSelector((state) => state.auth)
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
   const [isRegisterModalOpen, setIsRegisterModalOpen] = useState(false);
-  const expand = 'lg'; //false, 'sm', 'md', 'lg', 'xl', 'xxl'
+  const expand = 'xl'; //false, 'sm', 'md', 'lg', 'xl', 'xxl'
   const role = secureLocalStorage.getItem('role')
 
 
@@ -40,12 +42,12 @@ function Header() {
   const closeRegisterModal = () => setIsRegisterModalOpen(false);
 
   const authButton = isAuth ? (
-    <button type="button" className="btn btn-primary m-2" onClick={e => logout(e)}>
+    <button type="button" className="btn btn-primary mx-2" onClick={e => logout(e)}>
       Se déconnecter
     </button>
   ) : (
     //<Link to="/login">
-    <button type="button" className="btn btn-primary m-2" onClick={() => setIsLoginModalOpen(true)}>
+    <button type="button" className="btn btn-primary mx-2" onClick={() => setIsLoginModalOpen(true)}>
       Espace professionel
     </button>
     //</Link>
@@ -55,7 +57,14 @@ function Header() {
     <header>
       <Navbar expand={expand} className="bg-body-tertiary mb-3">
         <Container fluid>
-          <Navbar.Brand href="#">Garage Vincent Parrot</Navbar.Brand>
+          <Navbar.Brand href="#">
+            <Link to="/" className="logo d-flex align-items-center gap-2">
+              <i class="ri-car-line"></i>
+              <span>
+                Garage <br /> Vincent Parrot
+              </span>
+            </Link>
+          </Navbar.Brand>
           <Navbar.Toggle aria-controls={`offcanvasNavbar-expand-${expand}`} />
           <Navbar.Offcanvas
             id={`offcanvasNavbar-expand-${expand}`}
@@ -64,25 +73,34 @@ function Header() {
           >
             <Offcanvas.Header closeButton>
               <Offcanvas.Title id={`offcanvasNavbarLabel-expand-${expand}`}>
-                Garage Vincent Parrot
+                <h1>
+                  <Link to="/home" className="logo d-flex align-items-center gap-2">
+                    <i class="ri-car-line"></i>
+                    <span>
+                      Garage <br /> Vincent Parrot
+                    </span>
+                  </Link>
+                </h1>
               </Offcanvas.Title>
             </Offcanvas.Header>
             <Offcanvas.Body>
-              <Nav className="justify-content-end flex-grow-1 pe-3">
+              <Nav className="nav justify-content-center flex-grow-1 pe-3">
                 <Nav.Link href="#action1">Accueil</Nav.Link>
                 <Nav.Link href="#action2">Services</Nav.Link>
                 <Nav.Link href="#action3">À propos</Nav.Link>
                 <Nav.Link href="#action4">Contact</Nav.Link>
-                <Nav.Item>{authButton}</Nav.Item>
-                {isAuth && role === 'admin' && <Nav.Item>
+              </Nav>
+              <div className="d-flex align-items-center gap-2">
+                {authButton}
+                {isAuth && role === 'admin' && (
                   <button
                     type="button"
-                    className="btn btn-primary m-2"
+                    className="btn btn-primary"
                     onClick={() => setIsRegisterModalOpen(true)}>
                     Créer un compte employé
                   </button>
-                </Nav.Item>}
-              </Nav>
+                )}
+              </div>
             </Offcanvas.Body>
           </Navbar.Offcanvas>
         </Container>

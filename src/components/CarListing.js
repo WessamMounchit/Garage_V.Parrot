@@ -6,6 +6,7 @@ import AddCar from './AddCar';
 import { toast } from 'react-toastify';
 import { Modal, Button, Row, Col, Form } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 const CarListing = () => {
 
@@ -20,8 +21,6 @@ const CarListing = () => {
   const carsPerPage = 4; // Nombre d'éléments par page
   const indexOfLastCar = currentPage * carsPerPage;
   const indexOfFirstCar = indexOfLastCar - carsPerPage;
-
-
 
 
   const [filters, setFilters] = useState({
@@ -44,12 +43,13 @@ const CarListing = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  console.log(cars.data)
+
   const refreshCars = () => {
     setCars({ ...cars, loading: true });
     onGetCars()
       .then((response) => {
         setCars({ loading: false, error: false, data: response.data });
-        console.log(cars.loading)
       })
       .catch((error) => {
         setCars({ loading: false, error: true, data: undefined });
@@ -121,7 +121,6 @@ const CarListing = () => {
       [name]: value,
     });
   };
-  console.log(filteredCars)
   const currentCars = filteredCars?.slice(indexOfFirstCar, indexOfLastCar);
 
 
@@ -141,6 +140,9 @@ const CarListing = () => {
             <p className="card-text">Kilométrage : {car.mileage}.km</p>
             {isAuth && <img src='Edit.svg' alt='Modifier une voiture' className="btn m-2" onClick={() => handleModalOpen(car)} />}
             {isAuth && <img src='Delete.svg' alt='Supprimer une voiture' className="btn m-2" onClick={() => { handleDeleteCar(car.car_id) }} />}
+            <Link to={`/car/${car.car_id}`} className="btn m-2">
+              En savoir plus
+            </Link>
           </div>
         </div>
       </Col>

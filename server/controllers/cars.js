@@ -103,3 +103,26 @@ exports.deleteCar = async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 };
+
+exports.getSelectedCar = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const query = 'SELECT * FROM cars WHERE car_id = $1';
+    const values = [id];
+    const result = await db.query(query, values);
+    const car = result.rows[0];
+
+
+    const carsWithLocalImagePath = {
+        ...car,
+        image_path: `${SERVER_URL}/${car.image_path}`,
+        gallery: car.gallery.map((imagePath) => `${SERVER_URL}/${imagePath}`),
+      };
+
+      
+    res.json(carsWithLocalImagePath);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+

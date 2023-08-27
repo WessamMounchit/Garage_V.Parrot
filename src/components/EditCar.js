@@ -36,15 +36,15 @@ const EditCar = ({ car, onSubmit }) => {
     });
   };
 
-  const handleFeaturesChange = (event) => {
+  const handleFeatureChange = (event, index) => {
     const { value } = event.target;
-    const featuresArray = value.split('\n')//.map((feature) => feature.trim());
-    setCarData({
-      ...carData,
-      features: featuresArray,
+    setCarData((prevCarData) => {
+      const newFeatures = [...prevCarData.features];
+      newFeatures[index] = value;
+      return { ...prevCarData, features: newFeatures };
     });
   };
-
+  
   const handleEquipmentChange = (event) => {
     const { value } = event.target;
     const equipmentArray = value.split('\n')//.map((equipment) => equipment.trim());
@@ -67,18 +67,18 @@ const EditCar = ({ car, onSubmit }) => {
       });
 
       image && formData.append('image_path', image);
-        
+
       gallery.length > 0 && gallery.forEach((file) => {
-          formData.append('gallery', file);
-        });
-      
+        formData.append('gallery', file);
+      });
+
       carData.features !== car.features && carData.features.forEach((feature) => {
         formData.append(`features`, feature);
       });
       carData.equipment !== car.equipment && carData.equipment.forEach((equipment) => {
         formData.append(`equipment`, equipment);
       });
-      
+
       if (formData.entries().next().done === false) {
         try {
           const response = await onUpdateCar(carData.car_id, formData);
@@ -89,7 +89,7 @@ const EditCar = ({ car, onSubmit }) => {
           console.log(error)
         }
       }
-      
+
     } catch (error) {
       console.error(error);
     }
@@ -166,12 +166,15 @@ const EditCar = ({ car, onSubmit }) => {
       </Form.Group>
       <Form.Group className="mb-3" controlId="features">
         <Form.Label>Caractéristiques (séparées par des retours à la ligne)</Form.Label>
-        <Form.Control
-          as="textarea"
-          name="features"
-          value={carData.features.join('\n')}
-          onChange={handleFeaturesChange}
-        />
+        {carData.features.map((feature, index) => (
+          <textarea
+            key={index}
+            className="form-control mb-2"
+            name={`features-${index}`}
+            value={feature}
+            onChange={(event) => handleFeatureChange(event, index)}
+          />
+        ))}
       </Form.Group>
       <Form.Group className="mb-3" controlId="equipment">
         <Form.Label>Équipements et Options (séparés par des retours à la ligne)</Form.Label>
