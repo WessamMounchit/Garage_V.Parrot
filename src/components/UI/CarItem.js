@@ -2,27 +2,43 @@ import React from "react";
 import { Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import "../../styles/car-item.css";
+import { useSelector } from "react-redux";
 
-const CarItem = ({ item }) => {
+const CarItem = ({ car, handleModalOpen, handleDeleteCar }) => {
+  const { isAuth } = useSelector((state) => state.auth);
+
   const {
-    brand,
     car_name,
-    fuel_type,
     price,
     year,
     mileage,
     image_path,
-    gallery,
-    seat,
-    doors,
-    automatic,
-    description
-  } = item;
+    automatic
+  } = car;
+
+
+  const editIcon = isAuth && (
+    <i
+      type="button"
+      variant="warning"
+      className="ri-edit-box-fill edit__icon ri-lg my-2"
+      onClick={() => handleModalOpen()}>
+    </i>
+  )
+
+  const deleteIcon = isAuth && (
+    <i
+      type="button"
+      variant="warning"
+      className="ri-delete-bin-fill delete__icon ri-lg my-2"
+      onClick={() => handleDeleteCar()}>
+    </i>
+  )
 
   return (
     <Col lg="4" md="4" sm="6" className="mb-5">
       <div className="car__item">
-      <i class="my-2 edit__icon ri-lg ri-edit-box-fill"></i>
+        <span className="text-end">{editIcon} {deleteIcon}</span>
         <div className="car__img">
           <img src={image_path} alt="" className="w-100" />
         </div>
@@ -30,18 +46,18 @@ const CarItem = ({ item }) => {
         <div className="car__item-content mt-4">
           <h4 className="section__title text-center">{car_name}</h4>
           <h6 className="rent__price text-center mt-">
-            {price}.00 <span>€</span>
+            {price.toLocaleString()} <span>€</span>
           </h6>
 
           <div className="car__item-info d-flex align-items-center justify-content-between mt-3 mb-4">
             <span className=" d-flex align-items-center gap-1">
-              <i class="ri-car-line"></i> Modèle-{year}
+              <i class="ri-car-fill"></i> Modèle-{year}
             </span>
             <span className=" d-flex align-items-center gap-1">
-              <i class="ri-settings-2-line"></i> {automatic}
+              <i class="ri-settings-2-fill"></i> {automatic}
             </span>
             <span className=" d-flex align-items-center gap-1">
-              <i class="ri-timer-flash-line"></i> {mileage} <span>km</span>
+              <i class="ri-dashboard-3-fill"></i> {mileage.toLocaleString("")} <span>km</span>
             </span>
           </div>
 

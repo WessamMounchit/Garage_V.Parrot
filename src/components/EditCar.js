@@ -5,18 +5,9 @@ import { onUpdateCar } from '../api/cars';
 
 const EditCar = ({ car, onSubmit }) => {
 
-  const [carData, setCarData] = useState({
-    car_id: car.car_id,
-    model: car.model,
-    price: car.price,
-    year: car.year,
-    mileage: car.mileage,
-    features: car.features,
-    equipment: car.equipment
-  });
-
+  const [carData, setCarData] = useState({ ...car });
+  const [image_path, setImage] = useState(null);
   const [gallery, setGallery] = useState([]);
-  const [image, setImage] = useState('');
 
   const handleImageChange = (e) => {
     const selectedFile = e.target.files[0];
@@ -36,24 +27,6 @@ const EditCar = ({ car, onSubmit }) => {
     });
   };
 
-  const handleFeatureChange = (event, index) => {
-    const { value } = event.target;
-    setCarData((prevCarData) => {
-      const newFeatures = [...prevCarData.features];
-      newFeatures[index] = value;
-      return { ...prevCarData, features: newFeatures };
-    });
-  };
-  
-  const handleEquipmentChange = (event) => {
-    const { value } = event.target;
-    const equipmentArray = value.split('\n')//.map((equipment) => equipment.trim());
-    setCarData({
-      ...carData,
-      equipment: equipmentArray,
-    });
-  };
-
   const handleSubmit = async (event) => {
     event.preventDefault();
 
@@ -66,17 +39,9 @@ const EditCar = ({ car, onSubmit }) => {
         }
       });
 
-      image && formData.append('image_path', image);
-
+      image_path && formData.append('image_path', image_path);
       gallery.length > 0 && gallery.forEach((file) => {
         formData.append('gallery', file);
-      });
-
-      carData.features !== car.features && carData.features.forEach((feature) => {
-        formData.append(`features`, feature);
-      });
-      carData.equipment !== car.equipment && carData.equipment.forEach((equipment) => {
-        formData.append(`equipment`, equipment);
       });
 
       if (formData.entries().next().done === false) {
@@ -84,6 +49,7 @@ const EditCar = ({ car, onSubmit }) => {
           const response = await onUpdateCar(carData.car_id, formData);
           toast.success(response.data.info)
           onSubmit()
+          
         } catch (error) {
           toast.error(error.response.data.error)
           console.log(error)
@@ -95,23 +61,42 @@ const EditCar = ({ car, onSubmit }) => {
     }
   };
 
-  const getFileNameFromPath = (path) => {
-    const segments = path.split('\\');
-    const fileName = segments[segments.length - 1];
-    return fileName;
-  };
-
   return (
     <Form onSubmit={handleSubmit}>
-      <Form.Group className="mb-3" controlId="model">
-        <Form.Label>Modèle</Form.Label>
+      <Form.Group className="mb-3" controlId="brand">
+        <Form.Label>Marque</Form.Label>
         <Form.Control
           type="text"
-          name="model"
-          value={carData.model}
+          name="brand"
+          value={carData.brand}
           onChange={handleInputChange}
-          className="form-control"
+          placeholder="Entrez la marque"
         />
+      </Form.Group>
+      <Form.Group className="mb-3" controlId="car_name">
+        <Form.Label>Nom de la voiture</Form.Label>
+        <Form.Control
+          type="text"
+          name="car_name"
+          value={carData.car_name}
+          onChange={handleInputChange}
+          placeholder="Entrez le nom de la voiture"
+        />
+      </Form.Group>
+      <Form.Group className="mb-3" controlId="fuel_type">
+        <Form.Label>Type de carburant</Form.Label>
+        <Form.Control
+          as="select"
+          name="fuel_type"
+          value={carData.fuel_type}
+          onChange={handleInputChange}
+        >
+          <option value="">Sélectionnez le type de carburant</option>
+          <option value="gazole">Gazole</option>
+          <option value="essence">Essence</option>
+          <option value="hybride">Hybride</option>
+          <option value="electrique">Électrique</option>
+        </Form.Control>
       </Form.Group>
       <Form.Group className="mb-3" controlId="price">
         <Form.Label>Prix</Form.Label>
@@ -120,7 +105,7 @@ const EditCar = ({ car, onSubmit }) => {
           name="price"
           value={carData.price}
           onChange={handleInputChange}
-          className="form-control"
+          placeholder="Entrez le prix"
         />
       </Form.Group>
       <Form.Group className="mb-3" controlId="year">
@@ -128,9 +113,12 @@ const EditCar = ({ car, onSubmit }) => {
         <Form.Control
           type="number"
           name="year"
+          min="1900"
+          max="2099"
+          step="1"
           value={carData.year}
           onChange={handleInputChange}
-          className="form-control"
+          placeholder="Entrez l'année de mise en circulation"
         />
       </Form.Group>
       <Form.Group className="mb-3" controlId="mileage">
@@ -140,12 +128,63 @@ const EditCar = ({ car, onSubmit }) => {
           name="mileage"
           value={carData.mileage}
           onChange={handleInputChange}
-          className="form-control"
+          placeholder="Entrez le kilométrage"
+        />
+      </Form.Group>
+      <Form.Group className="mb-3" controlId="seat">
+        <Form.Label>Nombre de places</Form.Label>
+        <Form.Control
+          as="select"
+          name="seat"
+          value={carData.seat}
+          onChange={handleInputChange}
+        >
+          <option value="">Sélectionnez le nombre de places</option>
+          <option value="5">5</option>
+          <option value="7">7</option>
+          <option value="9">9</option>
+        </Form.Control>
+      </Form.Group>
+      <Form.Group className="mb-3" controlId="doors">
+        <Form.Label>Nombre de portes</Form.Label>
+        <Form.Control
+          as="select"
+          name="doors"
+          value={carData.doors}
+          onChange={handleInputChange}
+        >
+          <option value="">Sélectionnez le nombre de portes</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+        </Form.Control>
+      </Form.Group>
+      <Form.Group className="mb-3" controlId="automatic">
+        <Form.Label>Transmission</Form.Label>
+        <Form.Control
+          as="select"
+          name="automatic"
+          value={carData.automatic}
+          onChange={handleInputChange}
+        >
+          <option value="">Sélectionnez le type de transmission</option>
+          <option value="Manuelle">Manuelle</option>
+          <option value="Automatique">Automatique</option>
+        </Form.Control>
+      </Form.Group>
+      <Form.Group className="mb-3" controlId="description">
+        <Form.Label>Description</Form.Label>
+        <Form.Control
+          as="textarea"
+          name="description"
+          value={carData.description}
+          onChange={handleInputChange}
+          placeholder="Entrez la description"
         />
       </Form.Group>
       <Form.Group className="mb-3" controlId="image">
-        <Form.Label>Image Principale :</Form.Label>
-        <p>{getFileNameFromPath(car.image_path)}</p>
+        <Form.Label>Image Principale</Form.Label>
         <Form.Control
           type="file"
           onChange={handleImageChange}
@@ -154,35 +193,13 @@ const EditCar = ({ car, onSubmit }) => {
         />
       </Form.Group>
       <Form.Group className="mb-3" controlId="gallery">
-        <Form.Label>Galerie d'images :</Form.Label>
-        {car.gallery.map((image) => (<p>{getFileNameFromPath(image)}</p>))}
+        <Form.Label>Galerie d'images</Form.Label>
         <Form.Control
           type="file"
           onChange={handleGalleryChange}
           name="gallery"
           multiple
           accept="image/png, image/jpeg"
-        />
-      </Form.Group>
-      <Form.Group className="mb-3" controlId="features">
-        <Form.Label>Caractéristiques (séparées par des retours à la ligne)</Form.Label>
-        {carData.features.map((feature, index) => (
-          <textarea
-            key={index}
-            className="form-control mb-2"
-            name={`features-${index}`}
-            value={feature}
-            onChange={(event) => handleFeatureChange(event, index)}
-          />
-        ))}
-      </Form.Group>
-      <Form.Group className="mb-3" controlId="equipment">
-        <Form.Label>Équipements et Options (séparés par des retours à la ligne)</Form.Label>
-        <Form.Control
-          as="textarea"
-          name="equipment"
-          value={carData.equipment.join('\n')}
-          onChange={handleEquipmentChange}
         />
       </Form.Group>
       <Button variant="success" type="submit">

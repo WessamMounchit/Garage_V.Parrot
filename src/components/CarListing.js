@@ -23,6 +23,8 @@ const CarListing = () => {
   const indexOfFirstCar = indexOfLastCar - carsPerPage;
 
 
+
+
   const [filters, setFilters] = useState({
     minPrice: '',
     maxPrice: '',

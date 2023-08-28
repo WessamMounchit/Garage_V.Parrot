@@ -29,17 +29,17 @@ CREATE TABLE cars (
 CREATE TABLE IF NOT EXISTS cars (
   car_id SERIAL PRIMARY KEY,
   brand VARCHAR(50) NOT NULL,
-  car_name VARCHAR(50),
-  fuel_type VARCHAR(50),
-  price VARCHAR(50) NOT NULL,
-  year VARCHAR(4) NOT NULL,
-  mileage VARCHAR(50) NOT NULL,
+  car_name VARCHAR(50) NOT NULL,
+  fuel_type VARCHAR(50) NOT NULL,
+  price INTEGER NOT NULL,
+  year INTEGER NOT NULL,
+  mileage INTEGER NOT NULL,
   image_path VARCHAR(255) NOT NULL,
-  gallery TEXT [],
-  seat VARCHAR(2),
-  doors VARCHAR(2),
-  automatic VARCHAR(20),
-  description TEXT
+  gallery TEXT[] NOT NULL,
+  seat INTEGER NOT NULL,
+  doors INTEGER NOT NULL,
+  automatic VARCHAR(20) NOT NULL,
+  description TEXT NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS services (
@@ -152,7 +152,7 @@ VALUES
     ARRAY ['uploads/car11.png', 'uploads/car12.png'],
     '5',
     '4',
-    'Manuel',
+    'Manuelle',
     'La Peugeot 208 est une citadine élégante et dynamique, idéale pour les déplacements urbains. Son design moderne et ses fonctionnalités innovantes en font un choix populaire.'
   ),
   (
@@ -180,7 +180,7 @@ VALUES
     ARRAY ['uploads/car17.png', 'uploads/car18.png'],
     '5',
     '4',
-    'Manuel',
+    'Manuelle',
     'La Ford Focus est une compacte dynamique dotée de caractéristiques modernes et d''une conduite sportive. Elle offre une expérience de conduite engageante.'
   ),
   (
@@ -320,7 +320,7 @@ VALUES
     ARRAY ['uploads/car7.png', 'uploads/car8.png'],
     '4',
     '2',
-    'Manuel',
+    'Manuelle',
     'La Ford Mustang est une icône des voitures de sport, associant puissance et style emblématique. Avec son moteur V8 rugissant et sa conduite passionnante, elle est conçue pour les amateurs de sensations fortes.'
   ),
   (
@@ -334,7 +334,7 @@ VALUES
     ARRAY ['uploads/car10.png', 'uploads/car11.png'],
     '4',
     '2',
-    'Manuel',
+    'Manuelle',
     'La Volkswagen Beetle est une voiture classique qui évoque le charme rétro et l''esprit joyeux. Avec son design distinctif et son caractère unique, elle se démarque sur la route.'
   ),
   (
@@ -348,7 +348,7 @@ VALUES
     ARRAY ['uploads/car13.png', 'uploads/car14.png'],
     '2',
     '4',
-    'Manuel',
+    'Manuelle',
     'Le Renault Kangoo est un véhicule utilitaire pratique, idéal pour le transport de marchandises. Avec sa capacité de chargement généreuse et ses fonctionnalités polyvalentes, il répond aux besoins professionnels.'
   ),
   (
@@ -362,7 +362,7 @@ VALUES
     ARRAY ['uploads/car16.png', 'uploads/car17.png'],
     '2',
     '4',
-    'Manuel',
+    'Manuelle',
     'Le Peugeot Partner est une fourgonnette commerciale compacte, conçue pour faciliter les livraisons et les déplacements professionnels. Avec son espace de chargement pratique, il répond aux besoins des entrepreneurs.'
   ),
   (
@@ -376,6 +376,6 @@ VALUES
     ARRAY ['uploads/car19.png', 'uploads/car20.png'],
     '2',
     '4',
-    'Manuel',
+    'Manuelle',
     'Le Citroën Berlingo est un fourgon utilitaire compact conçu pour la praticité. Avec son design fonctionnel et ses caractéristiques astucieuses, il est parfait pour les professionnels en déplacement.'
   );

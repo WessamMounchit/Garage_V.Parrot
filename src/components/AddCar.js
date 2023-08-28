@@ -5,27 +5,29 @@ import { onAddCar } from '../api/cars';
 
 const AddCar = ({ onSubmit }) => {
   const [carData, setCarData] = useState({
-    model: '',
-    price: '',
-    year: '',
-    mileage: '',
-    features: [],
-    equipment: [],
+    brand: '',
+    car_name: '',
+    fuel_type: '',
+    price: null,
+    year: null,
+    mileage: null,
+    seat: null,
+    doors: null,
+    automatic: '',
+    description: ''
   });
 
   const [gallery, setGallery] = useState([]);
-  const [image, setImage] = useState(null);
+  const [image_path, setImage] = useState(null);
 
   const handleImageChange = (e) => {
     const selectedFile = e.target.files[0];
     setImage(selectedFile);
-    console.log(selectedFile);
   };
 
   const handleGalleryChange = (event) => {
     const selectedFiles = [...event.target.files];
     setGallery(selectedFiles);
-    console.log(selectedFiles);
   };
 
   const handleInputChange = (event) => {
@@ -36,45 +38,19 @@ const AddCar = ({ onSubmit }) => {
     });
   };
 
-  const handleFeaturesChange = (event) => {
-    const { value } = event.target;
-    const featuresArray = value.split('\n')//.map((feature) => feature.trim());
-    setCarData({
-      ...carData,
-      features: featuresArray,
-    });
-  };
-
-  const handleEquipmentChange = (event) => {
-    const { value } = event.target;
-    const equipmentArray = value.split('\n')//.map((equipment) => equipment.trim());
-    setCarData({
-      ...carData,
-      equipment: equipmentArray,
-    });
-  };
-
   const handleSubmit = async (event) => {
     event.preventDefault();
 
     try {
       const formData = new FormData();
 
-      formData.append('model', carData.model);
-      formData.append('price', carData.price);
-      formData.append('year', carData.year);
-      formData.append('mileage', carData.mileage);
-      formData.append('image', image);
+      Object.keys(carData).forEach((key) => {
+        formData.append(key, carData[key]);
+      });
 
+      formData.append('image_path', image_path);
       gallery.forEach((file) => {
         formData.append(`gallery`, file);
-      });
-
-      carData.features.forEach((feature) => {
-        formData.append(`features`, feature);
-      });
-      carData.equipment.forEach((equipment) => {
-        formData.append(`equipment`, equipment);
       });
 
       const response = await onAddCar(formData);
@@ -87,17 +63,45 @@ const AddCar = ({ onSubmit }) => {
     }
   };
 
+  const date = new Date();
+  const year = date.getFullYear();
+
   return (
     <Form onSubmit={handleSubmit}>
-      <Form.Group className="mb-3" controlId="model">
-        <Form.Label>Modèle</Form.Label>
+      <Form.Group className="mb-3" controlId="brand">
+        <Form.Label>Marque</Form.Label>
         <Form.Control
           type="text"
-          name="model"
-          value={carData.model}
+          name="brand"
+          value={carData.brand}
           onChange={handleInputChange}
-          placeholder="Entrez le modèle"
+          placeholder="Entrez la marque"
         />
+      </Form.Group>
+      <Form.Group className="mb-3" controlId="car_name">
+        <Form.Label>Nom de la voiture</Form.Label>
+        <Form.Control
+          type="text"
+          name="car_name"
+          value={carData.car_name}
+          onChange={handleInputChange}
+          placeholder="Entrez le nom de la voiture"
+        />
+      </Form.Group>
+      <Form.Group className="mb-3" controlId="fuel_type">
+        <Form.Label>Type de carburant</Form.Label>
+        <Form.Control
+          as="select"
+          name="fuel_type"
+          value={carData.fuel_type}
+          onChange={handleInputChange}
+        >
+          <option value="">Sélectionnez le type de carburant</option>
+          <option value="gazole">Gazole</option>
+          <option value="essence">Essence</option>
+          <option value="hybride">Hybride</option>
+          <option value="electrique">Électrique</option>
+        </Form.Control>
       </Form.Group>
       <Form.Group className="mb-3" controlId="price">
         <Form.Label>Prix</Form.Label>
@@ -114,6 +118,8 @@ const AddCar = ({ onSubmit }) => {
         <Form.Control
           type="number"
           name="year"
+          min="2000" 
+          max={year}
           value={carData.year}
           onChange={handleInputChange}
           placeholder="Entrez l'année de mise en circulation"
@@ -127,6 +133,58 @@ const AddCar = ({ onSubmit }) => {
           value={carData.mileage}
           onChange={handleInputChange}
           placeholder="Entrez le kilométrage"
+        />
+      </Form.Group>
+      <Form.Group className="mb-3" controlId="seat">
+        <Form.Label>Nombre de places</Form.Label>
+        <Form.Control
+          as="select"
+          name="seat"
+          value={carData.seat}
+          onChange={handleInputChange}
+        >
+          <option value="">Sélectionnez le nombre de places</option>
+          <option value="5">5</option>
+          <option value="7">7</option>
+          <option value="9">9</option>
+        </Form.Control>
+      </Form.Group>
+      <Form.Group className="mb-3" controlId="doors">
+        <Form.Label>Nombre de portes</Form.Label>
+        <Form.Control
+          as="select"
+          name="doors"
+          value={carData.doors}
+          onChange={handleInputChange}
+        >
+          <option value="">Sélectionnez le nombre de portes</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+        </Form.Control>
+      </Form.Group>
+      <Form.Group className="mb-3" controlId="automatic">
+        <Form.Label>Transmission</Form.Label>
+        <Form.Control
+          as="select"
+          name="automatic"
+          value={carData.automatic}
+          onChange={handleInputChange}
+        >
+          <option value="">Sélectionnez le type de transmission</option>
+          <option value="Manuelle">Manuelle</option>
+          <option value="Automatique">Automatique</option>
+        </Form.Control>
+      </Form.Group>
+      <Form.Group className="mb-3" controlId="description">
+        <Form.Label>Description</Form.Label>
+        <Form.Control
+          as="textarea"
+          name="description"
+          value={carData.description}
+          onChange={handleInputChange}
+          placeholder="Entrez la description"
         />
       </Form.Group>
       <Form.Group className="mb-3" controlId="image">
@@ -146,24 +204,6 @@ const AddCar = ({ onSubmit }) => {
           name="gallery"
           multiple
           accept="image/png, image/jpeg"
-        />
-      </Form.Group>
-      <Form.Group className="mb-3" controlId="features">
-        <Form.Label>Caractéristiques (séparées par des retours à la ligne)</Form.Label>
-        <Form.Control
-          as="textarea"
-          name="features"
-          //value={carData.features.join('\n')}
-          onChange={handleFeaturesChange}
-        />
-      </Form.Group>
-      <Form.Group className="mb-3" controlId="equipment">
-        <Form.Label>Équipements et Options (séparés par des retours à la ligne)</Form.Label>
-        <Form.Control
-          as="textarea"
-          name="equipment"
-          //value={carData.equipment.join('\n')}
-          onChange={handleEquipmentChange}
         />
       </Form.Group>
       <Button variant="primary" type="submit">
