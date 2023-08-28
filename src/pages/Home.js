@@ -4,7 +4,7 @@ import ServicesSection from '../components/ServicesSection';
 import AboutSection from '../components/UI/AboutSection';
 import ContactSection from '../components/ContactSection';
 import Footer from '../components/Footer';
-import Testimonial from '../components/Testimonial';
+import TestimonialSection from '../components/UI/TestimonialSection';
 import HeroSlider from '../components/UI/HeroSlider';
 import CarsSection from '../components/UI/CarsSection';
 
@@ -18,7 +18,7 @@ const Home = () => {
       </section>
       <ServicesSection />
       <CarsSection />
-      <Testimonial />
+      <TestimonialSection />
       <AboutSection />
       <ContactSection />
       <Footer />

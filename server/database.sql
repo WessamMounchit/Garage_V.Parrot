@@ -35,7 +35,7 @@ CREATE TABLE IF NOT EXISTS cars (
   year INTEGER NOT NULL,
   mileage INTEGER NOT NULL,
   image_path VARCHAR(255) NOT NULL,
-  gallery TEXT[] NOT NULL,
+  gallery TEXT [] NOT NULL,
   seat INTEGER NOT NULL,
   doors INTEGER NOT NULL,
   automatic VARCHAR(20) NOT NULL,
@@ -54,8 +54,8 @@ CREATE TABLE IF NOT EXISTS testimonials (
   first_name VARCHAR(50) NOT NULL,
   last_name VARCHAR(50) NOT NULL,
   job VARCHAR(50) NOT NULL,
-  description VARCHAR(255) NOT NULL,
-  mark VARCHAR(2) NOT NULL,
+  description TEXT NOT NULL,
+  mark INTEGER NOT NULL,
   image_path VARCHAR(255) NOT NULL
 );
 
@@ -66,6 +66,73 @@ CREATE TABLE opening_hours (
   afternoon_open VARCHAR(5),
   afternoon_close VARCHAR(5)
 );
+
+INSERT INTO
+  testimonials (
+    first_name,
+    last_name,
+    job,
+    description,
+    mark,
+    image_path
+  )
+VALUES
+  (
+    'Marie',
+    'Dupont',
+    'Enseignante',
+    'J''ai acheté ma première voiture chez Vincent Parrot et je suis vraiment satisfaite. Le service client était excellent et l''équipe m''a bien conseillée. Je recommande vivement ce garage !',
+    5,
+    'uploads/face1.jpg'
+  ),
+  (
+    'Jean',
+    'Martin',
+    'Ingénieur',
+    'J''ai trouvé la voiture de mes rêves chez Vincent Parrot. Le processus d''achat était simple et transparent. Je suis très content de mon achat.',
+    4,
+    'uploads/face2.jpg'
+  ),
+  (
+    'Sophie',
+    'Lefebvre',
+    'Étudiante',
+    'Vincent Parrot propose une grande sélection de voitures à des prix compétitifs. J''ai été impressionnée par la qualité du service et la rapidité de la transaction.',
+    4,
+    'uploads/face3.jpg'
+  ),
+  (
+    'Pierre',
+    'Leclerc',
+    'Commerçant',
+    'J''ai fait réparer ma voiture chez Vincent Parrot et je suis satisfait du travail effectué. L''équipe a été professionnelle et la réparation a été faite dans les délais.',
+    4,
+    'uploads/face4.jpg'
+  ),
+  (
+    'Catherine',
+    'Girard',
+    'Infirmière',
+    'J''ai fait l''entretien régulier de ma voiture chez Vincent Parrot. Le personnel était amical et compétent. Je me sens en sécurité en conduisant ma voiture après leur service.',
+    5,
+    'uploads/face5.jpg'
+  ),
+  (
+    'Thomas',
+    'Rousseau',
+    'Architecte',
+    'Je suis un client fidèle de Vincent Parrot depuis des années. Ils ont toujours su me proposer des voitures de qualité. Leur service après-vente est également excellent.',
+    5,
+    'uploads/face6.jpg'
+  ),
+  (
+    'Émilie',
+    'Bertrand',
+    'Avocate',
+    'Je suis ravie de mon expérience chez Vincent Parrot. L''équipe a pris le temps de m''expliquer toutes les options disponibles et j''ai trouvé la voiture parfaite pour mes besoins.',
+    5,
+    'uploads/face7.jpg'
+  );
 
 INSERT INTO
   opening_hours (
@@ -84,20 +151,21 @@ VALUES
   ('samedi', '08:45', '12:00', '14:00', '18:00'),
   ('dimanche', '08:45', '12:00', '14:00', '18:00');
 
-INSERT INTO cars (
-  brand,
-  car_name,
-  fuel_type,
-  price,
-  year,
-  mileage,
-  image_path,
-  gallery,
-  seat,
-  doors,
-  automatic,
-  description
-)
+INSERT INTO
+  cars (
+    brand,
+    car_name,
+    fuel_type,
+    price,
+    year,
+    mileage,
+    image_path,
+    gallery,
+    seat,
+    doors,
+    automatic,
+    description
+  )
 VALUES
   (
     'Tesla',

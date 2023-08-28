@@ -6,12 +6,12 @@ import { onUpdateCar } from '../api/cars';
 const EditCar = ({ car, onSubmit }) => {
 
   const [carData, setCarData] = useState({ ...car });
-  const [image_path, setImage] = useState(null);
+  const [image_path, setImage_path] = useState(null);
   const [gallery, setGallery] = useState([]);
 
   const handleImageChange = (e) => {
     const selectedFile = e.target.files[0];
-    setImage(selectedFile);
+    setImage_path(selectedFile);
   };
 
   const handleGalleryChange = (event) => {

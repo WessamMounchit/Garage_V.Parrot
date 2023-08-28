@@ -127,9 +127,7 @@ const CarsSection = () => {
 
   const addIcon = isAuth && (
     <i
-      type="button"
-      variant="warning"
-      className="ri-add-box-fill add__icon text-end ri-lg mb-4"
+      className="btn ri-add-box-fill add__icon text-end ri-lg mb-4"
       onClick={() => setIsAddModalOpen(true)}>
     </i>
   )
@@ -145,7 +143,7 @@ const CarsSection = () => {
             <h2 className="section__title">Nos voitures</h2>
           </Col>
           <CarFilters filters={filters} handleFilterChange={handleFilterChange} />
-          {addIcon}
+          <span className='text-end'>{addIcon}</span>
           {currentCars?.map((car) => (
             <CarItem
               car={car}

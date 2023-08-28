@@ -1,0 +1,78 @@
+.testimonial {
+  background-color: #f8f8f8;
+}
+
+.testimonial-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  text-align: center;
+  border-radius: 10px;
+  height: 100%;
+}
+
+.testimonial-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.testimonial-image {
+  height: 6rem;
+  width: 6rem;
+  border-radius: 50%;
+  overflow: hidden;
+  object-fit: cover;
+}
+
+.testimonial-name {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #333;
+}
+
+.testimonial-job {
+  font-size: 1rem;
+  color: #777;
+}
+
+.testimonial-description {
+  margin-top: 20px;
+  font-size: 1rem;
+  line-height: 1.5;
+  color: #555;
+  text-align: center;
+  height: 8em;
+}
+
+.testimonial-rating{
+  margin-bottom: 1.2rem;
+}
+
+.testimonial-rating i{
+  color: #f9a826;
+
+}
+
+
+@media only screen and (max-width: 768px) {
+  .testimonial p {
+    font-size: 0.8rem;
+    line-height: 1.5rem;
+  }
+
+  .testimonial h6 {
+    font-size: 1rem;
+  }
+}
+
+@media only screen and (max-width: 576px) {
+  .testimonial img {
+    width: 60px !important;
+    height: 60px !important;
+    object-fit: cover;
+  }
+}

@@ -126,9 +126,7 @@ const Footer = () => {
 
   const editIcon = isAuth && role === 'admin' && (
     <i
-      type="button"
-      variant="warning"
-      className="ri-edit-box-line ri-lg mx-2"
+      className="btn ri-edit-box-line ri-lg mx-2"
       onClick={() => setIsUpdateModalOpen(true)}>
     </i>
   )

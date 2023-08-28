@@ -33,11 +33,9 @@ const AddTestimonial = ({ onSubmit }) => {
     try {
       const formData = new FormData();
 
-      formData.append('first_name', testimonialData.first_name);
-      formData.append('last_name', testimonialData.last_name);
-      formData.append('job', testimonialData.job);
-      formData.append('description', testimonialData.description);
-      formData.append('mark', testimonialData.mark);
+      Object.keys(testimonialData).forEach((key) => {
+        formData.append(key, testimonialData[key]);
+      });
       formData.append('image_path', image_path);
 
       const response = await onAddTestimonial(formData);
@@ -92,14 +90,20 @@ const AddTestimonial = ({ onSubmit }) => {
         />
       </Form.Group>
       <Form.Group className="mb-3" controlId="mark">
-        <Form.Label>Note /10</Form.Label>
+        <Form.Label>Nombre d'étoiles</Form.Label>
         <Form.Control
-          type="number"
+          as="select"
           name="mark"
           value={testimonialData.mark}
           onChange={handleInputChange}
-          placeholder="Entrez la note"
-        />
+        >
+          <option value="">Sélectionnez le nombre d'étoiles</option>
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+        </Form.Control>
       </Form.Group>
       <Form.Group className="mb-3" controlId="image_path">
         <Form.Label>Image de profil</Form.Label>
@@ -113,7 +117,7 @@ const AddTestimonial = ({ onSubmit }) => {
       <Button variant="primary" type="submit">
         Ajouter l'avis
       </Button>
-    </Form>
+    </Form >
   );
 };
 

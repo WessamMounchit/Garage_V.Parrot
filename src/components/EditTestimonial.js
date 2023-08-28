@@ -4,20 +4,12 @@ import { Form, Button } from 'react-bootstrap';
 import { onUpdateTestimonial } from '../api/testimonials';
 
 const EditTestimonial = ({ testimonial, onSubmit }) => {
-  const [testimonialData, setTestimonialData] = useState({
-    testimonial_id: testimonial.testimonial_id,
-    first_name: testimonial.first_name,
-    last_name: testimonial.last_name,
-    job: testimonial.job,
-    description: testimonial.description,
-    mark: testimonial.mark
-  });
-
-  const [image, setImage] = useState(null);
+  const [testimonialData, setTestimonialData] = useState({...testimonial});
+  const [image_path, setImage_path] = useState(null);
 
   const handleImageChange = (e) => {
     const selectedFile = e.target.files[0];
-    setImage(selectedFile);
+    setImage_path(selectedFile);
   };
 
   const handleInputChange = (event) => {
@@ -40,7 +32,7 @@ const EditTestimonial = ({ testimonial, onSubmit }) => {
         }
       });
 
-      image && formData.append('image_path', image);
+      image_path && formData.append('image_path', image_path);
 
       if (formData.entries().next().done === false) {
         try {
@@ -108,14 +100,20 @@ const EditTestimonial = ({ testimonial, onSubmit }) => {
         />
       </Form.Group>
       <Form.Group className="mb-3" controlId="mark">
-        <Form.Label>Note /10</Form.Label>
+        <Form.Label>Nombre d'étoiles</Form.Label>
         <Form.Control
-          type="number"
+          as="select"
           name="mark"
           value={testimonialData.mark}
           onChange={handleInputChange}
-          placeholder="Entrez la note"
-        />
+        >
+          <option value="">Sélectionnez le nombre d'étoiles</option>
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+        </Form.Control>
       </Form.Group>
       <Form.Group className="mb-3" controlId="image_path">
         <Form.Label>Image de profil :</Form.Label>
