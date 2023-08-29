@@ -4,6 +4,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import Home from './pages/Home';
 import { useSelector } from 'react-redux'
 import CarDetails from './pages/CarDetails';
+import Dashboard from './pages/Dashboard';
 
 function App() {
 
@@ -25,6 +26,7 @@ function App() {
 
 
         <Route path='/' exact element={<Home />} />
+        <Route path='/dashboard' exact element={<Dashboard />} />
         <Route path="/car/:carId" element={<CarDetails />} />
 
       </Routes>

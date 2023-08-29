@@ -54,10 +54,12 @@ CREATE TABLE IF NOT EXISTS testimonials (
   first_name VARCHAR(50) NOT NULL,
   last_name VARCHAR(50) NOT NULL,
   job VARCHAR(50) NOT NULL,
-  description TEXT NOT NULL,
+  description VARCHAR(255) NOT NULL,
   mark INTEGER NOT NULL,
+  validated BOOLEAN DEFAULT false,
   image_path VARCHAR(255) NOT NULL
 );
+
 
 CREATE TABLE opening_hours (
   day VARCHAR(10) NOT NULL PRIMARY KEY,
@@ -74,6 +76,7 @@ INSERT INTO
     job,
     description,
     mark,
+    validated,
     image_path
   )
 VALUES
@@ -83,6 +86,7 @@ VALUES
     'Enseignante',
     'J''ai acheté ma première voiture chez Vincent Parrot et je suis vraiment satisfaite. Le service client était excellent et l''équipe m''a bien conseillée. Je recommande vivement ce garage !',
     5,
+    true,
     'uploads/face1.jpg'
   ),
   (
@@ -91,6 +95,7 @@ VALUES
     'Ingénieur',
     'J''ai trouvé la voiture de mes rêves chez Vincent Parrot. Le processus d''achat était simple et transparent. Je suis très content de mon achat.',
     4,
+    true,
     'uploads/face2.jpg'
   ),
   (
@@ -99,6 +104,7 @@ VALUES
     'Étudiante',
     'Vincent Parrot propose une grande sélection de voitures à des prix compétitifs. J''ai été impressionnée par la qualité du service et la rapidité de la transaction.',
     4,
+    true,
     'uploads/face3.jpg'
   ),
   (
@@ -107,6 +113,7 @@ VALUES
     'Commerçant',
     'J''ai fait réparer ma voiture chez Vincent Parrot et je suis satisfait du travail effectué. L''équipe a été professionnelle et la réparation a été faite dans les délais.',
     4,
+    true,
     'uploads/face4.jpg'
   ),
   (
@@ -115,6 +122,7 @@ VALUES
     'Infirmière',
     'J''ai fait l''entretien régulier de ma voiture chez Vincent Parrot. Le personnel était amical et compétent. Je me sens en sécurité en conduisant ma voiture après leur service.',
     5,
+    true,
     'uploads/face5.jpg'
   ),
   (
@@ -123,6 +131,7 @@ VALUES
     'Architecte',
     'Je suis un client fidèle de Vincent Parrot depuis des années. Ils ont toujours su me proposer des voitures de qualité. Leur service après-vente est également excellent.',
     5,
+    true,
     'uploads/face6.jpg'
   ),
   (
@@ -131,6 +140,7 @@ VALUES
     'Avocate',
     'Je suis ravie de mon expérience chez Vincent Parrot. L''équipe a pris le temps de m''expliquer toutes les options disponibles et j''ai trouvé la voiture parfaite pour mes besoins.',
     5,
+    true,
     'uploads/face7.jpg'
   );
 

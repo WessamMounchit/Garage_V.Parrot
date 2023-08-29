@@ -116,16 +116,21 @@ const Testimonial = () => {
 
           <span className='text-end'>{addIcon}</span>
           <Slider {...settings} className="testimonial">
-            {testimonials.data?.map((testimonial) => (
-              <TestimonialItem
-                testimonial={testimonial}
-                key={testimonial.testimonial_id}
-                handleModalOpen={() => handleModalOpen(testimonial)}
-                handleDeleteCar={() => { handleDeleteTestimonial(testimonial.testimonial_id) }}
-              />
-            ))}
+            {testimonials.data
+              ?.filter((testimonial) => testimonial.validated === true) // Filtrer les avis validés
+              .map((testimonial) => (
+                <TestimonialItem
+                  testimonial={testimonial}
+                  key={testimonial.testimonial_id}
+                  handleModalOpen={() => handleModalOpen(testimonial)}
+                  handleDeleteCar={() => {
+                    handleDeleteTestimonial(testimonial.testimonial_id);
+                  }}
+                />
+              ))}
           </Slider>
         </Row>
+        <button onClick={() => setIsAddModalOpen(true)} className="btn btn-info">Laissez un commentaire</button>
       </Container>
 
       <CustomModal

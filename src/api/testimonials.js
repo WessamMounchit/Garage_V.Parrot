@@ -30,3 +30,9 @@ export async function onUpdateTestimonial(TestimonialId, formData) {
 export async function onDeleteTestimonial(TestimonialId) {
   return await axios.delete(`http://localhost:5000/api/deleteTestimonial/${TestimonialId}`)
 }
+
+//Validate Testimonial
+export async function onValidateTestimonial(TestimonialId, validated) {
+  return await axios.put(`http://localhost:5000/api/validateTestimonial/${TestimonialId}`, { validated }
+  );
+}

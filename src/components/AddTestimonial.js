@@ -2,8 +2,10 @@ import React, { useState } from 'react';
 import { toast } from 'react-toastify';
 import { Form, Button } from 'react-bootstrap';
 import { onAddTestimonial } from '../api/testimonials';
+import { useSelector } from 'react-redux';
 
 const AddTestimonial = ({ onSubmit }) => {
+  const { isAuth } = useSelector((state) => state.auth);
   const [testimonialData, setTestimonialData] = useState({
     first_name: '',
     last_name: '',
@@ -37,6 +39,8 @@ const AddTestimonial = ({ onSubmit }) => {
         formData.append(key, testimonialData[key]);
       });
       formData.append('image_path', image_path);
+      isAuth && formData.append('validated', true);
+      
 
       const response = await onAddTestimonial(formData);
       toast.success(response.data.info);
@@ -114,6 +118,7 @@ const AddTestimonial = ({ onSubmit }) => {
           accept="image/png, image/jpeg"
         />
       </Form.Group>
+      {isAuth && <input type="hidden" name="validated" value="true" />}
       <Button variant="primary" type="submit">
         Ajouter l'avis
       </Button>

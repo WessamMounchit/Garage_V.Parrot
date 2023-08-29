@@ -1,3 +1,7 @@
+.card__container {
+  height: 42rem;
+}
+
 .car__item {
   border: 1px solid #7c8a9736;
   padding: 20px;
@@ -17,11 +21,19 @@
   color: #fc2727;
   font-size: 2rem;
 }
+.car_img {
+  height: 100%; 
+  width: 100%; 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden; 
+}
 
-.car__img {
-  height: 19rem;
+.car__img img{
   border-radius: 5px;
   overflow: hidden;
+  object-fit: cover;
 }
 
 .car__item-info span i {

@@ -1,26 +1,26 @@
 const { SERVER_URL } = require('../constants');
 const db = require('../db')
 
- exports.addTestimonial = async (req, res) => {
+exports.addTestimonial = async (req, res) => {
   try {
-    const { first_name, last_name, job, description, mark } = req.body;
+    const { first_name, last_name, job, description, mark, validated } = req.body;
     const image_path = req.file.path
 
-    const query = `INSERT INTO testimonials (first_name, last_name, job, description, mark, image_path)
-                   VALUES ($1, $2, $3, $4, $5, $6) RETURNING *`;
+    const query = `INSERT INTO testimonials (first_name, last_name, job, description, mark, image_path, validated)
+                   VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *`;
 
-    const values = [first_name, last_name, job, description, mark, image_path];
+    const values = [first_name, last_name, job, description, mark, image_path, validated];
 
     await db.query(query, values);
 
-    res.status(201).json({info: 'Avis ajouté avec succès'});
+    res.status(201).json({ info: 'Avis ajouté avec succès' });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
 };
- 
 
-  exports.getTestimonial = async (req, res) => {
+
+exports.getTestimonial = async (req, res) => {
   try {
     const query = 'SELECT * FROM testimonials';
     const result = await db.query(query);
@@ -44,10 +44,10 @@ exports.updateTestimonial = async (req, res) => {
     const { id } = req.params;
     const updateFields = { ...req.body };
 
-     if (req.file) {
+    if (req.file) {
       updateFields.image_path = req.file.path;
     }
- 
+
     const emptyFields = [];
     Object.keys(updateFields).forEach((key) => {
       if (!updateFields[key]) {
@@ -75,7 +75,7 @@ exports.updateTestimonial = async (req, res) => {
 
     await db.query(query, values);
 
-    res.status(200).json({info: 'Avis modifié avec succès'});
+    res.status(200).json({ info: 'Avis modifié avec succès' });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
@@ -92,7 +92,24 @@ exports.deleteTestimonial = async (req, res) => {
 
     await db.query(query, values);
 
-    res.status(201).json({info: 'Avis supprimé avec succès'});
+    res.status(201).json({ info: 'Avis supprimé avec succès' });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
+exports.ValidateTestimonial = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { validated } = req.body;
+
+    const query = `UPDATE testimonials SET validated = $1 WHERE testimonial_id = $2 RETURNING *`;
+
+    const values = [validated, id];
+
+    await db.query(query, values);
+
+    res.status(201).json({ info: 'Avis validé avec succès' });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }

@@ -2,8 +2,10 @@ import React, { useState } from 'react';
 import { toast } from 'react-toastify';
 import { Form, Button } from 'react-bootstrap';
 import { onUpdateTestimonial } from '../api/testimonials';
+import { useSelector } from 'react-redux';
 
 const EditTestimonial = ({ testimonial, onSubmit }) => {
+  const { isAuth } = useSelector((state) => state.auth);
   const [testimonialData, setTestimonialData] = useState({...testimonial});
   const [image_path, setImage_path] = useState(null);
 
@@ -31,8 +33,8 @@ const EditTestimonial = ({ testimonial, onSubmit }) => {
           formData.append(key, testimonialData[key]);
         }
       });
-
       image_path && formData.append('image_path', image_path);
+      isAuth && formData.append('validated', true);
 
       if (formData.entries().next().done === false) {
         try {
@@ -125,6 +127,7 @@ const EditTestimonial = ({ testimonial, onSubmit }) => {
           accept="image/png, image/jpeg"
         />
       </Form.Group>
+      {isAuth && <input type="hidden" name="validated" value="true" />}
       <Button variant="success" type="submit">
         Enregistrer
       </Button>

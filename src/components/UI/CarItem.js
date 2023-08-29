@@ -36,11 +36,11 @@ const CarItem = ({ car, handleModalOpen, handleDeleteCar }) => {
   )
 
   return (
-    <Col lg="4" md="4" sm="6" className="mb-5">
+    <Col lg="4" className="card__container mb-5">
       <div className="car__item">
         <span className="text-end">{editIcon} {deleteIcon}</span>
-        <div className="car__img">
-          <img src={image_path} alt="" className="w-100" />
+        <div className="car__img car_img">
+          <img src={image_path} alt="" className="" />
         </div>
 
         <div className="car__item-content mt-4">
