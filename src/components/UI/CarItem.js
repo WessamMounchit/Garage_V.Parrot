@@ -43,7 +43,7 @@ const CarItem = ({ car, handleModalOpen, handleDeleteCar }) => {
           <img src={image_path} alt="" className="" />
         </div>
 
-        <div className="car__item-content mt-4">
+        <div className="car__item-content mt-5">
           <h4 className="section__title text-center">{car_name}</h4>
           <h6 className="rent__price text-center mt-">
             {price.toLocaleString()} <span>€</span>
