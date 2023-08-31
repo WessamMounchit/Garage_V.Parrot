@@ -1,16 +1,33 @@
-import React from 'react';
-import Header from './Header';
-import Footer from './Footer';
+import React, { Fragment } from "react";
 
-const Layout = ({ children }) => {
+import Header from "../components/Header";
+import Footer from "../components/Footer";
+import Routers from "../../src/routers/Routers";
+import { useSelector } from "react-redux";
+import { Navigate, Outlet } from "react-router-dom";
+
+const Layout = () => {
+
+  const PrivateRoutes = () => {
+    const { isAuth } = useSelector((state) => state.auth)
+    return <>{isAuth ? <Outlet /> : <Navigate to='/login' />}</>
+  }
+
+  const RestrictedRoutes = () => {
+    const { isAuth } = useSelector((state) => state.auth)
+
+    return <>{!isAuth ? <Outlet /> : <Navigate to='/' />}</>
+  }
+
+
   return (
-    <div>
+    <Fragment>
       <Header />
-      <main>
-        {children}
-      </main>
+      <div>
+        <Routers />
+      </div>
       <Footer />
-    </div>
+    </Fragment>
   );
 };
 

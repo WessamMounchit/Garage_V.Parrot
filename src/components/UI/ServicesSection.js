@@ -19,7 +19,7 @@ const ServicesSection = () => {
   const settings = {
     dots: true,
     infinite: true,
-    autoplay: true,
+    autoplay: false,
     speed: 1000,
     swipeToSlide: true,
     autoplaySpeed: 4000,
@@ -55,7 +55,7 @@ const ServicesSection = () => {
         </Col>
       </Row>
 
-      <Slider {...settings} className="hero__slider">
+      <Slider {...settings} className="service">
             {services.data?.map((service) => (
               <ServiceItem
                 service={service}

@@ -8,6 +8,7 @@ const CarItem = ({ car, handleModalOpen, handleDeleteCar }) => {
   const { isAuth } = useSelector((state) => state.auth);
 
   const {
+    car_id,
     car_name,
     price,
     year,
@@ -43,7 +44,7 @@ const CarItem = ({ car, handleModalOpen, handleDeleteCar }) => {
           <img src={image_path} alt="" className="" />
         </div>
 
-        <div className="car__item-content mt-5">
+        <div className="car__item-content">
           <h4 className="section__title text-center">{car_name}</h4>
           <h6 className="rent__price text-center mt-">
             {price.toLocaleString()} <span>€</span>
@@ -62,7 +63,7 @@ const CarItem = ({ car, handleModalOpen, handleDeleteCar }) => {
           </div>
 
           <button className=" w-100 car__item-btn car__btn-details">
-            <Link to={`/cars/${car_name}`}>Details</Link>
+            <Link to={`/car/${car_id}`}>Details</Link>
           </button>
         </div>
       </div>

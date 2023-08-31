@@ -1,18 +1,15 @@
 import React from 'react'
-import Header from '../components/Header';
 import ServicesSection from '../components/UI/ServicesSection';
 import AboutSection from '../components/UI/AboutSection';
-import ContactSection from '../components/ContactSection';
-import Footer from '../components/Footer';
 import TestimonialSection from '../components/UI/TestimonialSection';
 import HeroSlider from '../components/UI/HeroSlider';
 import CarsSection from '../components/UI/CarsSection';
+import FormContact from '../components/UI/FormContact';
 
 
 const Home = () => {
   return (
     <>
-      <Header />
       <section className="p-0 hero__slider-section">
         <HeroSlider />
       </section>
@@ -20,8 +17,7 @@ const Home = () => {
       <CarsSection />
       <TestimonialSection />
       <AboutSection />
-      <ContactSection />
-      <Footer />
+      <FormContact />
     </>
   )
 }

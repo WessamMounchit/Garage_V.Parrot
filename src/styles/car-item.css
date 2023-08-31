@@ -4,9 +4,8 @@
 }
 
 .car__item {
-  border-bottom: 1px solid #7c8a9736;
+  border: 1px solid #7c8a9736;
   padding: 20px;
-  height: 416px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -23,7 +22,6 @@
 }
 .car__img {
   height: 10rem; 
-  width: 100%; 
   display: flex;
   align-items: center;
   justify-content: center;
@@ -36,6 +34,7 @@
   border-radius: 5px;
   overflow: hidden;
   object-fit: cover;
+  margin-bottom: 1rem;
 }
 
 .car__item-info span i {
@@ -69,6 +68,10 @@
   border-radius: 4px 0px 0px 4px;
 }
 
+.car__item-content {
+  margin-top: 2.5rem;
+}
+
 .car__item-content h4 {
   font-size: 1.8rem;
 }
@@ -82,17 +85,10 @@
   .car__item {
     height: auto;
 }
-  .car__img {
-    width: 340px;
-}
 }
 
 @media only screen and (max-width: 1200px) {
-  .car__item {
-    width: 100%;
-}
   .car__img {
-    width: 420px;
     height: 190px;
 }
   .car__img img {
@@ -105,9 +101,12 @@
     width: auto;
 }
   .car__img {
-    width: 325px;
     height: 190px;
 }
+.car__item-content {
+  margin-top: 1rem;
+}
+
 .car__item h4 {
   font-size: 1.1rem;
   margin-bottom: 0;
@@ -134,41 +133,35 @@
 }
 
 @media only screen and (max-width: 768px) {
-  .car__item {
-    width: 100%;
-}
   .car__img {
-    width: 100%;
-    height: 215px;
+    height: auto;
 }
-.car__item h4 {
-  font-size: 1rem;
-}
-
-.car__item h6 {
-  font-size: 0.9rem;
+  .car__item-content {
+    margin-top: 0;
+  }
+  .car__item h4 {
+    font-size: 1rem;
 }
 
-.car__item-info span {
-  font-size: 0.7rem;
+  .car__item h6 {
+    font-size: 0.9rem;
 }
 
-.car__item-info span i {
-  font-size: 0.9rem;
+  .car__item-info span {
+    font-size: 0.7rem;
 }
 
-.car__item-btn {
-  font-size: 0.8rem;
+  .car__item-info span i {
+    font-size: 0.9rem;
+}
+
+  .car__item-btn {
+    font-size: 0.8rem;
 }
 }
 
 @media only screen and (max-width: 576px) {
   .car__img {
-    width: 100%;
-    height: 100px;
+    height: auto;
 }
-  .car__item {
-    width: 400px;
-    height: 400px;
-  }
 }

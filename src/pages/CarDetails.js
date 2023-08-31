@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { onGetSelectedCar } from '../api/cars';
-import Layout from '../components/Layout';
-import { Carousel } from 'react-bootstrap';
+import { Carousel, Col, Container, Row } from 'react-bootstrap';
+import FormContact from '../components/UI/FormContact';
 
 const CarDetails = () => {
   const { carId } = useParams();
@@ -24,54 +24,102 @@ const CarDetails = () => {
       });
   }, []);
 
-  const renderFeatures = () => {
-    if (!car.data || !car.data.features) {
-      return null;
-    }
-
-    return (
-      <ul className="list-disc mt-4">
-        {car.data.features.map((feature, index) => (
-          <li key={index}>{feature}</li>
-        ))}
-      </ul>
-    );
-  };
-
   return (
-    <Layout>
-      {car.data && (
-        <div className="container mt-5">
-          <h1 className="display-4 fw-bold mb-4">{car.data.model}</h1>
-          <Carousel>
-            {car.data.gallery.map((image, index) => (
-              <Carousel.Item key={index}>
-                <img
-                  src={image}
-                  className="d-block w-100"
-                  alt={`Gallery ${index + 1}`}
-                />
-              </Carousel.Item>
-            ))}
-          </Carousel>
-          <h2 className="mt-4">Caractéristiques</h2>
-          <ul className="list-unstyled">
-            <li>Année : {car.data.year}</li>
-            <li>Kilométrage : {car.data.mileage} km</li>
-            <li>Prix : {car.data.price} €</li>
-            {/* Ajoutez d'autres caractéristiques ici */}
-          </ul>
-          <h2 className="mt-4">Équipements</h2>
-          <ul className="list-unstyled">
-            {car.data.equipment.map((equip, index) => (
-              <li key={index}>{equip}</li>
-            ))}
-          </ul>
-          <h2 className="mt-4">Features</h2>
-          {renderFeatures()}
-        </div>
-      )}
-    </Layout>
+      <section>
+        <Container>
+          <Row>
+            <Col lg="6">
+              <img src={car.data?.image_path} alt="" className="w-100" />
+            </Col>
+
+            <Col lg="6">
+              <div className="car__info h-100 d-flex flex-column justify-content-center ">
+                <h2 className="section__title">{car.data?.car_name}</h2>
+
+                <div className=" d-flex align-items-center gap-5 mb-4 mt-3">
+                  <h6 className="rent__price fw-bold fs-4">
+                    {car.data?.price.toLocaleString()} € 
+                  </h6>
+                </div>
+
+                <p className="section__description">
+                  {car.data?.description}
+                </p>
+
+                <div
+                  className=" d-flex align-items-center mt-3"
+                  style={{ columnGap: "4rem" }}
+                >
+                  <span className=" d-flex align-items-center gap-1 section__description">
+                    <i
+                      class="ri-roadster-line"
+                      style={{ color: "#f9a826" }}
+                    ></i>{" "}
+                    {car.data?.year}
+                  </span>
+
+                  <span className=" d-flex align-items-center gap-1 section__description">
+                    <i
+                      class="ri-settings-2-line"
+                      style={{ color: "#f9a826" }}
+                    ></i>{" "}
+                    {car.data?.automatic}
+                  </span>
+
+                  <span className=" d-flex align-items-center gap-1 section__description">
+                    <i
+                      class="ri-timer-flash-line"
+                      style={{ color: "#f9a826" }}
+                    ></i>{" "}
+                    {car.data?.mileage.toLocaleString()} km
+                  </span>
+                </div>
+
+                <div
+                  className=" d-flex align-items-center mt-3"
+                  style={{ columnGap: "6.5rem" }}
+                >
+                  <span className=" d-flex align-items-center gap-1 section__description">
+                    <i class="ri-map-pin-line" style={{ color: "#f9a826" }}></i>{" "}
+                    {car.data?.doors}
+                  </span>
+
+                  <span className=" d-flex align-items-center gap-1 section__description">
+                    <i
+                      class="ri-building-2-line"
+                      style={{ color: "#f9a826" }}
+                    ></i>{" "}
+                    {car.data?.brand}
+                  </span>
+
+                  <span className=" d-flex align-items-center gap-1 section__description">
+                    <i
+                      class="ri-wheelchair-line"
+                      style={{ color: "#f9a826" }}
+                    ></i>{" "}
+                    {car.data?.seat}
+                  </span>
+
+                </div>
+              </div>
+            </Col>
+
+             <Col lg="12">
+              <div className="booking-info mt-5">
+{/*                 <h5 className="mb-4 fw-bold text-center">Formulaire de contact</h5>
+ */}                {car.data?.car_name && <FormContact carName={car.data.car_name} />}
+              </div>
+            </Col>
+
+{/*             <Col lg="5" className="mt-5">
+              <div className="payment__info mt-5">
+                <h5 className="mb-4 fw-bold ">Payment Information</h5>
+                <PaymentMethod />
+              </div>
+            </Col>
+ */}           </Row>
+        </Container>
+      </section>
   );
 };
 

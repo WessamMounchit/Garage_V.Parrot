@@ -117,7 +117,7 @@ const Testimonial = () => {
           <span className='text-end'>{addIcon}</span>
           <Slider {...settings} className="testimonial">
             {testimonials.data
-              ?.filter((testimonial) => testimonial.validated === true) // Filtrer les avis validés
+              ?.filter((testimonial) => testimonial.validated === true)
               .map((testimonial) => (
                 <TestimonialItem
                   testimonial={testimonial}

@@ -11,6 +11,8 @@ import AddCar from '../AddCar';
 import EditCar from '../EditCar';
 import { toast } from 'react-toastify';
 import '../../styles/car-section.css'
+import Helmet from '../Helmet';
+import CommonSection from './CommonSection';
 
 const CarsSection = () => {
 
@@ -20,6 +22,8 @@ const CarsSection = () => {
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [selectedCar, setSelectedCar] = useState(null);
+  const [searchTerm, setSearchTerm] = useState("");
+
 
   const handleModalOpen = (car) => {
     setSelectedCar({ ...car });
@@ -77,6 +81,12 @@ const CarsSection = () => {
 
   //////////  PAGINATION   //////////
 
+  const handleSearch = (newSearchTerm) => {
+    setSearchTerm(newSearchTerm);
+    setCurrentPage(1);
+  };
+
+
   const paginate = (items, itemsPerPage, currentPage) => {
     const startIndex = (currentPage - 1) * itemsPerPage;
     const endIndex = startIndex + itemsPerPage;
@@ -86,8 +96,13 @@ const CarsSection = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const carsPerPage = 6;
 
-  const totalPages = Math.ceil(filteredCars?.length / carsPerPage);
-  const currentCars = paginate(filteredCars, carsPerPage, currentPage);
+  const filteredAndSearchedCars = filteredCars?.filter((car) =>
+    car.car_name.toLowerCase().includes(searchTerm.toLowerCase())
+  )
+
+
+  const totalPages = Math.ceil(filteredAndSearchedCars?.length / carsPerPage);
+  const currentCars = paginate(filteredAndSearchedCars, carsPerPage, currentPage);
 
   //////////  API   //////////
 
@@ -134,52 +149,65 @@ const CarsSection = () => {
 
 
   return (
-    <section>
-      <Container>
-        <Row>
 
-          <Col lg="12" className="text-center mb-5">
-            <h6 className="section__subtitle">Découvrez</h6>
-            <h2 className="section__title">Nos voitures</h2>
-          </Col>
-          <CarFilters filters={filters} handleFilterChange={handleFilterChange} />
-          <span className='text-end'>{addIcon}</span>
-          {currentCars?.map((car) => (
-            <CarItem
-              car={car}
-              key={car.car_id}
-              handleModalOpen={() => handleModalOpen(car)}
-              handleDeleteCar={() => { handleDeleteCar(car.car_id) }}
+    <Helmet title="Cars">
+      <CommonSection title="Nos voitures" />
+
+      <section>
+        <Container>
+          <Row>
+
+            <Col lg="12" className="text-center mb-5">
+              <h6 className="section__subtitle">Découvrez</h6>
+              <h2 className="section__title">Nos voitures</h2>
+            </Col>
+            <CarFilters filters={filters} handleFilterChange={handleFilterChange} />
+            <input
+              type="text"
+              placeholder="Rechercher par nom de voiture"
+              value={searchTerm}
+              onChange={(e) => handleSearch(e.target.value)}
             />
-          ))}
-          <CarPagination currentPage={currentPage} setCurrentPage={setCurrentPage} totalPages={totalPages} />
 
-        </Row>
-      </Container>
+            <span className='text-end'>{addIcon}</span>
+            {currentCars?.map((car) => (
+              <CarItem
+                car={car}
+                key={car.car_id}
+                handleModalOpen={() => handleModalOpen(car)}
+                handleDeleteCar={() => { handleDeleteCar(car.car_id) }}
+              />
+            ))}
+            <CarPagination currentPage={currentPage} setCurrentPage={setCurrentPage} totalPages={totalPages} />
+
+          </Row>
+        </Container>
 
 
 
-      <CustomModal
-        isOpen={isAddModalOpen}
-        onClose={() => setIsAddModalOpen(false)}
-        title='Ajouter une voiture'
-      >
-        <AddCar onSubmit={handleAddCar} />
-      </CustomModal>
+        <CustomModal
+          isOpen={isAddModalOpen}
+          onClose={() => setIsAddModalOpen(false)}
+          title='Ajouter une voiture'
+        >
+          <AddCar onSubmit={handleAddCar} />
+        </CustomModal>
 
-      <CustomModal
-        isOpen={isUpdateModalOpen}
-        onClose={handleModalClose}
-        title='Modifier une voiture'
-      >
-        {selectedCar &&
-          <EditCar
-            car={selectedCar}
-            onSubmit={handleUpdateCar}
-          />}
-      </CustomModal>
+        <CustomModal
+          isOpen={isUpdateModalOpen}
+          onClose={handleModalClose}
+          title='Modifier une voiture'
+        >
+          {selectedCar &&
+            <EditCar
+              car={selectedCar}
+              onSubmit={handleUpdateCar}
+            />}
+        </CustomModal>
 
-    </section>
+      </section>
+
+    </Helmet>
 
   )
 }

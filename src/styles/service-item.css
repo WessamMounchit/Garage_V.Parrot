@@ -4,9 +4,7 @@
   justify-content: center;
   border-radius: 10px;
   height: 25rem;
-  width: 25rem;
   background-position: center;
-  background-repeat: no-repeat;
   background-size: cover;
 }
 
@@ -16,8 +14,7 @@
   align-items: center;
   justify-content: center;
   border-radius: 10px;
-  height: 25rem;
-  width: 25rem;
+  height: 100%;
   gap: 10px;
   background: linear-gradient(rgb(0, 13, 107, 0.5), rgb(0, 13, 107, 0.5));
 }
@@ -39,21 +36,18 @@
 }
 
 
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 1200px) {
+  .service__item {
+    height: 15rem !important;
+    object-fit: cover;
+  }
   .service p {
-    font-size: 0.8rem;
+    font-size: 1rem;
     line-height: 1.5rem;
   }
 
   .service h6 {
-    font-size: 1rem;
-  }
-}
-
-@media only screen and (max-width: 576px) {
-  .service img {
-    width: 60px !important;
-    height: 60px !important;
-    object-fit: cover;
+    font-size: 1.2rem;
+    margin-bottom: 1.5rem;
   }
 }

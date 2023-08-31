@@ -58,9 +58,8 @@ ul {
 }
 
 .section__description {
-  color: #7c8a97;
-  font-size: 0.9rem;
-  line-height: 30px;
+  color: black;
+  font-size: 1rem;
 }
 
 section {
