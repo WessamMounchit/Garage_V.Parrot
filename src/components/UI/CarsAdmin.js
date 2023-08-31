@@ -160,7 +160,7 @@ const CarsAdmin = () => {
       <CustomModal
         isOpen={isViewModalOpen}
         onClose={handleViewModalClose}
-        title='Ajouter un avis'
+        title='Visualisation'
       >
         {selectedCar && <CarItem car={selectedCar} />}
       </CustomModal>

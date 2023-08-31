@@ -6,6 +6,7 @@ import { toast } from 'react-toastify';
 import CustomModal from './CustomModal';
 import AddService from '../AddService';
 import EditService from '../EditService';
+import ServiceItem from './ServiceItem'
 
 const ServicesAdmin = () => {
   const [services, setServices] = useState({
@@ -108,18 +109,17 @@ const ServicesAdmin = () => {
       </table>
       {/*   //////////  MODALS   ////////// */}
 
-{/*       <CustomModal
+      <CustomModal
         isOpen={isViewModalOpen}
         onClose={handleViewModalClose}
-        title='Ajouter un avis'
+        title='Visualisation'
       >
-        {selectedService && <ServiceItem service={selectedService} />}
-      </CustomModal>
- */}
+        {selectedService && <ServiceItem service={selectedService} />}      </CustomModal>
+
       <CustomModal
         isOpen={isAddModalOpen}
         onClose={() => setIsAddModalOpen(false)}
-        title='Ajouter une voiture'
+        title='Ajouter un service'
       >
         <AddService onSubmit={handleAddService} />
       </CustomModal>

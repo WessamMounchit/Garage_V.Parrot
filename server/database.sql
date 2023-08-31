@@ -60,7 +60,6 @@ CREATE TABLE IF NOT EXISTS testimonials (
   image_path VARCHAR(255) NOT NULL
 );
 
-
 CREATE TABLE opening_hours (
   day VARCHAR(10) NOT NULL PRIMARY KEY,
   morning_open VARCHAR(5),
@@ -68,6 +67,45 @@ CREATE TABLE opening_hours (
   afternoon_open VARCHAR(5),
   afternoon_close VARCHAR(5)
 );
+
+INSERT INTO
+  services (title, description, image_path)
+VALUES
+  (
+    'Réparation Mécanique',
+    'Experts en réparation mécanique pour assurer la performance optimale de votre véhicule.',
+    'uploads/service1.jpeg'
+  ),
+  (
+    'Réparation Carrosserie',
+    'Restauration professionnelle de la carrosserie pour retrouver l''apparence d''origine de votre voiture.',
+    'uploads/service2.jpeg'
+  ),
+  (
+    'Entretien Régulier',
+    'Programme d''entretien complet pour maintenir votre voiture en excellent état de fonctionnement.',
+    'uploads/service3.jpeg'
+  ),
+  (
+    'Vente de Véhicules d''Occasion',
+    'Découvrez notre sélection de véhicules d''occasion de haute qualité, prêts à prendre la route.',
+    'uploads/service4.jpeg'
+  ),
+  (
+    'Diagnostic Électronique',
+    'Technologies de pointe pour diagnostiquer rapidement et précisément les problèmes électroniques de votre véhicule.',
+    'uploads/service5.jpeg'
+  ),
+  (
+    'Climatisation',
+    'Réparation et entretien du système de climatisation pour un confort de conduite optimal.',
+    'uploads/service6.jpeg'
+  ),
+  (
+    'Contrôle Technique',
+    'Contrôles techniques rigoureux pour garantir la sécurité et la conformité de votre véhicule.',
+    'uploads/service7.jpeg'
+  );
 
 INSERT INTO
   testimonials (

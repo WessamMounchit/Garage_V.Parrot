@@ -1,0 +1,59 @@
+.service__item {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border-radius: 10px;
+  height: 25rem;
+  width: 25rem;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.service-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  height: 25rem;
+  width: 25rem;
+  gap: 10px;
+  background: linear-gradient(rgb(0, 13, 107, 0.5), rgb(0, 13, 107, 0.5));
+}
+
+.service-title h6 {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: white;
+  margin-bottom: 2.5rem;
+}
+
+.service-description {
+  margin-top: 20px;
+  font-size: 1.3rem;
+  line-height: 1.5;
+  color: white;
+  text-align: center;
+  height: auto;
+}
+
+
+@media only screen and (max-width: 768px) {
+  .service p {
+    font-size: 0.8rem;
+    line-height: 1.5rem;
+  }
+
+  .service h6 {
+    font-size: 1rem;
+  }
+}
+
+@media only screen and (max-width: 576px) {
+  .service img {
+    width: 60px !important;
+    height: 60px !important;
+    object-fit: cover;
+  }
+}

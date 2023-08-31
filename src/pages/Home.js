@@ -1,6 +1,6 @@
 import React from 'react'
 import Header from '../components/Header';
-import ServicesSection from '../components/ServicesSection';
+import ServicesSection from '../components/UI/ServicesSection';
 import AboutSection from '../components/UI/AboutSection';
 import ContactSection from '../components/ContactSection';
 import Footer from '../components/Footer';
