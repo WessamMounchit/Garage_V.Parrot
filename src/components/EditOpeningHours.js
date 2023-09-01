@@ -3,9 +3,10 @@ import { Form, Button } from 'react-bootstrap';
 import { toast } from 'react-toastify';
 import { onUpdateOpeningHours } from '../api/openingHours';
 
-const EditOpeningHours = ({ openingHours, onSubmit }) => {
+const EditOpeningHours = ({ openingHours, onSubmit, selectedDay }) => {
   const [openingHoursData, setOpeningHoursData] = useState([...openingHours]);
   const [modifiedIndices, setModifiedIndices] = useState([]);
+  const openingHoursOfDay = openingHoursData.filter((item) => item.day === selectedDay);
 
   const markAsModified = (day) => {
     const index = openingHoursData.findIndex((item) => item.day === day);
@@ -23,7 +24,7 @@ const EditOpeningHours = ({ openingHours, onSubmit }) => {
         item.day === day ? { ...item, [period]: value } : item
       )
     );
-    markAsModified(day); 
+    markAsModified(day);
   };
 
   const handleSetClosed = (day) => {
@@ -31,16 +32,16 @@ const EditOpeningHours = ({ openingHours, onSubmit }) => {
       prevOpeningHours.map((item) =>
         item.day === day
           ? {
-              ...item,
-              morning_open: null,
-              morning_close: null,
-              afternoon_open: null,
-              afternoon_close: null,
-            }
+            ...item,
+            morning_open: null,
+            morning_close: null,
+            afternoon_open: null,
+            afternoon_close: null,
+          }
           : item
       )
     );
-    markAsModified(day); 
+    markAsModified(day);
   };
 
   const handleCloseAfternoonOnly = (day) => {
@@ -48,10 +49,10 @@ const EditOpeningHours = ({ openingHours, onSubmit }) => {
       prevOpeningHours.map((item) =>
         item.day === day
           ? {
-              ...item,
-              afternoon_open: null,
-              afternoon_close: null,
-            }
+            ...item,
+            afternoon_open: null,
+            afternoon_close: null,
+          }
           : item
       )
     );
@@ -63,10 +64,10 @@ const EditOpeningHours = ({ openingHours, onSubmit }) => {
       prevOpeningHours.map((item) =>
         item.day === day
           ? {
-              ...item,
-              morning_open: null,
-              morning_close: null,
-            }
+            ...item,
+            morning_open: null,
+            morning_close: null,
+          }
           : item
       )
     );
@@ -94,7 +95,7 @@ const EditOpeningHours = ({ openingHours, onSubmit }) => {
   return (
     <div>
       <Form onSubmit={handleSubmit}>
-        {openingHoursData.map((item) => (
+        {openingHoursOfDay.map((item) => (
           <div key={item.day} className="mb-3">
             <h4>{item.day}</h4>
             <Form.Group controlId={`morning_open_${item.day}`}>
@@ -138,7 +139,7 @@ const EditOpeningHours = ({ openingHours, onSubmit }) => {
               />
             </Form.Group>
 
-           
+
             <Button variant="danger" onClick={() => handleSetClosed(item.day)}>
               Fermer toute la journée
             </Button>

@@ -2,6 +2,7 @@ import React from 'react';
 import TestimonialAdmin from '../components/UI/TestimonialAdmin';
 import CarsAdmin from '../components/UI/CarsAdmin';
 import ServicesAdmin from '../components/UI/ServicesAdmin';
+import OpeningHoursAdmin from '../components/UI/OpeningHoursAdmin';
 
 const Dashboard = () => {
   return (
@@ -16,6 +17,10 @@ const Dashboard = () => {
 
       <section>
         <ServicesAdmin />
+      </section>
+
+      <section>
+        <OpeningHoursAdmin />
       </section>
     </>
   );
