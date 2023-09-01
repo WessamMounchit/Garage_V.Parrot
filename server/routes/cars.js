@@ -1,12 +1,13 @@
 const express = require('express');
 const upload = require('../middleware/multerConfig')
-const { addCar, getCar, updateCar, deleteCar, getSelectedCar } = require('../controllers/cars');
+const { addCar, getCar, updateCar, deleteCar, getSelectedCar, getLatestCars } = require('../controllers/cars');
 const { validationMiddleware } = require('../middleware/validation-middleware');
 const router = express.Router();
 
 
 router.get('/getCars', getCar);
 router.get('/getSelectedCar/:id', getSelectedCar);
+router.get('/getLatestCars', getLatestCars);
 
 router.post('/addCars', validationMiddleware, upload.fields([
   { name: 'image_path', maxCount: 1 },

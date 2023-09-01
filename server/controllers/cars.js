@@ -166,3 +166,24 @@ exports.getSelectedCar = async (req, res) => {
   }
 };
 
+exports.getLatestCars = async (req, res) => {
+  try {
+    const query = 'SELECT * FROM cars ORDER BY car_id DESC LIMIT 6';
+    const result = await db.query(query);
+    const cars = result.rows;
+
+    const carsWithLocalImagePath = cars.map((car) => {
+      return {
+        ...car,
+        image_path: `${SERVER_URL}/${car.image_path}`,
+        gallery: car.gallery.map((imagePath) => `${SERVER_URL}/${imagePath}`),
+      };
+    });
+
+    res.json(carsWithLocalImagePath);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+

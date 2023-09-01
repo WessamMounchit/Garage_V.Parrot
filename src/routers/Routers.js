@@ -1,21 +1,20 @@
 import React from 'react'
-import { BrowserRouter, Route, Routes } from 'react-router-dom'
-import { ToastContainer } from 'react-toastify'
+import { Route, Routes } from 'react-router-dom'
 import Home from '../pages/Home'
-import CarsSection from '../components/UI/CarsSection'
+import CarsSection from '../pages/CarsSection'
 import Dashboard from '../pages/Dashboard'
 import CarDetails from '../pages/CarDetails'
+import Contact from '../pages/Contact'
 
 const Routers = () => {
   return (
     <Routes>
-        
-
 
         <Route path='/' exact element={<Home />} />
         <Route path="/cars" element={<CarsSection />} />
         <Route path='/dashboard' exact element={<Dashboard />} />
         <Route path="/car/:carId" element={<CarDetails />} />
+        <Route path="/contact" element={<Contact />} />
 
       </Routes>
   )

@@ -3,8 +3,8 @@ import ServicesSection from '../components/UI/ServicesSection';
 import AboutSection from '../components/UI/AboutSection';
 import TestimonialSection from '../components/UI/TestimonialSection';
 import HeroSlider from '../components/UI/HeroSlider';
-import CarsSection from '../components/UI/CarsSection';
 import FormContact from '../components/UI/FormContact';
+import CarsHome from '../components/UI/CarsHome';
 
 
 const Home = () => {
@@ -14,7 +14,7 @@ const Home = () => {
         <HeroSlider />
       </section>
       <ServicesSection />
-      <CarsSection />
+      <CarsHome />
       <TestimonialSection />
       <AboutSection />
       <FormContact />

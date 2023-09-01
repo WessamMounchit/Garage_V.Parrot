@@ -30,7 +30,7 @@ const FormContact = ({ carName }) => {
     event.preventDefault();
   };
   return (
-    <Container className="my-3">
+    <Container className="my-4">
     <Row>
       <Col lg="7" md="7">
         <h6 className="fw-bold mb-4">Formulaire de contact</h6>

@@ -21,8 +21,15 @@ export async function onGetCars() {
 export async function onGetSelectedCar(carId) {
   return await axios.get(
     `http://localhost:5000/api/getSelectedCar/${carId}`,
-  )
-}
+    )
+  }
+
+  //GET LATESTCARS
+  export async function onGetLatestCars() {
+    return await axios.get(
+      'http://localhost:5000/api/getLatestCars',
+    )
+  }
 
 //UPTADE CAR
 export async function onUpdateCar(carId, formData) {

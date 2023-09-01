@@ -1,18 +1,18 @@
 import React, { useEffect, useState } from 'react'
 import { Col, Container, Row } from 'react-bootstrap'
-import CarItem from './CarItem'
-import { onDeleteCar, onGetCars } from '../../api/cars';
-import fetchData from '../../utils/fetchData';
-import CarFilters from './CarFilters';
-import CarPagination from './CarPagination';
-import CustomModal from './CustomModal';
+import CarItem from '../components/UI/CarItem'
+import { onDeleteCar, onGetCars } from '../api/cars';
+import fetchData from '../utils/fetchData';
+import CarFilters from '../components/UI/CarFilters';
+import CarPagination from '../components/UI/CarPagination';
+import CustomModal from '../components/UI/CustomModal';
 import { useSelector } from 'react-redux';
-import AddCar from '../AddCar';
-import EditCar from '../EditCar';
+import AddCar from '../components/AddCar';
+import EditCar from '../components/EditCar';
 import { toast } from 'react-toastify';
-import '../../styles/car-section.css'
-import Helmet from '../Helmet';
-import CommonSection from './CommonSection';
+import '../styles/car-section.css'
+import Helmet from '../components/Helmet';
+import CommonSection from '../components/UI/CommonSection';
 
 const CarsSection = () => {
 
