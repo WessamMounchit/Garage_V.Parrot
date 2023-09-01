@@ -5,6 +5,7 @@ import CarsSection from '../pages/CarsSection'
 import Dashboard from '../pages/Dashboard'
 import CarDetails from '../pages/CarDetails'
 import Contact from '../pages/Contact'
+import About from '../pages/About'
 
 const Routers = () => {
   return (
@@ -15,6 +16,8 @@ const Routers = () => {
         <Route path='/dashboard' exact element={<Dashboard />} />
         <Route path="/car/:carId" element={<CarDetails />} />
         <Route path="/contact" element={<Contact />} />
+        <Route path="/about" element={<About />} />
+
 
       </Routes>
   )

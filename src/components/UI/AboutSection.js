@@ -2,27 +2,17 @@ import React from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import "../../styles/about-section.css";
 
-const AboutSection = ({ aboutClass }) => {
+const AboutSection = () => {
   return (
-    <section
-      className="about__section"
-    /* style={
-      aboutClass === "aboutPage"
-        ? { marginTop: "0px" }
-        : { marginTop: "280px" }
-    } */
-    >
+    <section>
       <Container>
         <Row>
           <Col lg="6" md="6">
             <div className="about__section-content">
-              <h2 className="section__title">À propos de nous</h2>
-              <p className="section__description">Nous sommes une équipe de mécaniciens passionnés dédiés à fournir des services automobiles de qualité à nos
-                clients. Avec des années d'expérience, nous sommes fiers de notre expertise et de notre engagement envers la
-                satisfaction du client.</p>
-              <p className="section__description">Nous nous efforçons de maintenir des normes élevées en matière de réparation, d'entretien et de service à la
-                clientèle. Laissez-nous prendre soin de votre véhicule et profitez de la tranquillité d'esprit sur la route.</p>
-
+              <h2 className="section__title">Le Garage de Vincent Parrot</h2>
+              <p className="section__description">Vincent Parrot, fort de ses 15 années d'expérience dans la réparation automobile, a ouvert son propre garage à Toulouse en 2021. Depuis 2 ans, il propose une large gamme de services : réparation de la carrosserie et de la mécanique des voitures ainsi que leur entretien régulier pour garantir leur performance et leur sécurité.</p>
+               <p className="section__description">De plus, le Garage V. Parrot met en vente des véhicules d'occasion afin d'accroître son chiffre d'affaires.</p>
+ 
               <div className="about__section-item d-flex align-items-center">
                 <p className="section__description d-flex align-items-center gap-2">
                   <i class="ri-checkbox-circle-line"></i> Qualité
