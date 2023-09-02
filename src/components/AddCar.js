@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { toast } from 'react-toastify';
 import { Form, Button } from 'react-bootstrap';
-import { onAddCar } from '../api/cars';
+import { addCar } from '../redux/slices/carSlice';
+import { useDispatch } from 'react-redux';
 
-const AddCar = ({ onSubmit }) => {
+const AddCar = ({ modalClose }) => {
   const [carData, setCarData] = useState({
     brand: '',
     car_name: '',
@@ -19,6 +20,7 @@ const AddCar = ({ onSubmit }) => {
 
   const [gallery, setGallery] = useState([]);
   const [image_path, setImage] = useState(null);
+  const dispatch = useDispatch();
 
   const handleImageChange = (e) => {
     const selectedFile = e.target.files[0];
@@ -53,12 +55,12 @@ const AddCar = ({ onSubmit }) => {
         formData.append(`gallery`, file);
       });
 
-      const response = await onAddCar(formData);
-      toast.success(response.data.info);
-      onSubmit();
+      dispatch(addCar(formData))
+      modalClose()
+      toast.success("La voiture a été ajoutée avec succès.");
 
     } catch (error) {
-      toast.error(error.response.data.error);
+      toast.error("L'ajout de la voiture a échoué.");
       console.error(error);
     }
   };
@@ -118,7 +120,7 @@ const AddCar = ({ onSubmit }) => {
         <Form.Control
           type="number"
           name="year"
-          min="2000" 
+          min="2000"
           max={year}
           value={carData.year}
           onChange={handleInputChange}

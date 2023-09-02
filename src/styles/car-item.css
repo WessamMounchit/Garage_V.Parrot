@@ -21,7 +21,7 @@
   font-size: 2rem;
 }
 .car__img {
-  height: 10rem; 
+  height: 15rem; 
   display: flex;
   align-items: center;
   justify-content: center;
@@ -134,7 +134,7 @@
 
 @media only screen and (max-width: 768px) {
   .car__img {
-    height: auto;
+    height: 100%;
 }
   .car__item-content {
     margin-top: 0;

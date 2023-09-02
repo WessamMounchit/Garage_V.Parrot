@@ -2,10 +2,8 @@ import React from "react";
 import { Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import "../../styles/car-item.css";
-import { useSelector } from "react-redux";
 
-const CarItem = ({ car, handleModalOpen, handleDeleteCar }) => {
-  const { isAuth } = useSelector((state) => state.auth);
+const CarItem = ({ car }) => {
 
   const {
     car_id,
@@ -18,28 +16,9 @@ const CarItem = ({ car, handleModalOpen, handleDeleteCar }) => {
   } = car;
 
 
-  const editIcon = isAuth && (
-    <i
-      type="button"
-      variant="warning"
-      className="ri-edit-box-fill edit__icon ri-lg my-2"
-      onClick={() => handleModalOpen()}>
-    </i>
-  )
-
-  const deleteIcon = isAuth && (
-    <i
-      type="button"
-      variant="warning"
-      className="ri-delete-bin-fill delete__icon ri-lg my-2"
-      onClick={() => handleDeleteCar()}>
-    </i>
-  )
-
   return (
     <Col xxl="4" xl="4" lg="6" md="6" className="mb-5 card__container">
       <div className="car__item">
-        <span className="text-end">{editIcon} {deleteIcon}</span>
         <div className="car__img">
           <img src={image_path} alt="" className="" />
         </div>

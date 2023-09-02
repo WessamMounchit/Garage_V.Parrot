@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import { Container } from 'react-bootstrap'
-import fetchData from '../../utils/fetchData';
-import { onDeleteCar, onGetCars } from '../../api/cars';
 import { toast } from 'react-toastify';
 import CustomModal from './CustomModal';
 import EditCar from '../EditCar';
 import AddCar from '../AddCar';
 import CarItem from './CarItem';
 import CarPagination from './CarPagination';
+import { useDispatch, useSelector } from 'react-redux';
+import { deleteCar, fetchCars } from '../../redux/slices/carSlice';
 
 const CarsAdmin = () => {
 
@@ -18,21 +18,29 @@ const CarsAdmin = () => {
   const [isViewModalOpen, setIsViewModalOpen] = useState(false);
   const [selectedCar, setSelectedCar] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
-
-
-  const [cars, setCars] = useState({
-    loading: false,
-    error: false,
-    data: undefined,
-  });
+  const cars = useSelector((state => state.cars))
+  const dispatch = useDispatch()
 
 
   //////////  API   //////////
 
-
   useEffect(() => {
-    fetchData(setCars, onGetCars);
-  }, []);
+    dispatch(fetchCars())
+  }, [dispatch]);
+
+  const handleDeleteCar = async (carId) => {
+    try {
+
+      dispatch(deleteCar(carId))
+      toast.success("La voiture a été supprimée avec succès.")
+
+    } catch (error) {
+      toast.error("La suppression de la voiture a échoué.")
+      console.log(error)
+    }
+  }
+
+  //////////  MODAL   //////////
 
   const handleViewModalOpen = (car) => {
     setSelectedCar({ ...car });
@@ -55,37 +63,7 @@ const CarsAdmin = () => {
     setIsUpdateModalOpen(false);
   };
 
-  const handleAddCar = () => {
-    try {
-      fetchData(setCars, onGetCars)
-      setIsAddModalOpen(false)
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  const handleUpdateCar = async () => {
-    try {
-      fetchData(setCars, onGetCars)
-      handleModalClose();
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  const handleDeleteCar = async (carId) => {
-    try {
-      const response = await onDeleteCar(carId)
-      toast.success(response.data.info)
-
-    } catch (error) {
-      toast.error(error.response.data.error)
-    }
-
-    fetchData(setCars, onGetCars)
-  };
-
-    //////////  PAGINATION & SEARCH   //////////
+  //////////  PAGINATION & SEARCH   //////////
 
 
   const handleSearch = (newSearchTerm) => {
@@ -108,6 +86,9 @@ const CarsAdmin = () => {
   const totalPages = Math.ceil(filteredCars?.length / carsPerPage);
   const currentCars = paginate(filteredCars, carsPerPage, currentPage);
 
+
+  //////////  ICONS   //////////
+
   const addIcon = (
     <i
       className="btn ri-add-box-fill add__icon text-end ri-lg p-0 "
@@ -115,6 +96,30 @@ const CarsAdmin = () => {
     </i>
   )
 
+  let content;
+  if (cars.loading) {
+    content = <img src="spinner.svg" alt='chargement' />
+  }
+  else if (cars.error) {
+    content = <p>Une erreur est survenue...</p>
+  }
+  else if (cars.data?.length === 0) {
+    content = <p>Aucune voiture disponible</p>
+  }
+  else if (cars.data?.length > 0) {
+    content = currentCars?.map((car) => (
+      <tr key={car.car_id}>
+        <th scope="row">{car.car_id}</th>
+        <td>{car.car_name}</td>
+        <td>{car.year}</td>
+        <td>{car.price.toLocaleString()} €</td>
+        <td>{car.mileage.toLocaleString()} km</td>
+        <td>{<i className="btn ri-edit-box-fill edit__icon ri-lg p-0 " onClick={() => handleModalOpen(car)}></i>}</td>
+        <td>{<i className="btn ri-delete-bin-fill delete__icon ri-lg p-0 " onClick={() => handleDeleteCar(car.car_id)}></i>}</td>
+        <td><button onClick={() => handleViewModalOpen(car)} className='btn btn-info'>Voir en détails</button></td>
+      </tr>
+    ))
+  }
 
   return (
     <Container>
@@ -139,21 +144,12 @@ const CarsAdmin = () => {
           </tr>
         </thead>
         <tbody>
-          {currentCars?.map((car) => (
-            <tr key={car.car_id}>
-              <th scope="row">{car.car_id}</th>
-              <td>{car.car_name}</td>
-              <td>{car.year}</td>
-              <td>{car.price.toLocaleString()} €</td>
-              <td>{car.mileage.toLocaleString()} km</td>
-              <td>{<i className="btn ri-edit-box-fill edit__icon ri-lg p-0 " onClick={() => handleModalOpen(car)}></i>}</td>
-              <td>{<i className="btn ri-delete-bin-fill delete__icon ri-lg p-0 " onClick={() => handleDeleteCar(car.car_id)}></i>}</td>
-              <td><button onClick={() => handleViewModalOpen(car)} className='btn btn-info'>Voir en détails</button></td>
-            </tr>
-          ))}
+          {content}
         </tbody>
       </table>
       <CarPagination currentPage={currentPage} setCurrentPage={setCurrentPage} totalPages={totalPages} />
+
+
 
       {/*   //////////  MODALS   ////////// */}
 
@@ -170,7 +166,7 @@ const CarsAdmin = () => {
         onClose={() => setIsAddModalOpen(false)}
         title='Ajouter une voiture'
       >
-        <AddCar onSubmit={handleAddCar} />
+        <AddCar modalClose={() => setIsAddModalOpen(false)} />
       </CustomModal>
 
       <CustomModal
@@ -181,9 +177,11 @@ const CarsAdmin = () => {
         {selectedCar &&
           <EditCar
             car={selectedCar}
-            onSubmit={handleUpdateCar}
+            modalClose={handleModalClose}
           />}
       </CustomModal>
+
+
 
 
     </Container>

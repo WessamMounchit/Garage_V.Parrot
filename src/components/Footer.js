@@ -1,12 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 
 import { Container, Row, Col, ListGroup, ListGroupItem, Button, Modal } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import "../styles/footer.css";
-import { useSelector } from "react-redux";
-import secureLocalStorage from "react-secure-storage";
-import { onGetopeningHours } from "../api/openingHours";
-import EditOpeningHours from "./EditOpeningHours";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchHours } from "../redux/slices/hoursSlice";
 
 const quickLinks = [
   {
@@ -32,48 +30,20 @@ const quickLinks = [
 const Footer = () => {
   const date = new Date();
   const year = date.getFullYear();
-
-  const [openingHours, setOpeningHours] = useState({
-    loading: false,
-    error: false,
-    data: undefined
-  });
-  const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
-  const { isAuth } = useSelector((state) => state.auth);
-  const role = secureLocalStorage.getItem('role')
-
-
-
-  const compareDaysOfWeek = (day1, day2) => {
-    const daysOfWeek = ['lundi', 'mardi', 'mercredi', 'jeudi', 'vendredi', 'samedi', 'dimanche'];
-    return daysOfWeek.indexOf(day1) - daysOfWeek.indexOf(day2);
-  };
+  const openingHours = useSelector((state => state.hours))
+  const dispatch = useDispatch()
 
   useEffect(() => {
-    setOpeningHours({ ...openingHours, loading: true });
-    onGetopeningHours()
-      .then((response) => {
-        const sortedOpeningHours = response.data.sort((a, b) => compareDaysOfWeek(a.day, b.day));
-        setOpeningHours({ loading: false, error: false, data: sortedOpeningHours });
-      })
-      .catch((error) => {
-        setOpeningHours({ loading: false, error: true, data: undefined });
-      });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    dispatch(fetchHours())
+  }, [dispatch]);
 
-  const refreshOpeningHours = () => {
-    setOpeningHours({ ...openingHours, loading: true });
-    onGetopeningHours()
-      .then((response) => {
-        const sortedOpeningHours = response.data.sort((a, b) => compareDaysOfWeek(a.day, b.day));
-        setOpeningHours({ loading: false, error: false, data: sortedOpeningHours });
-      })
-      .catch((error) => {
-        setOpeningHours({ loading: false, error: true, data: undefined });
-      });
-  }
+  const daysOfWeekOrder = ['lundi', 'mardi', 'mercredi', 'jeudi', 'vendredi', 'samedi', 'dimanche'];
 
+  const sortedOpeningHours = openingHours.data
+    ? [...openingHours.data].sort((a, b) => {
+      return daysOfWeekOrder.indexOf(a.day) - daysOfWeekOrder.indexOf(b.day);
+    })
+    : [];
 
   const formatOpeningHours = (openingHour) => {
     const {
@@ -107,29 +77,16 @@ const Footer = () => {
   };
 
 
-  const handleUpdateOpeningHours = async () => {
-    try {
-      refreshOpeningHours()
-      setIsUpdateModalOpen(false);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
   let content;
-  if (openingHours.loading) content = <img src="spinner.svg" alt='chargement' />
-  else if (openingHours.error) content = <p>Une erreur est survenue...</p>
-  else if (openingHours.data?.length === 0) content = <p>Aucune voiture disponible</p>
-  else if (openingHours.data?.length > 0) {
-    content = openingHours.data.map(formatOpeningHours)
+  if (openingHours.loading) {
+    content = <img src="spinner.svg" alt='chargement' />
   }
-
-  const editIcon = isAuth && role === 'admin' && (
-    <i
-      className="btn ri-edit-box-line ri-lg mx-2"
-      onClick={() => setIsUpdateModalOpen(true)}>
-    </i>
-  )
+  else if (openingHours.error) {
+    content = <p>Une erreur est survenue...</p>
+  }
+  else if (openingHours.data?.length > 0) {
+    content = sortedOpeningHours?.map(formatOpeningHours)
+  }
 
 
   return (
@@ -165,7 +122,6 @@ const Footer = () => {
               <div className="mb-4">
                 <div className="hours__title">
                   <h5 className="footer__link-title mb-4">Horraires d'ouverture</h5>
-                  <span>{editIcon}</span>
                 </div>
                 <p className="office__info">{content}</p>
               </div>
@@ -195,21 +151,6 @@ const Footer = () => {
           </Row>
         </Container>
       </footer>
-
-
-
-      <Modal show={isUpdateModalOpen} onHide={() => setIsUpdateModalOpen(false)}>
-        <Modal.Header closeButton>
-          <Modal.Title>Modifier les horaires d'ouverture</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <EditOpeningHours openingHours={openingHours.data} onSubmit={handleUpdateOpeningHours} />
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="danger" className="m-2" onClick={() => setIsUpdateModalOpen(false)}>Fermer</Button>
-        </Modal.Footer>
-      </Modal>
-
     </>
   );
 };

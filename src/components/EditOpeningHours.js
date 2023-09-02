@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
 import { Form, Button } from 'react-bootstrap';
 import { toast } from 'react-toastify';
-import { onUpdateOpeningHours } from '../api/openingHours';
+import { useDispatch } from 'react-redux';
+import { updateHours } from '../redux/slices/hoursSlice';
 
-const EditOpeningHours = ({ openingHours, onSubmit, selectedDay }) => {
+const EditOpeningHours = ({ openingHours, modalClose, selectedDay }) => {
   const [openingHoursData, setOpeningHoursData] = useState([...openingHours]);
   const [modifiedIndices, setModifiedIndices] = useState([]);
   const openingHoursOfDay = openingHoursData.filter((item) => item.day === selectedDay);
+  const dispatch = useDispatch();
+
 
   const markAsModified = (day) => {
     const index = openingHoursData.findIndex((item) => item.day === day);
@@ -81,14 +84,14 @@ const EditOpeningHours = ({ openingHours, onSubmit, selectedDay }) => {
 
     if (modifiedOpeningHours.length > 0) {
       try {
-        const response = await onUpdateOpeningHours(modifiedOpeningHours);
-        toast.success(response.data.info);
-        onSubmit();
+        dispatch(updateHours(modifiedOpeningHours))
+        modalClose()
+        toast.success("Les horraires a été ajoutée avec succès.");
       } catch (error) {
         toast.error(error.response.data.error);
       }
     } else {
-      toast.info("No changes were made to opening hours.");
+      toast.info("La modification des horraires a échoué.");
     }
   };
 

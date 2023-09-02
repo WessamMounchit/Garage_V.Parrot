@@ -1,40 +1,55 @@
 import React, { useEffect, useState } from 'react'
-import fetchData from '../../utils/fetchData';
-import { onGetopeningHours } from '../../api/openingHours';
 import { Container } from 'react-bootstrap';
 import CustomModal from './CustomModal';
 import EditOpeningHours from '../EditOpeningHours';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchHours } from '../../redux/slices/hoursSlice';
 
 const OpeningHoursAdmin = () => {
-  const [openingHours, setOpeningHours] = useState({
-    loading: false,
-    error: false,
-    data: undefined
-  });
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
   const [selectedDay, setSelectedDay] = useState(null);
-
+  const openingHours = useSelector((state => state.hours))
+  const dispatch = useDispatch()
 
   useEffect(() => {
-    fetchData(setOpeningHours, onGetopeningHours);
-  }, []);
-
-  const handleUpdateOpeningHours = async () => {
-    try {
-      fetchData(setOpeningHours, onGetopeningHours);
-      setIsUpdateModalOpen(false);
-    } catch (error) {
-      console.error(error);
-    }
-  };
+    dispatch(fetchHours())
+  }, [dispatch]);
 
   const daysOfWeekOrder = ['lundi', 'mardi', 'mercredi', 'jeudi', 'vendredi', 'samedi', 'dimanche'];
 
   const sortedOpeningHours = openingHours.data
-    ? openingHours.data.sort((a, b) => {
+    ? [...openingHours.data].sort((a, b) => {
       return daysOfWeekOrder.indexOf(a.day) - daysOfWeekOrder.indexOf(b.day);
     })
     : [];
+
+  let content;
+  if (openingHours.loading) {
+    content = <img src="spinner.svg" alt='chargement' />
+  }
+  else if (openingHours.error) {
+    content = <p>Une erreur est survenue...</p>
+  }
+  else if (openingHours.data?.length > 0) {
+    content = sortedOpeningHours.map((openingHour) => (
+      <tr key={openingHour.day}>
+        <th scope="row">{openingHour.day}</th>
+        <td>{openingHour.morning_open}</td>
+        <td>{openingHour.morning_close}</td>
+        <td>{openingHour.afternoon_open}</td>
+        <td>{openingHour.afternoon_close}</td>
+        <td>
+          {<i
+            className="btn ri-edit-box-fill edit__icon ri-lg p-0 "
+            onClick={() => {
+              setSelectedDay(openingHour.day);
+              setIsUpdateModalOpen(true);
+            }}>
+          </i>}
+        </td>
+      </tr>
+    ))
+  }
 
 
   return (
@@ -51,24 +66,7 @@ const OpeningHoursAdmin = () => {
           </tr>
         </thead>
         <tbody>
-          {sortedOpeningHours.map((openingHour) => (
-            <tr key={openingHour.day}>
-              <th scope="row">{openingHour.day}</th>
-              <td>{openingHour.morning_open}</td>
-              <td>{openingHour.morning_close}</td>
-              <td>{openingHour.afternoon_open}</td>
-              <td>{openingHour.afternoon_close}</td>
-              <td>
-                {<i
-                  className="btn ri-edit-box-fill edit__icon ri-lg p-0 "
-                  onClick={() => {
-                    setSelectedDay(openingHour.day);
-                    setIsUpdateModalOpen(true);
-                  }}>
-                </i>}
-              </td>
-            </tr>
-          ))}
+          {content}
         </tbody>
       </table>
 
@@ -76,13 +74,16 @@ const OpeningHoursAdmin = () => {
         isOpen={isUpdateModalOpen}
         onClose={() => {
           setIsUpdateModalOpen(false);
-          setSelectedDay(null); // Réinitialisez selectedDay lorsque la modal se ferme
+          setSelectedDay(null);
         }}
         title={`Modifier les horaires pour ${selectedDay || ''}`}
       >
         <EditOpeningHours
           openingHours={sortedOpeningHours}
-          onSubmit={handleUpdateOpeningHours}
+          modalClose={() => {
+            setIsUpdateModalOpen(false);
+            setSelectedDay(null);
+          }}
           selectedDay={selectedDay}
         />
       </CustomModal>

@@ -138,7 +138,7 @@ exports.deleteCar = async (req, res) => {
 
     await db.query(query, values);
 
-    res.status(201).json({info: 'Voiture supprimée avec succès'});
+    res.status(204).json({info: 'Voiture supprimée avec succès'});
   } catch (err) {
     res.status(500).json({ error: err.message });
   }

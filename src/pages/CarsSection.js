@@ -1,45 +1,22 @@
 import React, { useEffect, useState } from 'react'
 import { Col, Container, Form, Row } from 'react-bootstrap'
 import CarItem from '../components/UI/CarItem'
-import { onDeleteCar, onGetCars } from '../api/cars';
-import fetchData from '../utils/fetchData';
 import CarFilters from '../components/UI/CarFilters';
 import CarPagination from '../components/UI/CarPagination';
-import CustomModal from '../components/UI/CustomModal';
-import { useSelector } from 'react-redux';
-import AddCar from '../components/AddCar';
-import EditCar from '../components/EditCar';
-import { toast } from 'react-toastify';
+import { useDispatch, useSelector } from 'react-redux';
 import '../styles/car-section.css'
 import Helmet from '../components/Helmet';
 import CommonSection from '../components/UI/CommonSection';
+import { fetchCars } from '../redux/slices/carSlice';
 
 const CarsSection = () => {
 
   //////////  STATE   //////////
 
-  const { isAuth } = useSelector((state) => state.auth);
-  const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
-  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
-  const [selectedCar, setSelectedCar] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
+  const cars = useSelector((state => state.cars))
+  const dispatch = useDispatch()
 
-
-  const handleModalOpen = (car) => {
-    setSelectedCar({ ...car });
-    setIsUpdateModalOpen(true);
-  };
-
-  const handleModalClose = () => {
-    setSelectedCar(null);
-    setIsUpdateModalOpen(false);
-  };
-
-  const [cars, setCars] = useState({
-    loading: false,
-    error: false,
-    data: undefined,
-  });
 
   const [filters, setFilters] = useState({
     minPrice: '',
@@ -50,8 +27,8 @@ const CarsSection = () => {
   });
 
   useEffect(() => {
-    fetchData(setCars, onGetCars);
-  }, []);
+    dispatch(fetchCars())
+  }, [dispatch]);
 
 
   //////////  FILTERS   //////////
@@ -104,49 +81,25 @@ const CarsSection = () => {
   const totalPages = Math.ceil(filteredAndSearchedCars?.length / carsPerPage);
   const currentCars = paginate(filteredAndSearchedCars, carsPerPage, currentPage);
 
-  //////////  API   //////////
 
-
-  const handleAddCar = () => {
-    try {
-      fetchData(setCars, onGetCars)
-      setIsAddModalOpen(false)
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  const handleUpdateCar = async () => {
-    try {
-      fetchData(setCars, onGetCars)
-      handleModalClose();
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  const handleDeleteCar = async (carId) => {
-    try {
-      const response = await onDeleteCar(carId)
-      toast.success(response.data.info)
-
-    } catch (error) {
-      toast.error(error.response.data.error)
-    }
-
-    fetchData(setCars, onGetCars)
-  };
-
-
-
-
-  const addIcon = isAuth && (
-    <i
-      className="btn ri-add-box-fill add__icon text-end ri-lg mb-4"
-      onClick={() => setIsAddModalOpen(true)}>
-    </i>
-  )
-
+  let content;
+  if (cars.loading) {
+    content = <img src="spinner.svg" alt='chargement' />
+  }
+  else if (cars.error) {
+    content = <p>Une erreur est survenue...</p>
+  }
+  else if (cars.data?.length === 0) {
+    content = <p>Aucune voiture disponible</p>
+  }
+  else if (cars.data?.length > 0) {
+    content = currentCars?.map((car) => (
+      <CarItem
+        car={car}
+        key={car.car_id}
+      />
+    ))
+  }
 
   return (
 
@@ -156,7 +109,6 @@ const CarsSection = () => {
       <section>
         <Container>
           <Row>
-
             <Col lg="12" className="text-center mb-5">
               <h6 className="section__subtitle">Découvrez</h6>
               <h2 className="section__title">Nos voitures</h2>
@@ -171,47 +123,12 @@ const CarsSection = () => {
               />
             </div>
             <CarFilters filters={filters} handleFilterChange={handleFilterChange} />
-
-            <span className='text-end'>{addIcon}</span>
-            {currentCars?.map((car) => (
-              <CarItem
-                car={car}
-                key={car.car_id}
-                handleModalOpen={() => handleModalOpen(car)}
-                handleDeleteCar={() => { handleDeleteCar(car.car_id) }}
-              />
-            ))}
+            {content}
             <CarPagination currentPage={currentPage} setCurrentPage={setCurrentPage} totalPages={totalPages} />
-
           </Row>
         </Container>
-
-
-
-        <CustomModal
-          isOpen={isAddModalOpen}
-          onClose={() => setIsAddModalOpen(false)}
-          title='Ajouter une voiture'
-        >
-          <AddCar onSubmit={handleAddCar} />
-        </CustomModal>
-
-        <CustomModal
-          isOpen={isUpdateModalOpen}
-          onClose={handleModalClose}
-          title='Modifier une voiture'
-        >
-          {selectedCar &&
-            <EditCar
-              car={selectedCar}
-              onSubmit={handleUpdateCar}
-            />}
-        </CustomModal>
-
       </section>
-
     </Helmet>
-
   )
 }
 

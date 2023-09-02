@@ -1,7 +1,7 @@
 import axios from "axios";
 
 //GET OPENING HOURS
-export async function onGetopeningHours() {
+export async function onGetOpeningHours() {
   return await axios.get(
     'http://localhost:5000/api/getOpeningHours',
   )
