@@ -3,20 +3,22 @@ import { Col, Container, Form, Row } from 'react-bootstrap'
 import CarItem from '../components/UI/CarItem'
 import CarFilters from '../components/UI/CarFilters';
 import CarPagination from '../components/UI/CarPagination';
-import { useDispatch, useSelector } from 'react-redux';
 import '../styles/car-section.css'
 import Helmet from '../components/Helmet';
 import CommonSection from '../components/UI/CommonSection';
-import { fetchCars } from '../redux/slices/carSlice';
+import fetchData from '../utils/fetchData';
+import { onGetCars } from '../api/cars';
 
 const CarsSection = () => {
 
   //////////  STATE   //////////
 
   const [searchTerm, setSearchTerm] = useState("");
-  const cars = useSelector((state => state.cars))
-  const dispatch = useDispatch()
-
+  const [cars, setCars] = useState({
+    loading: false,
+    error: false,
+    data: undefined,
+  });
 
   const [filters, setFilters] = useState({
     minPrice: '',
@@ -27,8 +29,8 @@ const CarsSection = () => {
   });
 
   useEffect(() => {
-    dispatch(fetchCars())
-  }, [dispatch]);
+    fetchData(setCars, onGetCars);
+  }, []);
 
 
   //////////  FILTERS   //////////

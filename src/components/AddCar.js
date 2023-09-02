@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 import { toast } from 'react-toastify';
 import { Form, Button } from 'react-bootstrap';
-import { addCar } from '../redux/slices/carSlice';
-import { useDispatch } from 'react-redux';
+import { onAddCar } from '../api/cars';
 
-const AddCar = ({ modalClose }) => {
+const AddCar = ({ onSubmit }) => {
   const [carData, setCarData] = useState({
     brand: '',
     car_name: '',
@@ -20,7 +19,6 @@ const AddCar = ({ modalClose }) => {
 
   const [gallery, setGallery] = useState([]);
   const [image_path, setImage] = useState(null);
-  const dispatch = useDispatch();
 
   const handleImageChange = (e) => {
     const selectedFile = e.target.files[0];
@@ -55,12 +53,12 @@ const AddCar = ({ modalClose }) => {
         formData.append(`gallery`, file);
       });
 
-      dispatch(addCar(formData))
-      modalClose()
-      toast.success("La voiture a été ajoutée avec succès.");
+      const response = await onAddCar(formData);
+      toast.success(response.data.info);
+      onSubmit();
 
     } catch (error) {
-      toast.error("L'ajout de la voiture a échoué.");
+      toast.error(error.response.data.error)
       console.error(error);
     }
   };

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { onGetSelectedCar } from '../api/cars';
-import { Carousel, Col, Container, Row } from 'react-bootstrap';
+import { Col, Container, Row } from 'react-bootstrap';
 import FormContact from '../components/UI/FormContact';
 
 const CarDetails = () => {

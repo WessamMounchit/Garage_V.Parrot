@@ -6,8 +6,8 @@ import EditCar from '../EditCar';
 import AddCar from '../AddCar';
 import CarItem from './CarItem';
 import CarPagination from './CarPagination';
-import { useDispatch, useSelector } from 'react-redux';
-import { deleteCar, fetchCars } from '../../redux/slices/carSlice';
+import { onDeleteCar, onGetCars } from '../../api/cars';
+import fetchData from '../../utils/fetchData';
 
 const CarsAdmin = () => {
 
@@ -18,28 +18,48 @@ const CarsAdmin = () => {
   const [isViewModalOpen, setIsViewModalOpen] = useState(false);
   const [selectedCar, setSelectedCar] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
-  const cars = useSelector((state => state.cars))
-  const dispatch = useDispatch()
-
+  const [cars, setCars] = useState({
+    loading: false,
+    error: false,
+    data: undefined,
+  });
 
   //////////  API   //////////
 
   useEffect(() => {
-    dispatch(fetchCars())
-  }, [dispatch]);
+    fetchData(setCars, onGetCars);
+  }, []);
+
+
+  const handleAddCar = () => {
+    try {
+      fetchData(setCars, onGetCars)
+      setIsAddModalOpen(false)
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handleUpdateCar = async () => {
+    try {
+      fetchData(setCars, onGetCars)
+      handleModalClose();
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   const handleDeleteCar = async (carId) => {
     try {
-
-      dispatch(deleteCar(carId))
-      toast.success("La voiture a été supprimée avec succès.")
+      await onDeleteCar(carId)
+      toast.success("La voiture a été supprimée avec succès")
 
     } catch (error) {
-      toast.error("La suppression de la voiture a échoué.")
-      console.log(error)
+      toast.error(error.response.data.error)
     }
-  }
 
+    fetchData(setCars, onGetCars)
+  };
   //////////  MODAL   //////////
 
   const handleViewModalOpen = (car) => {
@@ -166,7 +186,7 @@ const CarsAdmin = () => {
         onClose={() => setIsAddModalOpen(false)}
         title='Ajouter une voiture'
       >
-        <AddCar modalClose={() => setIsAddModalOpen(false)} />
+        <AddCar onSubmit={handleAddCar} />
       </CustomModal>
 
       <CustomModal
@@ -177,7 +197,7 @@ const CarsAdmin = () => {
         {selectedCar &&
           <EditCar
             car={selectedCar}
-            modalClose={handleModalClose}
+            onSubmit={handleUpdateCar}
           />}
       </CustomModal>
 

@@ -1,18 +1,20 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Col, Container, Row } from 'react-bootstrap';
 import CarItem from './CarItem';
 import { Link } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { fetchLatestCars } from '../../redux/slices/carSlice';
+import { onGetLatestCars } from '../../api/cars';
+import fetchData from '../../utils/fetchData';
 
 const CarsHome = () => {
-  const cars = useSelector((state => state.cars))
-  const dispatch = useDispatch()
-
+  const [cars, setCars] = useState({
+    loading: false,
+    error: false,
+    data: undefined,
+  });
 
   useEffect(() => {
-    dispatch(fetchLatestCars())
-  }, [dispatch]);
+    fetchData(setCars, onGetLatestCars);
+  }, []);
 
   let content;
   if (cars.loading) {
@@ -43,7 +45,7 @@ const CarsHome = () => {
         </Col>
 
         {content}
-        
+
       </Row>
 
       <button className="text-center w-50 car__item-btn car__btn-details">

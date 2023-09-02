@@ -13,10 +13,17 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
+.about__section-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .about__section-content h2 {
   font-size: 2.5rem;
   font-weight: bold;
   margin-bottom: 1.5rem;
+  width: 100%;
 }
 
 @media only screen and (max-width: 992px) {
