@@ -1,5 +1,5 @@
 .testimonial {
-  background-color: #f8f8f8;
+  /* background-color: #f8f8f8; */
 }
 
 .testimonial-card {
@@ -9,8 +9,10 @@
   align-items: center;
   padding: 20px;
   text-align: center;
-  border-radius: 10px;
+  border-radius: 20px;
   height: 100%;
+  border: 1px solid #7c8a9736;
+  margin: 0 1rem 0 1rem;
 }
 
 .testimonial-content {

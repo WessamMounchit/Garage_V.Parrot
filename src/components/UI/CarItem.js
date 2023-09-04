@@ -24,7 +24,7 @@ const CarItem = ({ car }) => {
         </div>
 
         <div className="car__item-content">
-          <h4 className="section__title text-center">{car_name}</h4>
+          <h4 className="car__name text-center">{car_name}</h4>
           <h6 className="rent__price text-center mt-">
             {price.toLocaleString()} <span>€</span>
           </h6>
@@ -41,7 +41,7 @@ const CarItem = ({ car }) => {
             </span>
           </div>
 
-          <button className=" w-100 car__item-btn car__btn-details">
+          <button className="w-100 custom__btn">
             <Link to={`/car/${car_id}`}>Details</Link>
           </button>
         </div>

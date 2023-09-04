@@ -56,7 +56,7 @@ const FormContact = ({ carName }) => {
             ></textarea>
           </FormGroup>
 
-          <button className=" contact__btn" type="submit">
+          <button className="custom__btn w-25 m-auto mt-2" type="submit">
             Envoyer
           </button>
         </Form>

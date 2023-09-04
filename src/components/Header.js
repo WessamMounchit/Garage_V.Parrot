@@ -8,6 +8,7 @@ import { Button, Modal, Nav, Navbar, Container, Offcanvas } from 'react-bootstra
 import Login from './Login';
 import Register from './Register';
 import { Link } from 'react-router-dom';
+import logo from '../assets/logo.png'
 import './Header.css'
 
 function Header() {
@@ -15,7 +16,7 @@ function Header() {
   const { isAuth } = useSelector((state) => state.auth)
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
   const [isRegisterModalOpen, setIsRegisterModalOpen] = useState(false);
-  const expand = 'xl'; //false, 'sm', 'md', 'lg', 'xl', 'xxl'
+  const expand = 'md'; //false, 'sm', 'md', 'lg', 'xl', 'xxl'
   const role = secureLocalStorage.getItem('role')
 
 
@@ -42,27 +43,24 @@ function Header() {
   const closeRegisterModal = () => setIsRegisterModalOpen(false);
 
   const authButton = isAuth ? (
-    <button type="button" className="btn btn-primary mx-2" onClick={e => logout(e)}>
+    <button className="custom__btn" onClick={e => logout(e)}>
       Se déconnecter
     </button>
   ) : (
     //<Link to="/login">
-    <button type="button" className="btn btn-primary mx-2" onClick={() => setIsLoginModalOpen(true)}>
+    <button className="custom__btn" onClick={() => setIsLoginModalOpen(true)}>
       Espace professionel
     </button>
     //</Link>
   );
 
   return (
-    <header>
-      <Navbar expand={expand} className="bg-body-tertiary mb-3">
+    <header className='w-100 d-flex justify-content-between'>
+      <Navbar expand={expand} className="bg-body-tertiary w-100 p-0">
         <Container fluid>
           <Navbar.Brand href="#">
-            <Link to="/" className="logo d-flex align-items-center gap-2">
-              <i class="ri-car-line"></i>
-              <span>
-                Garage <br /> Vincent Parrot
-              </span>
+            <Link to="/" className="logo d-flex align-items-center">
+              <img src={logo} alt='logo' />
             </Link>
           </Navbar.Brand>
           <Navbar.Toggle aria-controls={`offcanvasNavbar-expand-${expand}`} />
@@ -71,20 +69,17 @@ function Header() {
             aria-labelledby={`offcanvasNavbarLabel-expand-${expand}`}
             placement="end"
           >
-            <Offcanvas.Header closeButton>
-              <Offcanvas.Title id={`offcanvasNavbarLabel-expand-${expand}`}>
+            <Offcanvas.Header className='canvas__header' closeButton>
+              <Offcanvas.Title className='canvas__title' id={`offcanvasNavbarLabel-expand-${expand}`}>
                 <h1>
                   <Link to="/home" className="logo d-flex align-items-center gap-2">
-                    <i class="ri-car-line"></i>
-                    <span>
-                      Garage <br /> Vincent Parrot
-                    </span>
+                    <img src={logo} alt='logo' />
                   </Link>
                 </h1>
               </Offcanvas.Title>
             </Offcanvas.Header>
-            <Offcanvas.Body>
-              <Nav className="nav justify-content-center flex-grow-1 pe-3">
+            <Offcanvas.Body className='canvas__body'>
+              <Nav className="nav justify-content-center flex-grow-1 nav__container">
                 <Nav.Link href="#action1">Accueil</Nav.Link>
                 <Nav.Link href="#action2">Services</Nav.Link>
                 <Nav.Link href="#action3">À propos</Nav.Link>

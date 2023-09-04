@@ -1,0 +1,8 @@
+.all_cars-btn {
+  background-color: #262526;
+  width: 32%;
+}
+
+.all_cars-btn:hover {
+  background-color: #D92332;
+}

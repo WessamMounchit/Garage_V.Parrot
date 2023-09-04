@@ -16,7 +16,7 @@
   border-radius: 10px;
   height: 100%;
   gap: 10px;
-  background: linear-gradient(rgb(0, 13, 107, 0.5), rgb(0, 13, 107, 0.5));
+  background: linear-gradient(rgba(6, 8, 30, 0.5), rgba(5, 8, 36, 0.5));
 }
 
 .service-title h6 {

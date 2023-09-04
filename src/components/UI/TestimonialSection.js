@@ -71,7 +71,7 @@ const Testimonial = () => {
   const settings = {
     dots: true,
     infinite: true,
-    autoplay: true,
+    autoplay: false,
     speed: 1000,
     swipeToSlide: true,
     autoplaySpeed: 4000,
@@ -130,7 +130,7 @@ const Testimonial = () => {
               ))}
           </Slider>
         </Row>
-        <button onClick={() => setIsAddModalOpen(true)} className="btn btn-info">Laissez un commentaire</button>
+        <button onClick={() => setIsAddModalOpen(true)} className="custom__btn mt-4 ms-auto me-4">Laissez un avis</button>
       </Container>
 
       <CustomModal

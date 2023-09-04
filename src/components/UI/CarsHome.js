@@ -4,6 +4,7 @@ import CarItem from './CarItem';
 import { Link } from 'react-router-dom';
 import { onGetLatestCars } from '../../api/cars';
 import fetchData from '../../utils/fetchData';
+import '../../styles/car-home.css'
 
 const CarsHome = () => {
   const [cars, setCars] = useState({
@@ -48,7 +49,7 @@ const CarsHome = () => {
 
       </Row>
 
-      <button className="text-center w-50 car__item-btn car__btn-details">
+      <button className="text-center custom__btn all_cars-btn">
         <Link to={`/cars`}>Voir toutes nos voitures</Link>
       </button>
     </Container>

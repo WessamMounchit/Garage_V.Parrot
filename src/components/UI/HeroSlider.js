@@ -1,63 +1,29 @@
 import React from "react";
-
-import Slider from "react-slick";
-import { Container } from "react-bootstrap";
-import { Link } from "react-router-dom";
-
 import "../../styles/hero-slider.css";
+import heroImage from '../../assets/hero.png'
 
 const HeroSlider = () => {
-  const settings = {
-    fade: true,
-    speed: 2000,
-    autoplaySpeed: 3000,
-    infinite: true,
-    autoplay: true,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-    pauseOnHover: false,
-  };
   return (
-    <Slider {...settings} className="hero__slider">
-      <div className="slider__item slider__item-01 mt0">
-        <Container>
-          <div className="slider__content ">
-            <h4 className="text-black fw-bold mb-3">Bienvenue</h4>
-            <h1 className="text-black mb-4">Au garage Vincent Parrot</h1>
+    <div className="hero">
+      <div className="hero__left">
+        <h1 className="hero__title">
+          Find, book, rent a car—quick and super easy!
+        </h1>
 
-            <button className="btn reserve__btn">
-              <Link to="/cars">Contactez-nous</Link>
-            </button>
-          </div>
-        </Container>
+        <p className="hero__subtitle">
+          Streamline your car rental experience with our effortless booking
+          process.
+        </p>
+        <button className="custom__btn">Contactez-nous</button>
+
       </div>
+      <div className="hero__image-container">
+        <div className="hero__image">
+          <img src={heroImage} alt="hero" fill className="" />
+        </div>
 
-      <div className="slider__item slider__item-02 mt0">
-        <Container>
-          <div className="slider__content ">
-            <h4 className="text-black fw-bold  mb-3">Bienvenue</h4>
-            <h1 className="text-black mb-4">Au garage Vincent Parrot</h1>
-
-            <button className="btn reserve__btn">
-              <Link to="/cars">Contactez-nous</Link>
-            </button>
-          </div>
-        </Container>
       </div>
-
-      <div className="slider__item slider__item-03 mt0">
-        <Container>
-          <div className="slider__content ">
-            <h4 className="text-black fw-bold mb-3">Bienvenue</h4>
-            <h1 className="text-black mb-4">Au garage Vincent Parrot</h1>
-
-            <button className="btn reserve__btn">
-              <Link to="/cars">Contactez-nous</Link>
-            </button>
-          </div>
-        </Container>
-      </div>
-    </Slider>
+    </div>
   );
 };
 

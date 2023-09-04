@@ -16,7 +16,7 @@ h3,
 h4,
 h5,
 h6 {
-  color: #000d6b;
+  color: #262526;
   font-weight: 600;
   margin-bottom: 0;
 }
@@ -46,13 +46,13 @@ ul {
 }
 
 .section__title {
-  color: #000d6b;
+  color: #262526;
   font-weight: 600;
   font-size: 2rem;
 }
 
 .section__subtitle {
-  color: #f9a826;
+  color: #D92332;
   font-weight: 600;
   font-size: 1.2rem;
 }
@@ -76,10 +76,38 @@ section {
   transition: 0.3s;
 }
 
-.btn:hover {
-  color: #fff !important;
-  background: #000c6bd0;
+.custom__btn {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+  color: white;
+  background-color: #D92332;
+  border-radius: 9999px;
+  border: 0;
+  transition: 0.3s;
 }
+
+
+.custom__btn:hover {
+  background-color: #262526;
+}
+
+.custom__btn a {
+  text-decoration: none;
+  color: #fff;
+  font-weight: 500;
+}
+
+.custom__btn a:hover {
+  color: white;
+}
+
 
 @media only screen and (max-width: 768px) {
   section {

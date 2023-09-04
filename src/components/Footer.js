@@ -98,7 +98,6 @@ const Footer = () => {
               <div className="logo footer__logo">
                 <h1>
                   <Link to="/home" className=" d-flex align-items-center gap-2 text-decoration-none ">
-                    <i class="ri-car-line"></i>
                     <span>
                       Garage <br /> Vincent Parrot
                     </span>
@@ -118,7 +117,7 @@ const Footer = () => {
             </Col>
 
 
-            <Col lg="4" md="4" sm="6" className="d-flex justify-content-lg-center">
+            <Col lg="5" md="4" sm="6" className="d-flex justify-content-lg-center">
               <div className="mb-4">
                 <div className="hours__title">
                   <h5 className="footer__link-title mb-4">Horraires d'ouverture</h5>
@@ -127,7 +126,7 @@ const Footer = () => {
               </div>
             </Col>
 
-            <Col lg="4" md="4" sm="6" className="d-flex justify-content-lg-center">
+            <Col lg="3" md="4" sm="6" className="d-flex justify-content-lg-center">
               <div className="mb-4">
                 <h5 className="footer__link-title">Quick Links</h5>
                 <ListGroup>
@@ -142,7 +141,7 @@ const Footer = () => {
 
             <Col lg="12">
               <div className="footer__bottom">
-                <p className="section__description d-flex align-items-center justify-content-center gap-1 pt-4">
+                <p className="section__description copyright">
                   <i class="ri-copyright-line"></i>
                   Copyright {year}
                 </p>

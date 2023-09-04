@@ -1,9 +1,13 @@
 .about__section-item {
-  column-gap: 3rem;
+  column-gap: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .about__section-item p i {
-  color: #01c601;
+  color: #D92332;
   font-size: 1.2rem;
 }
 
@@ -24,6 +28,14 @@
   font-weight: bold;
   margin-bottom: 1.5rem;
   width: 100%;
+}
+
+.about__description {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: auto;
+  gap: 1rem;
 }
 
 @media only screen and (max-width: 992px) {

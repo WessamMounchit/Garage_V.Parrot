@@ -1,9 +1,45 @@
-.logo {
-  text-decoration: none;
-  color: black;
+.logo img{
+  height: 3.2rem;
 }
 
 .nav {
-  margin-left: 10rem;
-  font-size: 1.2rem;
+  font-size: 1.3rem;
+}
+
+.nav__container{
+  margin-right: 3rem;
+}
+
+.nav__container a {
+  color: #262526;
+  font-weight: 600;
+  margin: 0 0.2rem 0 0.2rem;
+}
+
+.nav__container a:hover {
+  color: #D92332;
+}
+
+.canvas__header {
+  display: grid !important;
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+.canvas__title {
+  grid-column-start: 2;
+}
+
+.canvas__title img {
+  height: 4rem;
+}
+
+.btn-close {
+  grid-column-start: 3 !important;
+  margin-left: auto;
+}
+
+@media (min-width: 768px) {
+  .canvas__header{
+    display: none !important;
+  }
 }
