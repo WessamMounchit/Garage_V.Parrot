@@ -4,11 +4,11 @@ import { toast } from 'react-toastify';
 import CustomModal from './CustomModal';
 import EditCar from '../EditCar';
 import AddCar from '../AddCar';
-import CarItem from './CarItem';
 import CarPagination from './CarPagination';
 import { onDeleteCar, onGetCars } from '../../api/cars';
 import fetchData from '../../utils/fetchData';
 import { Link } from 'react-router-dom';
+import CarFilters from './CarFilters';
 
 const CarsAdmin = () => {
 
@@ -16,14 +16,25 @@ const CarsAdmin = () => {
 
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
-  const [isViewModalOpen, setIsViewModalOpen] = useState(false);
   const [selectedCar, setSelectedCar] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
+  const date = new Date();
+  const year = date.getFullYear();
   const [cars, setCars] = useState({
     loading: false,
     error: false,
     data: undefined,
   });
+
+  const [filters, setFilters] = useState({
+    minPrice: 0,
+    maxPrice: 100000,
+    minYear: 2000,
+    maxYear: year,
+    minMileage: 0,
+    maxMileage: 100000,
+  });
+
 
   //////////  API   //////////
 
@@ -63,16 +74,6 @@ const CarsAdmin = () => {
   };
   //////////  MODAL   //////////
 
-  const handleViewModalOpen = (car) => {
-    setSelectedCar({ ...car });
-    setIsViewModalOpen(true);
-  };
-
-  const handleViewModalClose = () => {
-    setSelectedCar(null);
-    setIsViewModalOpen(false);
-  };
-
 
   const handleModalOpen = (car) => {
     setSelectedCar({ ...car });
@@ -83,6 +84,24 @@ const CarsAdmin = () => {
     setSelectedCar(null);
     setIsUpdateModalOpen(false);
   };
+
+
+  //////////  FILTERS   //////////
+
+  const filteredCarsByRange = cars.data?.filter((car) => {
+    const price = car.price;
+    const year = car.year;
+    const mileage = car.mileage;
+
+    return (
+      (filters.minPrice === '' || price >= filters.minPrice) &&
+      (filters.maxPrice === '' || price <= filters.maxPrice) &&
+      (filters.minYear === '' || year >= filters.minYear) &&
+      (filters.maxYear === '' || year <= filters.maxYear) &&
+      (filters.minMileage === '' || mileage >= filters.minMileage) &&
+      (filters.maxMileage === '' || mileage <= filters.maxMileage)
+    );
+  });
 
   //////////  PAGINATION & SEARCH   //////////
 
@@ -101,7 +120,7 @@ const CarsAdmin = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const carsPerPage = 7;
 
-  const filteredCars = cars.data?.filter((car) =>
+  const filteredCars = filteredCarsByRange?.filter((car) =>
     car.car_name.toLowerCase().includes(searchTerm.toLowerCase())
   )
   const totalPages = Math.ceil(filteredCars?.length / carsPerPage);
@@ -157,6 +176,10 @@ const CarsAdmin = () => {
         onChange={(e) => handleSearch(e.target.value)}
       />
       <div className='text-end me-4'>{addIcon}</div>
+      <CarFilters
+        filters={filters}
+        setFilters={setFilters}
+      />
       <table className="table styled-table">
         <thead>
           <tr>
@@ -180,13 +203,6 @@ const CarsAdmin = () => {
 
       {/*   //////////  MODALS   ////////// */}
 
-      <CustomModal
-        isOpen={isViewModalOpen}
-        onClose={handleViewModalClose}
-        title='Visualisation'
-      >
-        {selectedCar && <CarItem car={selectedCar} />}
-      </CustomModal>
 
       <CustomModal
         isOpen={isAddModalOpen}
