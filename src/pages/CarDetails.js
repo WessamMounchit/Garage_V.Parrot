@@ -26,6 +26,11 @@ const CarDetails = () => {
       });
   }, [carId]);
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [car]);
+
+
   const settings = {
     dots: true,
     infinite: true,
@@ -147,18 +152,11 @@ const CarDetails = () => {
 
           <Col lg="12">
             <div className="booking-info mt-5">
-              {/*                 <h5 className="mb-4 fw-bold text-center">Formulaire de contact</h5>
- */}                {car.data?.car_name && <FormContact carName={car.data.car_name} />}
+              {car.data?.car_name && <FormContact carName={car.data.car_name} />}
             </div>
           </Col>
 
-          {/*             <Col lg="5" className="mt-5">
-              <div className="payment__info mt-5">
-                <h5 className="mb-4 fw-bold ">Payment Information</h5>
-                <PaymentMethod />
-              </div>
-            </Col>
- */}           </Row>
+        </Row>
       </Container>
     </section>
   );

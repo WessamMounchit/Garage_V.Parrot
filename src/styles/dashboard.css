@@ -1,0 +1,128 @@
+  .styled-table {
+  border-collapse: collapse;
+  margin: 25px 0;
+  font-size: 0.9em;
+  font-family: sans-serif;
+  border-radius: 15px;
+}
+ 
+.styled-table thead tr {
+  background-color: #D92332;
+  color: #ffffff;
+}
+ 
+
+  thead th:first-child {
+    border-top-left-radius: 15px;
+  }
+  thead th:last-child {
+    border-top-right-radius: 15px;
+  }  
+    
+  table tr {
+    background-color: #f8f8f8;
+    padding: .35em;
+  }
+  
+  table th,
+  table td {
+    padding: .625em;
+    text-align: center;
+  }
+  
+  table th {
+    font-size: .85em;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+  }
+
+  .edit__icon::before {
+    color: rgb(17, 47, 148);
+    font-size: 1.5rem;
+  }
+  
+  .delete__icon::before {
+    color: #D92332;
+    font-size: 1.5rem;
+  }
+  
+  .check__icon::before {
+    color: #009879;
+    font-size: 1.5rem;
+  }
+  
+  .hourglass__icon::before {
+    color: #ddbd06;
+    font-size: 1.5rem;
+  }
+  
+  .eye__icon::before {
+    color: #262526;
+    font-size: 1.5rem;
+  }
+
+ 
+  @media screen and (max-width: 768px) {
+    table {
+      border: 0;
+    }
+      
+    table thead {
+      border: none;
+      height: 1px;
+      margin: -1px;
+      overflow: hidden;
+      padding: 0;
+      position: absolute;
+      width: 1px;
+    }
+
+    tbody th:first-child {
+      background-color: #D92332;
+      display: block;
+      border-radius: 15px 15px 0 0;
+      color: white;
+    }
+    
+    table tr {
+      border-bottom: 3px solid #ddd;
+      display: block;
+      margin-bottom: 1.5rem;
+      border-radius: 20px;
+      padding: 0;
+    }
+    
+    table td {
+      border-bottom: 1px solid #ddd;
+      display: block;
+      font-size: .8em;
+      text-align: right;
+      margin-right: 0.7rem;
+    }
+    
+    table td::before {
+      content: attr(data-label);
+      float: left;
+      font-weight: bold;
+      text-transform: uppercase;
+      margin-left: 0.7rem;
+    }
+    
+    table td:last-child {
+      border-bottom: 0;
+    }
+  }
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  

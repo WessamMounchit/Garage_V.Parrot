@@ -6,14 +6,25 @@
   font-size: 1.3rem;
 }
 
+
 .nav__container{
-  margin-right: 3rem;
+  margin: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+  flex-grow: 1;
+  margin: 0;
 }
 
 .nav__container a {
   color: #262526;
   font-weight: 600;
-  margin: 0 0.2rem 0 0.2rem;
+  text-decoration: none;
+}
+
+.nav__container a.active {
+  color: #D92332;
 }
 
 .nav__container a:hover {
@@ -38,8 +49,27 @@
   margin-left: auto;
 }
 
-@media (min-width: 768px) {
+.button__container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+@media (max-width: 1200px) {
+  .button__container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 3rem;
+  }
+}
+
+@media (min-width: 1200px) {
   .canvas__header{
     display: none !important;
   }
+
 }

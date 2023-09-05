@@ -4,26 +4,26 @@ import heroImage from '../../assets/hero.png'
 
 const HeroSlider = () => {
   return (
-    <div className="hero">
-      <div className="hero__left">
-        <h1 className="hero__title">
-          Find, book, rent a car—quick and super easy!
-        </h1>
+    <section className="p-0 hero__slider-section">
+      <div className="hero">
+        <div className="hero__left">
+          <h1 className="hero__title">
+            Plongez dans un univers automobile exceptionnel !
+          </h1>
 
-        <p className="hero__subtitle">
-          Streamline your car rental experience with our effortless booking
-          process.
-        </p>
-        <button className="custom__btn">Contactez-nous</button>
+          <p className="hero__subtitle">
+            Nous sommes là pour vous offrir des services de réparation, d'entretien et de personnalisation de la plus haute qualité.        </p>
+          <button className="custom__btn">Contactez-nous</button>
 
-      </div>
-      <div className="hero__image-container">
-        <div className="hero__image">
-          <img src={heroImage} alt="hero" fill className="" />
         </div>
+        <div className="hero__image-container">
+          <div className="hero__image">
+            <img src={heroImage} alt="hero" fill className="" />
+          </div>
 
+        </div>
       </div>
-    </div>
+    </section>
   );
 };
 

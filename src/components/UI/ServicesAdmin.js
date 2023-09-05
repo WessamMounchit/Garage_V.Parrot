@@ -9,6 +9,9 @@ import EditService from '../EditService';
 import ServiceItem from './ServiceItem'
 
 const ServicesAdmin = () => {
+
+  //////////  STATE   //////////
+
   const [services, setServices] = useState({
     loading: false,
     error: false,
@@ -22,6 +25,9 @@ const ServicesAdmin = () => {
   useEffect(() => {
     fetchData(setServices, onGetServices);
   }, []);
+
+  //////////  HANDLE MODALS   //////////
+
 
   const handleViewModalOpen = (service) => {
     setSelectedService({ ...service });
@@ -43,6 +49,8 @@ const ServicesAdmin = () => {
     setSelectedService(null);
     setIsUpdateModalOpen(false);
   };
+
+  //////////  API   //////////
 
 
   const handleAddService = async () => {
@@ -77,14 +85,14 @@ const ServicesAdmin = () => {
 
   const addIcon = (
     <i
-      className="btn ri-add-box-fill add__icon text-end ri-lg p-0 "
+      className="btn ri-add-circle-fill add__icon text-end ri-lg p-0 "
       onClick={() => setIsAddModalOpen(true)}>
     </i>
   )
 
   return (
     <Container>
-      <span className='text-end'>{addIcon}</span>
+      <div className='text-end me-4'>{addIcon}</div>
       <table className="table styled-table">
         <thead>
           <tr>
@@ -99,10 +107,10 @@ const ServicesAdmin = () => {
           {services.data?.map((service) => (
             <tr key={service.service_id}>
               <th scope="row">{service.service_id}</th>
-              <td>{service.title}</td>
-              <td>{<i className="btn ri-edit-box-fill edit__icon ri-lg p-0 " onClick={() => handleModalOpen(service)}></i>}</td>
-              <td>{<i className="btn ri-delete-bin-fill delete__icon ri-lg p-0 " onClick={() => handleDeleteService(service.service_id)}></i>}</td>
-              <td><button onClick={() => handleViewModalOpen(service)} className='btn btn-info'>Voir en détails</button></td>
+              <td data-label="Nom du service">{service.title}</td>
+              <td data-label="Modifier">{<i className="btn ri-edit-box-fill edit__icon ri-lg p-0 " onClick={() => handleModalOpen(service)}></i>}</td>
+              <td data-label="Supprimer">{<i className="btn ri-delete-bin-fill delete__icon ri-lg p-0 " onClick={() => handleDeleteService(service.service_id)}></i>}</td>
+              <td data-label="Détails"><i onClick={() => handleViewModalOpen(service)} className='btn ri-eye-fill ri-lg eye__icon p-0' /></td>
             </tr>
           ))}
         </tbody>
@@ -114,7 +122,8 @@ const ServicesAdmin = () => {
         onClose={handleViewModalClose}
         title='Visualisation'
       >
-        {selectedService && <ServiceItem service={selectedService} />}      </CustomModal>
+        {selectedService && <ServiceItem service={selectedService} />}
+      </CustomModal>
 
       <CustomModal
         isOpen={isAddModalOpen}

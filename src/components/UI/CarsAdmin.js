@@ -8,6 +8,7 @@ import CarItem from './CarItem';
 import CarPagination from './CarPagination';
 import { onDeleteCar, onGetCars } from '../../api/cars';
 import fetchData from '../../utils/fetchData';
+import { Link } from 'react-router-dom';
 
 const CarsAdmin = () => {
 
@@ -111,10 +112,12 @@ const CarsAdmin = () => {
 
   const addIcon = (
     <i
-      className="btn ri-add-box-fill add__icon text-end ri-lg p-0 "
+      className="btn ri-add-circle-fill add__icon text-end ri-lg p-0 "
       onClick={() => setIsAddModalOpen(true)}>
     </i>
   )
+
+  //////////  CONTENT   //////////
 
   let content;
   if (cars.loading) {
@@ -130,13 +133,17 @@ const CarsAdmin = () => {
     content = currentCars?.map((car) => (
       <tr key={car.car_id}>
         <th scope="row">{car.car_id}</th>
-        <td>{car.car_name}</td>
-        <td>{car.year}</td>
-        <td>{car.price.toLocaleString()} €</td>
-        <td>{car.mileage.toLocaleString()} km</td>
-        <td>{<i className="btn ri-edit-box-fill edit__icon ri-lg p-0 " onClick={() => handleModalOpen(car)}></i>}</td>
-        <td>{<i className="btn ri-delete-bin-fill delete__icon ri-lg p-0 " onClick={() => handleDeleteCar(car.car_id)}></i>}</td>
-        <td><button onClick={() => handleViewModalOpen(car)} className='btn btn-info'>Voir en détails</button></td>
+        <td data-label="Nom">{car.car_name}</td>
+        <td data-label="Année">{car.year}</td>
+        <td data-label="Prix">{car.price.toLocaleString()} €</td>
+        <td data-label="Kilometrage">{car.mileage.toLocaleString()} km</td>
+        <td data-label="Modifier">{<i className="btn ri-edit-box-fill edit__icon ri-lg p-0 " onClick={() => handleModalOpen(car)}></i>}</td>
+        <td data-label="Supprimer">{<i className="btn ri-delete-bin-fill delete__icon ri-lg p-0 " onClick={() => handleDeleteCar(car.car_id)}></i>}</td>
+        <td data-label="Détails">
+          <Link to={`/${car.car_name}/${car.car_id}`}>
+            <i className='btn ri-eye-fill ri-lg eye__icon p-0'></i>
+          </Link>
+        </td>
       </tr>
     ))
   }
@@ -149,7 +156,7 @@ const CarsAdmin = () => {
         value={searchTerm}
         onChange={(e) => handleSearch(e.target.value)}
       />
-      <span className='text-end'>{addIcon}</span>
+      <div className='text-end me-4'>{addIcon}</div>
       <table className="table styled-table">
         <thead>
           <tr>

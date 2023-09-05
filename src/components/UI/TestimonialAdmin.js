@@ -1,22 +1,22 @@
 import React, { useEffect, useState } from 'react';
-import { Container } from 'react-bootstrap';
+import { Container, OverlayTrigger, Tooltip } from 'react-bootstrap';
 import fetchData from '../../utils/fetchData';
 import { onDeleteTestimonial, onGetTestimonials, onValidateTestimonial } from '../../api/testimonials';
 import CustomModal from './CustomModal';
 import TestimonialItem from './TestimonialItem';
-import '../../styles/testimonial-admin.css'
-import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import AddTestimonial from '../AddTestimonial';
 import EditTestimonial from '../EditTestimonial';
 
 const TestimonialAdmin = () => {
+
+  //////////  STATE   //////////
+
   const [testimonials, setTestimonials] = useState({
     loading: false,
     error: false,
     data: undefined
   });
-  const { isAuth } = useSelector((state) => state.auth);
   const [selectedTestimonial, setSelectedTestimonial] = useState(null);
   const [isViewModalOpen, setIsViewModalOpen] = useState(false);
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
@@ -25,6 +25,9 @@ const TestimonialAdmin = () => {
   useEffect(() => {
     fetchData(setTestimonials, onGetTestimonials);
   }, []);
+
+  //////////  HANDLE MODALS   //////////
+
 
   const handleViewModalOpen = (testimonial) => {
     setSelectedTestimonial({ ...testimonial });
@@ -45,6 +48,8 @@ const TestimonialAdmin = () => {
     setSelectedTestimonial(null);
     setIsUpdateModalOpen(false);
   };
+
+  //////////  API   //////////
 
 
   const handleAddTestimonial = async () => {
@@ -91,7 +96,7 @@ const TestimonialAdmin = () => {
 
   const addIcon = (
     <i
-      className="btn ri-add-box-fill add__icon text-end ri-lg p-0 "
+      className="btn ri-add-circle-fill add__icon text-end ri-lg p-0 "
       onClick={() => setIsAddModalOpen(true)}>
     </i>
   )
@@ -99,7 +104,7 @@ const TestimonialAdmin = () => {
 
   return (
     <Container>
-      <span className='text-end'>{addIcon}</span>
+      <div className='text-end me-4'>{addIcon}</div>
       <table className="table styled-table">
         <thead>
           <tr>
@@ -117,13 +122,23 @@ const TestimonialAdmin = () => {
           {testimonials.data?.map((testimonial) => (
             <tr key={testimonial.testimonial_id}>
               <th scope="row">{testimonial.testimonial_id}</th>
-              <td>{testimonial.first_name}</td>
-              <td>{testimonial.last_name}</td>
-              <td>{testimonial.job}</td>
-              <td>{testimonial.validated ? <i className="ri-checkbox-circle-fill ri-lg"></i> : <i className="btn ri-hourglass-fill ri-lg" onClick={() => handleValidateTestimonial(testimonial.testimonial_id, true)}></i>}</td>
-              <td>{<i className="btn ri-edit-box-fill edit__icon ri-lg p-0 " onClick={() => handleModalOpen(testimonial)}></i>}</td>
-              <td>{<i className="btn ri-delete-bin-fill delete__icon ri-lg p-0 " onClick={() => handleDeleteTestimonial(testimonial.testimonial_id)}></i>}</td>
-              <td><button onClick={() => handleViewModalOpen(testimonial)} className='btn btn-info'>Voir en détails</button></td>
+              <td data-label="Prénom">{testimonial.first_name}</td>
+              <td data-label="Nom">{testimonial.last_name}</td>
+              <td data-label="Métier">{testimonial.job}</td>
+              <td data-label="Validation">{testimonial.validated ? (
+                <i className="ri-checkbox-circle-fill ri-lg check__icon p-0 "></i>
+              ) : (
+                <OverlayTrigger
+                  placement="top"
+                  overlay={<Tooltip id={`tooltip-validate-${testimonial.testimonial_id}`}>Appuyez pour valider</Tooltip>}
+                >
+                  <i className="btn ri-hourglass-fill ri-lg hourglass__icon p-0 " onClick={() => handleValidateTestimonial(testimonial.testimonial_id, true)}></i>
+                </OverlayTrigger>
+              )}
+              </td>
+              <td data-label="Modifier">{<i className="btn ri-edit-box-fill edit__icon ri-lg p-0 " onClick={() => handleModalOpen(testimonial)}></i>}</td>
+              <td data-label="Supprimer">{<i className="btn ri-delete-bin-fill delete__icon ri-lg p-0 " onClick={() => handleDeleteTestimonial(testimonial.testimonial_id)}></i>}</td>
+              <td data-label="Détails"><i onClick={() => handleViewModalOpen(testimonial)} className='btn ri-eye-fill ri-lg eye__icon p-0' /></td>
             </tr>
           ))}
         </tbody>

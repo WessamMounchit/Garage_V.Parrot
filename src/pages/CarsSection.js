@@ -20,17 +20,26 @@ const CarsSection = () => {
     data: undefined,
   });
 
+  const date = new Date();
+  const year = date.getFullYear();
+
   const [filters, setFilters] = useState({
-    minPrice: '',
-    maxPrice: '',
-    minYear: '',
-    maxYear: '',
-    maxMileage: '',
+    minPrice: 0,
+    maxPrice: 100000,
+    minYear: 2000,
+    maxYear: year,
+    minMileage: 0,
+    maxMileage: 100000,
   });
 
   useEffect(() => {
     fetchData(setCars, onGetCars);
   }, []);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [cars]);
+
 
 
   //////////  FILTERS   //////////
@@ -46,19 +55,13 @@ const CarsSection = () => {
       (filters.maxPrice === '' || price <= filters.maxPrice) &&
       (filters.minYear === '' || year >= filters.minYear) &&
       (filters.maxYear === '' || year <= filters.maxYear) &&
+      (filters.minMileage === '' || mileage >= filters.minMileage) &&
       (filters.maxMileage === '' || mileage <= filters.maxMileage)
     );
   });
 
-  const handleFilterChange = (event) => {
-    const { name, value } = event.target;
-    setFilters({
-      ...filters,
-      [name]: value,
-    });
-  };
 
-  //////////  PAGINATION   //////////
+  //////////  PAGINATION & SEARCH   //////////
 
   const handleSearch = (newSearchTerm) => {
     setSearchTerm(newSearchTerm);
@@ -83,6 +86,7 @@ const CarsSection = () => {
   const totalPages = Math.ceil(filteredAndSearchedCars?.length / carsPerPage);
   const currentCars = paginate(filteredAndSearchedCars, carsPerPage, currentPage);
 
+  //////////  CONTENT   //////////
 
   let content;
   if (cars.loading) {
@@ -124,7 +128,10 @@ const CarsSection = () => {
                 className='w-75 '
               />
             </div>
-            <CarFilters filters={filters} handleFilterChange={handleFilterChange} />
+            <CarFilters
+              filters={filters}
+              setFilters={setFilters}
+            />
             {content}
             <CarPagination currentPage={currentPage} setCurrentPage={setCurrentPage} totalPages={totalPages} />
           </Row>

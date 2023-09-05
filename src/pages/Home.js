@@ -10,9 +10,7 @@ import CarsHome from '../components/UI/CarsHome';
 const Home = () => {
   return (
     <>
-      <section className="p-0 hero__slider-section">
-        <HeroSlider />
-      </section>
+      <HeroSlider />
       <ServicesSection />
       <CarsHome />
       <TestimonialSection />

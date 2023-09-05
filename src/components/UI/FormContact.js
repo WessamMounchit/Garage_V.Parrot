@@ -62,7 +62,7 @@ const FormContact = ({ carName }) => {
         </Form>
       </Col>
 
-      <Col lg="5" md="5" className="d-flex justify-content-center align-items-center">
+      <Col lg="5" md="5" className="contact__container">
         <div className="contact__info">
           <h6 className="fw-bold">Information de contact</h6>
 

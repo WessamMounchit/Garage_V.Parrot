@@ -7,7 +7,7 @@ import { toast } from 'react-toastify';
 import { Button, Modal, Nav, Navbar, Container, Offcanvas } from 'react-bootstrap';
 import Login from './Login';
 import Register from './Register';
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import logo from '../assets/logo.png'
 import './Header.css'
 
@@ -16,7 +16,7 @@ function Header() {
   const { isAuth } = useSelector((state) => state.auth)
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
   const [isRegisterModalOpen, setIsRegisterModalOpen] = useState(false);
-  const expand = 'md'; //false, 'sm', 'md', 'lg', 'xl', 'xxl'
+  const expand = 'xl'; //false, 'sm', 'md', 'lg', 'xl', 'xxl'
   const role = secureLocalStorage.getItem('role')
 
 
@@ -71,26 +71,24 @@ function Header() {
           >
             <Offcanvas.Header className='canvas__header' closeButton>
               <Offcanvas.Title className='canvas__title' id={`offcanvasNavbarLabel-expand-${expand}`}>
-                <h1>
-                  <Link to="/home" className="logo d-flex align-items-center gap-2">
+                  <Link to="/" className="logo d-flex align-items-center gap-2">
                     <img src={logo} alt='logo' />
                   </Link>
-                </h1>
               </Offcanvas.Title>
             </Offcanvas.Header>
             <Offcanvas.Body className='canvas__body'>
-              <Nav className="nav justify-content-center flex-grow-1 nav__container">
-                <Nav.Link href="#action1">Accueil</Nav.Link>
-                <Nav.Link href="#action2">Services</Nav.Link>
-                <Nav.Link href="#action3">À propos</Nav.Link>
-                <Nav.Link href="#action4">Contact</Nav.Link>
+              <Nav className="nav nav__container">
+                <NavLink to="/">Accueil</NavLink>
+                <NavLink to="/cars">Nos voitures</NavLink>
+                <NavLink to="/about">À propos</NavLink>
+                <NavLink to="/contact">Contact</NavLink>
+                {isAuth && <NavLink to="/dashboard">Gestion</NavLink>}
               </Nav>
-              <div className="d-flex align-items-center gap-2">
+              <div className="button__container">
                 {authButton}
                 {isAuth && role === 'admin' && (
                   <button
-                    type="button"
-                    className="btn btn-primary"
+                    className="custom__btn"
                     onClick={() => setIsRegisterModalOpen(true)}>
                     Créer un compte employé
                   </button>

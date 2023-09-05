@@ -6,6 +6,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchHours } from '../../redux/slices/hoursSlice';
 
 const OpeningHoursAdmin = () => {
+
+  //////////  STATE   //////////
+
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
   const [selectedDay, setSelectedDay] = useState(null);
   const openingHours = useSelector((state => state.hours))
@@ -15,6 +18,9 @@ const OpeningHoursAdmin = () => {
     dispatch(fetchHours())
   }, [dispatch]);
 
+  //////////  FORMAT HOURS   //////////
+
+
   const daysOfWeekOrder = ['lundi', 'mardi', 'mercredi', 'jeudi', 'vendredi', 'samedi', 'dimanche'];
 
   const sortedOpeningHours = openingHours.data
@@ -22,6 +28,9 @@ const OpeningHoursAdmin = () => {
       return daysOfWeekOrder.indexOf(a.day) - daysOfWeekOrder.indexOf(b.day);
     })
     : [];
+
+  //////////  CONTENT   //////////
+
 
   let content;
   if (openingHours.loading) {
@@ -33,12 +42,12 @@ const OpeningHoursAdmin = () => {
   else if (openingHours.data?.length > 0) {
     content = sortedOpeningHours.map((openingHour) => (
       <tr key={openingHour.day}>
-        <th scope="row">{openingHour.day}</th>
-        <td>{openingHour.morning_open}</td>
-        <td>{openingHour.morning_close}</td>
-        <td>{openingHour.afternoon_open}</td>
-        <td>{openingHour.afternoon_close}</td>
-        <td>
+        <th scope="row">{openingHour.day ? openingHour.day : "Fermé"}</th>
+        <td data-label="Matin ouverture">{openingHour.morning_open ? openingHour.morning_open : "Fermé"}</td>
+        <td data-label="Matin fermeture">{openingHour.morning_close ? openingHour.morning_close : "Fermé"}</td>
+        <td data-label="Après-midi ouverture">{openingHour.afternoon_open ? openingHour.afternoon_open : "Fermé"}</td>
+        <td data-label="Après-midi fermeture">{openingHour.afternoon_close ? openingHour.afternoon_close : "Fermé"}</td>
+        <td data-label="Modifier">
           {<i
             className="btn ri-edit-box-fill edit__icon ri-lg p-0 "
             onClick={() => {

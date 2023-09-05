@@ -41,9 +41,11 @@ const CarItem = ({ car }) => {
             </span>
           </div>
 
-          <button className="w-100 custom__btn">
-            <Link to={`/car/${car_id}`}>Details</Link>
-          </button>
+          <Link to={`/${car_name}/${car_id}`} className="text-decoration-none ">
+            <button className="w-100 custom__btn">
+              Details
+            </button>
+          </Link>
         </div>
       </div>
     </Col>

@@ -94,10 +94,10 @@ const Footer = () => {
       <footer className="footer">
         <Container>
           <Row>
-            <Col lg="4" md="4" sm="12">
+            <Col lg="4" md="5" sm="12">
               <div className="logo footer__logo">
                 <h1>
-                  <Link to="/home" className=" d-flex align-items-center gap-2 text-decoration-none ">
+                  <Link to="/" className=" d-flex align-items-center gap-2 text-decoration-none ">
                     <span>
                       Garage <br /> Vincent Parrot
                     </span>
@@ -126,8 +126,8 @@ const Footer = () => {
               </div>
             </Col>
 
-            <Col lg="3" md="4" sm="6" className="d-flex justify-content-lg-center">
-              <div className="mb-4">
+            <Col lg="3" md="2" sm="6" className="d-flex justify-content-lg-center">
+              <div className="mb-4 footer_link-container">
                 <h5 className="footer__link-title">Quick Links</h5>
                 <ListGroup>
                   {quickLinks.map((item, index) => (
@@ -143,7 +143,7 @@ const Footer = () => {
               <div className="footer__bottom">
                 <p className="section__description copyright">
                   <i class="ri-copyright-line"></i>
-                  Copyright {year}
+                  Site codé par Wessam Mounchit Copyright {year}
                 </p>
               </div>
             </Col>
