@@ -7,23 +7,18 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchHours } from "../redux/slices/hoursSlice";
 
 const quickLinks = [
-  {
-    path: "/about",
-    display: "About",
-  },
-
-  {
-    path: "#",
-    display: "Privacy Policy",
-  },
-
+  
   {
     path: "/cars",
-    display: "Car Listing",
+    display: "Nos voitures",
   },
   {
     path: "/contact",
     display: "Contact",
+  },
+  {
+    path: "/about",
+    display: "About",
   },
 ];
 
@@ -128,7 +123,7 @@ const Footer = () => {
 
             <Col lg="3" md="2" sm="6" className="d-flex justify-content-lg-center">
               <div className="mb-4 footer_link-container">
-                <h5 className="footer__link-title">Quick Links</h5>
+                <h5 className="footer__link-title">Navigation rapide</h5>
                 <ListGroup>
                   {quickLinks.map((item, index) => (
                     <ListGroupItem key={index} className="p-0 mt-3 quick__link">

@@ -56,7 +56,7 @@ const FormContact = ({ carName }) => {
             ></textarea>
           </FormGroup>
 
-          <button className="custom__btn w-25 m-auto mt-2" type="submit">
+          <button className="custom__btn contact__btn w-25 mt-2" type="submit">
             Envoyer
           </button>
         </Form>
@@ -67,20 +67,20 @@ const FormContact = ({ carName }) => {
           <h6 className="fw-bold">Information de contact</h6>
 
           <div className=" d-flex align-items-center gap-2">
-          <h6 className="fs-6 mb-0">Adresse:</h6>
-          <p className="section__description mb-0">
+          <h6 className="label__contact">Adresse:</h6>
+          <p className="section__description contact__text mb-0">
             123 Rue de Vincent, Paris, France
           </p>
           </div>
 
           <div className=" d-flex align-items-center gap-2">
-            <h6 className="fs-6 mb-0">Telephone:</h6>
-            <p className="section__description mb-0">+88683896366</p>
+            <h6 className="label__contact">Telephone:</h6>
+            <p className="section__description contact__text mb-0">+88683896366</p>
           </div>
 
           <div className=" d-flex align-items-center gap-2">
-            <h6 className="mb-0 fs-6">Email:</h6>
-            <p className="section__description mb-0">example@gmail.com</p>
+            <h6 className="label__contact">Email:</h6>
+            <p className="section__description contact__text mb-0">example@gmail.com</p>
           </div>
 
           <h6 className="fw-bold mt-4">Follow Us</h6>

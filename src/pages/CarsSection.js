@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Col, Container, Form, Row } from 'react-bootstrap'
+import { Col, Container, Row } from 'react-bootstrap'
 import CarItem from '../components/UI/CarItem'
 import CarFilters from '../components/UI/CarFilters';
 import CarPagination from '../components/UI/CarPagination';
@@ -119,14 +119,16 @@ const CarsSection = () => {
               <h6 className="section__subtitle">Découvrez</h6>
               <h2 className="section__title">Nos voitures</h2>
             </Col>
-            <div className='w-100 d-flex justify-content-center my-4'>
-              <Form.Control
+            <div className="search mb-4">
+              <input
                 type="text"
                 placeholder="Rechercher par nom de voiture"
                 value={searchTerm}
                 onChange={(e) => handleSearch(e.target.value)}
-                className='w-75 '
               />
+              <span>
+                <i class="ri-search-line ri-lg"></i>
+              </span>
             </div>
             <CarFilters
               filters={filters}

@@ -108,6 +108,65 @@ section {
   color: white;
 }
 
+.form__btn {
+  background-color: #239B56;
+}
+
+.black__btn {
+  background-color: #262526
+}
+
+.white__btn {
+  background-color: #F2F2F2;
+  color: #262526;
+}
+
+.custom__btn.black__btn:hover,
+.custom__btn.white__btn:hover {
+  background-color: #D94350;
+}
+
+.search {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  border: 1px solid #7c8a972f;
+  border-radius: 50px;
+  background: #F2F2F2;
+  width: 35% !important;
+  height: 2.2rem;
+  margin: auto;
+}
+
+.search input {
+  background: transparent;
+  color: #262526;
+  border: none;
+  outline: none;
+  width: 100%;
+}
+
+.search span i {
+  color: #262526;
+}
+
+.modal-title {
+  font-weight: 600 !important;
+  text-transform: uppercase;
+  font-size: medium !important;
+}
+
+.modal-header {
+  background-color: #D92332;
+  color: white;
+}
+
+label {
+  font-weight: 600;
+}
+
+
 
 @media only screen and (max-width: 768px) {
   section {
@@ -120,5 +179,8 @@ section {
 
   .section__subtitle {
     font-size: 1.1rem;
+  }
+  .search {
+    width: 100% !important;
   }
 }

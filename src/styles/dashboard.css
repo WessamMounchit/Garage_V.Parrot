@@ -37,7 +37,7 @@
   }
 
   .edit__icon::before {
-    color: rgb(17, 47, 148);
+    color: #262526;
     font-size: 1.5rem;
   }
   
@@ -47,7 +47,7 @@
   }
   
   .check__icon::before {
-    color: #009879;
+    color: #017630;
     font-size: 1.5rem;
   }
   
@@ -61,6 +61,31 @@
     font-size: 1.5rem;
   }
 
+  .hours__btn-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    width: 70%;
+    margin: auto;
+    margin-top: 1rem;
+  }
+
+.welcome-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.welcome {
+  font-size: 2rem;
+  font-weight: 600;
+  margin-bottom: 2.5rem;
+}
+
+  
  
   @media screen and (max-width: 768px) {
     table {

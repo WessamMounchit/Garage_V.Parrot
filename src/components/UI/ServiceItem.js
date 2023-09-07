@@ -2,7 +2,7 @@ import React from 'react'
 import "../../styles/service-item.css"
 import { Container } from 'react-bootstrap';
 
-const ServicesSection = ({ service }) => {
+const ServiceItem = ({ service }) => {
   const {
     title,
     description,
@@ -27,4 +27,4 @@ const ServicesSection = ({ service }) => {
   )
 }
 
-export default ServicesSection
+export default ServiceItem

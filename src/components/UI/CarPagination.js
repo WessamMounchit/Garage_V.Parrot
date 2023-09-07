@@ -8,10 +8,10 @@ const CarPagination = ({ currentPage, setCurrentPage, totalPages }) => {
     <div className="pagination justify-content-center">
       <ul className="pagination">
         <li className={`page-item${currentPage === 1 ? ' disabled' : ''}`}>
-          <i className="page-link ri-arrow-left-double-line" onClick={() => setCurrentPage(1)}></i>
+          <i className="page-link ri-lg ri-arrow-left-double-line" onClick={() => setCurrentPage(1)}></i>
         </li>
         <li className={`page-item${currentPage === 1 ? ' disabled' : ''}`}>
-          <i className="page-link ri-arrow-drop-left-line" onClick={() => setCurrentPage(currentPage - 1)}></i>
+          <i className="page-link ri-xl ri-arrow-drop-left-line" onClick={() => setCurrentPage(currentPage - 1)}></i>
         </li>
         {pageNumbers.map((number) => (
           <li
@@ -25,10 +25,10 @@ const CarPagination = ({ currentPage, setCurrentPage, totalPages }) => {
           </li>
         ))}
         <li className={`page-item${currentPage === totalPages ? ' disabled' : ''}`}>
-          <i className="page-link ri-arrow-drop-right-line" onClick={() => setCurrentPage(currentPage + 1)}></i>
+          <i className="page-link ri-xl ri-arrow-drop-right-line" onClick={() => setCurrentPage(currentPage + 1)}></i>
         </li>
         <li className={`page-item${currentPage === totalPages ? ' disabled' : ''}`}>
-          <i className="page-link ri-arrow-right-double-line" onClick={() => setCurrentPage(totalPages)}></i>
+          <i className="page-link ri-lg ri-arrow-right-double-line" onClick={() => setCurrentPage(totalPages)}></i>
         </li>
       </ul>
     </div>);

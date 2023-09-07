@@ -3,3 +3,25 @@
   height: 20rem;
   object-fit: contain;
 }
+
+.icons__details {
+  color: #D92332;
+}
+
+.icons__container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.icons__group {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  flex-direction: column;
+  width: 100%;
+}
+
+.contact__details {
+  margin-top: 8rem !important;
+}

@@ -30,7 +30,7 @@ const CarFilters = ({ filters, setFilters }) => {
   };
 
   return (
-    <Row className="mb-4 d-flex justify-content-around">
+    <Row className="slider__container">
       <Col md={3}>
         <Form.Group className="mb-3" controlId="brand">
           <div className='slider__label'>Prix : {filters.minPrice} € - {filters.maxPrice} €</div>

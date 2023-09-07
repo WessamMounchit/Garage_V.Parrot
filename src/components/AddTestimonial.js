@@ -119,9 +119,9 @@ const AddTestimonial = ({ onSubmit }) => {
         />
       </Form.Group>
       {isAuth && <input type="hidden" name="validated" value="true" />}
-      <Button variant="primary" type="submit">
+      <button className='custom__btn form__btn m-auto mt-5' type="submit">
         Ajouter l'avis
-      </Button>
+      </button>
     </Form >
   );
 };

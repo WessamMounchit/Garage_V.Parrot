@@ -9,9 +9,9 @@ const CustomModal = ({ isOpen, onClose, title, children }) => {
       </Modal.Header>
       <Modal.Body>{children}</Modal.Body>
       <Modal.Footer>
-        <Button variant="danger" onClick={onClose}>
+        <button className='custom__btn' onClick={onClose}>
           Fermer
-        </Button>
+        </button>
       </Modal.Footer>
     </Modal>
   );

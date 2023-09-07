@@ -12,7 +12,8 @@
   border-radius: 20px;
   height: 100%;
   border: 1px solid #7c8a9736;
-  margin: 0 1rem 0 1rem;
+  /* margin: 0 1rem 0 1rem; */
+  margin-right: 1.5rem;
 }
 
 .testimonial-content {

@@ -93,9 +93,9 @@ const EditService = ({ service, onSubmit }) => {
           accept="image/png, image/jpeg"
         />
       </Form.Group>
-      <Button variant="success" type="submit">
+      <button className='custom__btn form__btn m-auto mt-5' type="submit">
         Enregistrer
-      </Button>
+      </button>
     </Form>
   );
 };

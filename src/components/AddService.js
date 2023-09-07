@@ -75,9 +75,9 @@ const AddService = ({ onSubmit }) => {
           accept="image/png, image/jpeg"
         />
       </Form.Group>
-      <Button variant="primary" type="submit">
+      <button className='custom__btn form__btn m-auto mt-5' type="submit">
         Ajouter le service
-      </Button>
+      </button>
     </Form>
   );
 };

@@ -13,6 +13,7 @@ import "slick-carousel/slick/slick-theme.css";
 import { BrowserRouter as Router } from "react-router-dom";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import 'react-multi-carousel/lib/styles.css';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));

@@ -49,7 +49,7 @@ const OpeningHoursAdmin = () => {
         <td data-label="Après-midi fermeture">{openingHour.afternoon_close ? openingHour.afternoon_close : "Fermé"}</td>
         <td data-label="Modifier">
           {<i
-            className="btn ri-edit-box-fill edit__icon ri-lg p-0 "
+            className="btn ri-edit-box-line edit__icon ri-lg p-0 "
             onClick={() => {
               setSelectedDay(openingHour.day);
               setIsUpdateModalOpen(true);

@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
-import Slider from "react-slick";
 import fetchData from "../../utils/fetchData";
 import { onGetTestimonials } from "../../api/testimonials";
 import { Col, Container, Row } from "react-bootstrap";
 import TestimonialItem from "./TestimonialItem";
 import CustomModal from "./CustomModal";
 import AddTestimonial from "../AddTestimonial";
+import Carousel from 'react-multi-carousel';
 
 const Testimonial = () => {
 
@@ -20,7 +20,7 @@ const Testimonial = () => {
     fetchData(setTestimonials, onGetTestimonials);
   }, []);
 
-  
+
   const handleAddTestimonial = async () => {
     try {
       fetchData(setTestimonials, onGetTestimonials);
@@ -31,33 +31,23 @@ const Testimonial = () => {
     }
   };
 
-  const settings = {
-    dots: true,
-    infinite: true,
-    autoplay: false,
-    speed: 1000,
-    swipeToSlide: true,
-    autoplaySpeed: 4000,
-    slidesToShow: 3,
-    slidesToScroll: 1,
-    responsive: [
-      {
-        breakpoint: 992,
-        settings: {
-          slidesToShow: 1,
-          slidesToScroll: 1,
-          infinite: true,
-          dots: true,
-        },
-      },
-      {
-        breakpoint: 576,
-        settings: {
-          slidesToShow: 1,
-          slidesToScroll: 1,
-        },
-      },
-    ],
+  const responsive = {
+    superLargeDesktop: {
+      breakpoint: { max: 4000, min: 3000 },
+      items: 5
+    },
+    desktop: {
+      breakpoint: { max: 3000, min: 1024 },
+      items: 3
+    },
+    tablet: {
+      breakpoint: { max: 1024, min: 767 },
+      items: 2
+    },
+    mobile: {
+      breakpoint: { max: 767, min: 0 },
+      items: 1
+    }
   };
 
 
@@ -70,16 +60,31 @@ const Testimonial = () => {
             <h2 className="section__title">Avis</h2>
           </Col>
 
-          <Slider {...settings} className="testimonial">
-            {testimonials.data
-              ?.filter((testimonial) => testimonial.validated === true)
-              .map((testimonial) => (
-                <TestimonialItem
-                  testimonial={testimonial}
-                  key={testimonial.testimonial_id}
-                />
-              ))}
-          </Slider>
+          {testimonials.data && testimonials.data.length > 0 && (
+            <Carousel
+              responsive={responsive}
+              swipeable={true}
+              arrows={false}
+              draggable={true}
+              showDots={false}
+              infinite={true}
+              autoPlay={true}
+              autoPlaySpeed={4000}
+              keyBoardControl={true}
+              transitionDuration={500}
+            >
+              {testimonials.data
+                .filter((testimonial) => testimonial.validated === true)
+                .map((testimonial) => (
+                  <TestimonialItem
+                    testimonial={testimonial}
+                    key={testimonial.testimonial_id}
+                  />
+                ))}
+            </Carousel>
+          )}
+
+
         </Row>
         <button onClick={() => setIsAddModalOpen(true)} className="custom__btn mt-4 ms-auto me-4">Laissez un avis</button>
       </Container>

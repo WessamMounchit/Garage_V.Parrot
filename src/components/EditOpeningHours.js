@@ -142,21 +142,22 @@ const EditOpeningHours = ({ openingHours, modalClose, selectedDay }) => {
               />
             </Form.Group>
 
-
-            <Button variant="danger" onClick={() => handleSetClosed(item.day)}>
-              Fermer toute la journée
-            </Button>
-            <Button variant="warning" onClick={() => handleCloseMorningOnly(item.day)}>
-              Fermer le matin
-            </Button>
-            <Button variant="danger" onClick={() => handleCloseAfternoonOnly(item.day)}>
-              Fermer l'après-midi
-            </Button>
+            <div className='hours__btn-container'>
+              <button className='custom__btn white__btn mx-3 w-100' onClick={() => handleSetClosed(item.day)}>
+                Fermer toute la journée
+              </button>
+              <button className='custom__btn white__btn mx-3 w-100' onClick={() => handleCloseMorningOnly(item.day)}>
+                Fermer le matin
+              </button>
+              <button className='custom__btn white__btn mx-3 w-100' onClick={() => handleCloseAfternoonOnly(item.day)}>
+                Fermer l'après-midi
+              </button>
+            </div>
           </div>
         ))}
-        <Button variant="primary" type="submit">
+        <button className='custom__btn form__btn m-auto mt-5' type="submit">
           Enregistrer
-        </Button>
+        </button>
       </Form>
     </div>
   );

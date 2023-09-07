@@ -17,7 +17,6 @@ function Header() {
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
   const [isRegisterModalOpen, setIsRegisterModalOpen] = useState(false);
   const expand = 'xl'; //false, 'sm', 'md', 'lg', 'xl', 'xxl'
-  const role = secureLocalStorage.getItem('role')
 
 
 
@@ -54,6 +53,12 @@ function Header() {
     //</Link>
   );
 
+
+
+  const closeButton = () => {
+    document.querySelector('button.btn-close').click();
+  };
+
   return (
     <header className='w-100 d-flex justify-content-between'>
       <Navbar expand={expand} className="bg-body-tertiary w-100 p-0">
@@ -71,28 +76,21 @@ function Header() {
           >
             <Offcanvas.Header className='canvas__header' closeButton>
               <Offcanvas.Title className='canvas__title' id={`offcanvasNavbarLabel-expand-${expand}`}>
-                  <Link to="/" className="logo d-flex align-items-center gap-2">
-                    <img src={logo} alt='logo' />
-                  </Link>
+                <Link to="/" className="logo d-flex align-items-center gap-2">
+                  <img src={logo} alt='logo' />
+                </Link>
               </Offcanvas.Title>
             </Offcanvas.Header>
             <Offcanvas.Body className='canvas__body'>
               <Nav className="nav nav__container">
-                <NavLink to="/">Accueil</NavLink>
-                <NavLink to="/cars">Nos voitures</NavLink>
-                <NavLink to="/about">À propos</NavLink>
-                <NavLink to="/contact">Contact</NavLink>
-                {isAuth && <NavLink to="/dashboard">Gestion</NavLink>}
+                <NavLink to="/" onClick={closeButton}>Accueil</NavLink>
+                <NavLink to="/cars" onClick={closeButton}>Nos voitures</NavLink>
+                <NavLink to="/about" onClick={closeButton}>À propos</NavLink>
+                <NavLink to="/contact" onClick={closeButton}>Contact</NavLink>
+                {isAuth && <NavLink to="/dashboard" onClick={closeButton}>Gestion</NavLink>}
               </Nav>
               <div className="button__container">
                 {authButton}
-                {isAuth && role === 'admin' && (
-                  <button
-                    className="custom__btn"
-                    onClick={() => setIsRegisterModalOpen(true)}>
-                    Créer un compte employé
-                  </button>
-                )}
               </div>
             </Offcanvas.Body>
           </Navbar.Offcanvas>
@@ -118,7 +116,7 @@ function Header() {
           <Register closeRegisterModal={closeRegisterModal} />
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="danger" onClick={() => setIsRegisterModalOpen(false)}>Fermer</Button>
+          <button className='custom__btn' onClick={() => setIsRegisterModalOpen(false)}>Fermer</button>
         </Modal.Footer>
       </Modal>
     </header>

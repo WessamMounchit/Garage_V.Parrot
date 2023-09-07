@@ -50,17 +50,15 @@
   font-size: 1.2rem;
 }
 
-.contact__btn {
-  padding: 7px 15px;
-  background: #000d6b;
-  color: #fff;
-  border: none;
-  outline: none;
-  border-radius: 5px;
-}
-
 .contact_info h6 p {
   font-size: 1rem;
+}
+
+.label__contact {
+  color: #D92332;
+  font-size: 1rem;
+  margin: 0;
+
 }
 
 
@@ -80,6 +78,10 @@
   }
   .contact__container {
     margin-top: 3rem !important;
+  }
+
+  .contact__text {
+    font-size: 0.9rem;
   }
 }
 

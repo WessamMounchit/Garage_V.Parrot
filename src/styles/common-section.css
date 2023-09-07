@@ -1,7 +1,7 @@
 .common__section {
-  background: linear-gradient(rgba(6, 8, 30, 0.5), rgba(5, 8, 36, 0.5)),
-    url("../assets/drive.jpg");
-  background-position: center;
+  background: linear-gradient(rgba(6, 8, 30, 0.632), rgba(5, 8, 36, 0.659)),
+    url("../assets/common__img.jpeg");
+  background-position-y: 35%;
   background-size: cover;
   background-repeat: no-repeat;
   padding: 80px 0px;

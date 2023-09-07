@@ -2,8 +2,7 @@ import React, { useState } from 'react';
 import { toast } from 'react-toastify';
 import { onEmployeeRegistration } from '../api/auth';
 
-const Register = ({ closeRegisterModal }) => {
-  
+const Register = ({ closeRegisterModal, onSubmit }) => {
   const [inputs, setInputs] = useState({
     email: '',
     password: '',
@@ -24,45 +23,59 @@ const Register = ({ closeRegisterModal }) => {
       const response = await onEmployeeRegistration(registrationData);
 
       if (response.data.success) {
-        closeRegisterModal()
-        toast.success(response.data.message)
-      } else {
+
+      //closeRegisterModal();
+      onSubmit()
+      toast.success("Compte employé créer avec succès");
       }
+
     } catch (error) {
       console.error(error.message);
-      toast.error(error.response.data.errors[0].msg);
+      toast.error("erreur lors la création du compte employé");
     }
   };
 
   return (
     <>
       <form onSubmit={onSubmitForm}>
-        <input
-          type="email"
-          name="email"
-          placeholder="email"
-          className="form-control my-3"
-          value={email}
-          onChange={onChange}
-        />
-        <input
-          type="password"
-          name="password"
-          placeholder="password"
-          className="form-control my-3"
-          value={password}
-          onChange={onChange}
-        />
-        <input
-          type="text"
-          name="name"
-          placeholder="name"
-          className="form-control my-3"
-          value={name}
-          onChange={onChange}
-        />
-        <button type="submit" className="btn btn-success btn-block">
-          Enregister l'employé
+        <div className="form-group">
+          <label htmlFor="email">Adresse Email</label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            placeholder="Adresse Email"
+            className="form-control my-3"
+            value={email}
+            onChange={onChange}
+          />
+        </div>
+        <div className="form-group">
+          <label htmlFor="password">Mot de passe</label>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            placeholder="Mot de passe"
+            className="form-control my-3"
+            value={password}
+            onChange={onChange}
+          />
+        </div>
+        <div className="form-group">
+          <label htmlFor="name">Nom</label>
+          <input
+            type="text"
+            id="name"
+            name="name"
+            placeholder="Nom"
+            className="form-control my-3"
+            value={name}
+            onChange={onChange}
+          />
+        </div>
+        <button type="submit" className="custom__btn m-auto mt-5 form__btn">
+          Enregistrer l'employé
         </button>
       </form>
     </>

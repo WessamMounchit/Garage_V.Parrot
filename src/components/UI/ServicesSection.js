@@ -3,7 +3,7 @@ import fetchData from '../../utils/fetchData';
 import { onGetServices } from '../../api/services';
 import { Col, Container, Row } from 'react-bootstrap';
 import ServiceItem from "./ServiceItem";
-import Slider from 'react-slick';
+import Carousel from 'react-multi-carousel';
 
 const ServicesSection = () => {
   const [services, setServices] = useState({
@@ -16,33 +16,24 @@ const ServicesSection = () => {
     fetchData(setServices, onGetServices);
   }, []);
 
-  const settings = {
-    dots: true,
-    infinite: true,
-    autoplay: false,
-    speed: 1000,
-    swipeToSlide: true,
-    autoplaySpeed: 4000,
-    slidesToShow: 3,
-    slidesToScroll: 1,
-    responsive: [
-      {
-        breakpoint: 992,
-        settings: {
-          slidesToShow: 2,
-          slidesToScroll: 1,
-          infinite: true,
-          dots: true,
-        },
-      },
-      {
-        breakpoint: 576,
-        settings: {
-          slidesToShow: 1,
-          slidesToScroll: 1,
-        },
-      },
-    ],
+
+  const responsive = {
+    superLargeDesktop: {
+      breakpoint: { max: 4000, min: 3000 },
+      items: 5
+    },
+    desktop: {
+      breakpoint: { max: 3000, min: 1024 },
+      items: 3
+    },
+    tablet: {
+      breakpoint: { max: 1024, min: 464 },
+      items: 2
+    },
+    mobile: {
+      breakpoint: { max: 464, min: 0 },
+      items: 1
+    }
   };
 
 
@@ -55,14 +46,27 @@ const ServicesSection = () => {
         </Col>
       </Row>
 
-      <Slider {...settings} className="service">
-            {services.data?.map((service) => (
-              <ServiceItem
-                service={service}
-                key={service.service_id}
-              />
-            ))}
-      </Slider >
+      {services.data && services.data.length > 0 && (
+        <Carousel
+          responsive={responsive}
+          swipeable={true}
+          arrows={false}
+          draggable={true}
+          showDots={true}
+          infinite={true}
+          autoPlay={true}
+          autoPlaySpeed={4000}
+          keyBoardControl={true}
+          transitionDuration={500}
+          >
+          {services.data?.map((service) => (
+            <ServiceItem
+              service={service}
+              key={service.service_id}
+            />
+          ))}
+        </Carousel >
+      )}
     </Container >
   )
 }

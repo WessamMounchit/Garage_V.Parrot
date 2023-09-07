@@ -1,6 +1,6 @@
 import React from "react";
 import "../../styles/hero-slider.css";
-import heroImage from '../../assets/hero.png'
+import heroImage from '../../assets/Lamborghini.png'
 
 const HeroSlider = () => {
   return (

@@ -131,7 +131,7 @@ const CarsAdmin = () => {
 
   const addIcon = (
     <i
-      className="btn ri-add-circle-fill add__icon text-end ri-lg p-0 "
+      className="btn ri-add-circle-line add__icon text-end ri-lg p-0 "
       onClick={() => setIsAddModalOpen(true)}>
     </i>
   )
@@ -156,11 +156,11 @@ const CarsAdmin = () => {
         <td data-label="Année">{car.year}</td>
         <td data-label="Prix">{car.price.toLocaleString()} €</td>
         <td data-label="Kilometrage">{car.mileage.toLocaleString()} km</td>
-        <td data-label="Modifier">{<i className="btn ri-edit-box-fill edit__icon ri-lg p-0 " onClick={() => handleModalOpen(car)}></i>}</td>
-        <td data-label="Supprimer">{<i className="btn ri-delete-bin-fill delete__icon ri-lg p-0 " onClick={() => handleDeleteCar(car.car_id)}></i>}</td>
+        <td data-label="Modifier">{<i className="btn ri-edit-box-line edit__icon ri-lg p-0 " onClick={() => handleModalOpen(car)}></i>}</td>
+        <td data-label="Supprimer">{<i className="btn ri-delete-bin-line delete__icon ri-lg p-0 " onClick={() => handleDeleteCar(car.car_id)}></i>}</td>
         <td data-label="Détails">
           <Link to={`/${car.car_name}/${car.car_id}`}>
-            <i className='btn ri-eye-fill ri-lg eye__icon p-0'></i>
+            <i className='btn ri-eye-line ri-lg eye__icon p-0'></i>
           </Link>
         </td>
       </tr>
@@ -169,17 +169,22 @@ const CarsAdmin = () => {
 
   return (
     <Container>
-      <input
-        type="text"
-        placeholder="Rechercher par nom de voiture"
-        value={searchTerm}
-        onChange={(e) => handleSearch(e.target.value)}
-      />
-      <div className='text-end me-4'>{addIcon}</div>
+      <div className="search">
+        <input
+          type="text"
+          placeholder="Rechercher par nom de voiture"
+          value={searchTerm}
+          onChange={(e) => handleSearch(e.target.value)}
+        />
+        <span>
+          <i class="ri-search-line ri-lg"></i>
+        </span>
+      </div>
       <CarFilters
         filters={filters}
         setFilters={setFilters}
       />
+      <div className='text-end me-4'>{addIcon}</div>
       <table className="table styled-table">
         <thead>
           <tr>
