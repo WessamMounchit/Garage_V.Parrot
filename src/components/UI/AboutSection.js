@@ -1,6 +1,6 @@
 import React from "react";
 import { Container, Row, Col } from "react-bootstrap";
-import "../../styles/about-section.css";
+import "../../styles/About/about-section.css";
 import aboutImg from '../../assets/about-img.jpeg'
 
 const AboutSection = () => {

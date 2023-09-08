@@ -3,11 +3,11 @@ import { useParams } from 'react-router-dom';
 import { onGetSelectedCar } from '../api/cars';
 import { Col, Container, Row } from 'react-bootstrap';
 import FormContact from '../components/UI/FormContact';
-import '../styles/car-details.css'
+import '../styles/Cars/car-details.css'
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
-import Helmet from '../components/Helmet';
 import CommonSection from '../components/UI/CommonSection';
+import Helmet from '../components/UI/Helmet';
 
 
 

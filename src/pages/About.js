@@ -1,14 +1,19 @@
-import React from 'react'
-import Helmet from '../components/Helmet'
+import React, { useEffect } from 'react'
 import CommonSection from '../components/UI/CommonSection'
 import AboutSection from '../components/UI/AboutSection'
 import { Col, Container, Row } from 'react-bootstrap'
-import '../styles/about-page.css'
+import '../styles/About/about-page.css'
 import firstImg from "../assets/service5.jpeg";
 import secondImg from "../assets/service7.jpeg";
+import Helmet from '../components/UI/Helmet'
 
 
 const About = () => {
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <Helmet title="About">
       <CommonSection title="À propos" />

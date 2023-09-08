@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import { Col, Container, Row } from 'react-bootstrap'
-import CarItem from '../components/UI/CarItem'
-import CarFilters from '../components/UI/CarFilters';
-import CarPagination from '../components/UI/CarPagination';
-import '../styles/car-section.css'
-import Helmet from '../components/Helmet';
+import CarItem from '../components/Cars/CarItem'
+import CarFilters from '../components/Cars/CarFilters';
+import CarPagination from '../components/Cars/CarPagination';
+import '../styles/Cars/car-section.css'
 import CommonSection from '../components/UI/CommonSection';
 import fetchData from '../utils/fetchData';
 import { onGetCars } from '../api/cars';
+import Helmet from '../components/UI/Helmet';
 
 const CarsSection = () => {
 

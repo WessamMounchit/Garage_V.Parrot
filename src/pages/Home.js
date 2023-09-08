@@ -1,10 +1,10 @@
 import React from 'react'
-import ServicesSection from '../components/UI/ServicesSection';
+import ServicesSection from '../components/Services/ServicesSection';
 import AboutSection from '../components/UI/AboutSection';
-import TestimonialSection from '../components/UI/TestimonialSection';
+import TestimonialSection from '../components/Testimonials/TestimonialSection';
 import HeroSlider from '../components/UI/HeroSlider';
 import FormContact from '../components/UI/FormContact';
-import CarsHome from '../components/UI/CarsHome';
+import CarsHome from '../components/Cars/CarsHome';
 
 
 const Home = () => {

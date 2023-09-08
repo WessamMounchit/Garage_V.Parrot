@@ -1,14 +1,14 @@
 import React from 'react';
-import TestimonialAdmin from '../components/UI/TestimonialAdmin';
-import CarsAdmin from '../components/UI/CarsAdmin';
-import ServicesAdmin from '../components/UI/ServicesAdmin';
-import OpeningHoursAdmin from '../components/UI/OpeningHoursAdmin';
+import TestimonialAdmin from '../components/Administration/Testimonials/TestimonialAdmin';
+import CarsAdmin from '../components/Administration/Cars/CarsAdmin';
+import ServicesAdmin from '../components/Administration/Services/ServicesAdmin';
+import OpeningHoursAdmin from '../components/Administration/OpeningHours/OpeningHoursAdmin';
 import '../styles/dashboard.css'
 import { useSelector } from 'react-redux';
 import secureLocalStorage from 'react-secure-storage';
-import Helmet from '../components/Helmet';
+import Helmet from '../components/UI/Helmet';
 import CommonSection from '../components/UI/CommonSection';
-import EmployeeAdmin from '../components/UI/EmployeeAdmin'
+import EmployeeAdmin from '../components/Administration/Employee/EmployeeAdmin'
 import { Col } from 'react-bootstrap';
 
 const Dashboard = () => {
