@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import ServicesSection from '../components/Services/ServicesSection';
 import AboutSection from '../components/UI/AboutSection';
 import TestimonialSection from '../components/Testimonials/TestimonialSection';
@@ -8,6 +8,11 @@ import CarsHome from '../components/Cars/CarsHome';
 
 
 const Home = () => {
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <>
       <HeroSlider />

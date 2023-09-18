@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import TestimonialAdmin from '../components/Administration/Testimonials/TestimonialAdmin';
 import CarsAdmin from '../components/Administration/Cars/CarsAdmin';
 import ServicesAdmin from '../components/Administration/Services/ServicesAdmin';
@@ -12,6 +12,11 @@ import EmployeeAdmin from '../components/Administration/Employee/EmployeeAdmin'
 import { Col } from 'react-bootstrap';
 
 const Dashboard = () => {
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   const { isAuth } = useSelector((state) => state.auth)
   const role = secureLocalStorage.getItem('role')
   const name = secureLocalStorage.getItem('name')

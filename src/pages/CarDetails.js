@@ -119,14 +119,14 @@ const CarDetails = () => {
                   </span>
 
                   <span className=" d-flex align-items-center gap-1 section__description">
-                    <i class="ri-timer-flash-line icons__details" />
+                    <i class="ri-timer-2-line icons__details" />
                     {car.data?.mileage.toLocaleString()} km
                   </span>
                 </div>
 
                 <div className="icons__group">
                   <span className=" d-flex align-items-center gap-1 section__description">
-                    <i class="ri-map-pin-line icons__details" />
+                    <i class="ri-door-line icons__details" />
                     {car.data?.doors}
                   </span>
 

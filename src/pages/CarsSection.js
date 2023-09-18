@@ -122,7 +122,7 @@ const CarsSection = () => {
             <div className="search mb-4">
               <input
                 type="text"
-                placeholder="Rechercher par nom de voiture"
+                placeholder="Recherchez par nom de voiture"
                 value={searchTerm}
                 onChange={(e) => handleSearch(e.target.value)}
               />

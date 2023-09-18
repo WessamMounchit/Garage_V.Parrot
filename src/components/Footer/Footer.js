@@ -7,7 +7,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchHours } from "../../redux/slices/hoursSlice";
 
 const quickLinks = [
-  
+
+  {
+    path: "/",
+    display: "Acceuil",
+  },
   {
     path: "/cars",
     display: "Nos voitures",
@@ -19,7 +23,7 @@ const quickLinks = [
   {
     path: "/about",
     display: "About",
-  },
+  }
 ];
 
 const Footer = () => {
@@ -27,6 +31,8 @@ const Footer = () => {
   const year = date.getFullYear();
   const openingHours = useSelector((state => state.hours))
   const dispatch = useDispatch()
+  const { isAuth } = useSelector((state) => state.auth);
+
 
   useEffect(() => {
     dispatch(fetchHours())
@@ -125,11 +131,18 @@ const Footer = () => {
               <div className="mb-4 footer_link-container">
                 <h5 className="footer__link-title">Navigation rapide</h5>
                 <ListGroup>
+
                   {quickLinks.map((item, index) => (
                     <ListGroupItem key={index} className="p-0 mt-3 quick__link">
                       <Link to={item.path}>{item.display}</Link>
                     </ListGroupItem>
                   ))}
+                  {isAuth && (
+                    <ListGroupItem key="gestion" className="p-0 mt-3 quick__link">
+                      <Link to="/dashboard">Gestion</Link>
+                    </ListGroupItem>
+                  )}
+
                 </ListGroup>
               </div>
             </Col>

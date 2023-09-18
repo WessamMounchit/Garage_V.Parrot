@@ -172,7 +172,7 @@ const CarsAdmin = () => {
       <div className="search">
         <input
           type="text"
-          placeholder="Rechercher par nom de voiture"
+          placeholder="Recherchez par nom de voiture"
           value={searchTerm}
           onChange={(e) => handleSearch(e.target.value)}
         />

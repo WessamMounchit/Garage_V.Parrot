@@ -4,9 +4,8 @@ import { onLogout } from '../../api/auth';
 import secureLocalStorage from 'react-secure-storage';
 import { unauthenticateUser } from '../../redux/slices/authSlice';
 import { toast } from 'react-toastify';
-import { Button, Modal, Nav, Navbar, Container, Offcanvas } from 'react-bootstrap';
+import { Modal, Nav, Navbar, Container, Offcanvas } from 'react-bootstrap';
 import Login from '../Administration/Employee/Login';
-import Register from '../Administration/Employee/Register';
 import { Link, NavLink } from 'react-router-dom';
 import logo from '../../assets/logo.png'
 import './Header.css'
@@ -15,7 +14,6 @@ function Header() {
 
   const { isAuth } = useSelector((state) => state.auth)
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
-  const [isRegisterModalOpen, setIsRegisterModalOpen] = useState(false);
   const expand = 'xl'; //false, 'sm', 'md', 'lg', 'xl', 'xxl'
 
 
@@ -39,18 +37,15 @@ function Header() {
   }
 
   const closeLoginModal = () => setIsLoginModalOpen(false);
-  const closeRegisterModal = () => setIsRegisterModalOpen(false);
 
   const authButton = isAuth ? (
     <button className="custom__btn" onClick={e => logout(e)}>
       Se déconnecter
     </button>
   ) : (
-    //<Link to="/login">
     <button className="custom__btn" onClick={() => setIsLoginModalOpen(true)}>
       Espace professionel
     </button>
-    //</Link>
   );
 
 
@@ -96,6 +91,8 @@ function Header() {
           </Navbar.Offcanvas>
         </Container>
       </Navbar>
+
+
       <Modal show={isLoginModalOpen} onHide={() => setIsLoginModalOpen(false)}>
         <Modal.Header closeButton>
           <Modal.Title>Se connecter à son espace professionel</Modal.Title>
@@ -104,21 +101,10 @@ function Header() {
           <Login closeLoginModal={closeLoginModal} />
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="danger" onClick={() => setIsLoginModalOpen(false)}>Fermer</Button>
+          <button className='custom__btn' onClick={() => setIsLoginModalOpen(false)}>Fermer</button>
         </Modal.Footer>
       </Modal>
 
-      <Modal show={isRegisterModalOpen} onHide={() => setIsRegisterModalOpen(false)}>
-        <Modal.Header closeButton>
-          <Modal.Title>Créer un compte employé</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Register closeRegisterModal={closeRegisterModal} />
-        </Modal.Body>
-        <Modal.Footer>
-          <button className='custom__btn' onClick={() => setIsRegisterModalOpen(false)}>Fermer</button>
-        </Modal.Footer>
-      </Modal>
     </header>
   );
 }

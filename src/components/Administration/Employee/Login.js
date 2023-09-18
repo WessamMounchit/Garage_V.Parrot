@@ -3,7 +3,7 @@ import { toast } from 'react-toastify';
 import { onLogin } from '../../../api/auth';
 import { useDispatch } from 'react-redux';
 import { authenticateUser } from '../../../redux/slices/authSlice';
-import secureLocalStorage from  "react-secure-storage";
+import secureLocalStorage from "react-secure-storage";
 
 
 const Login = ({ closeLoginModal }) => {
@@ -25,9 +25,9 @@ const Login = ({ closeLoginModal }) => {
   const onSubmitForm = async e => {
     e.preventDefault();
     try {
-      const response = await onLogin({email, password})
-       const { role, name } = response.data
- 
+      const response = await onLogin({ email, password })
+      const { role, name } = response.data
+
       dispatch(authenticateUser())
       secureLocalStorage.setItem('isAuth', 'true')
       secureLocalStorage.setItem('role', role)
@@ -36,7 +36,7 @@ const Login = ({ closeLoginModal }) => {
 
       closeLoginModal()
       toast.success(response.data.info)
-      
+
     } catch (error) {
       console.error(error.message);
       toast.error(error.response.data.errors[0].msg)
@@ -47,25 +47,32 @@ const Login = ({ closeLoginModal }) => {
   return (
     <>
       <form onSubmit={onSubmitForm}>
-        <input
-          type='email'
-          name='email'
-          placeholder='email'
-          className='form-control my-3'
-          value={email}
-          onChange={e => onChange(e)}
-        />
-        <input
-          type='password'
-          name='password'
-          placeholder='password'
-          className='form-control my-3'
-          value={password}
-          onChange={e => onChange(e)}
-        />
-        <button className='btn btn-success btn-block'>Se connecter</button>
-      </form>
-    </>
+        <div className="form-group">
+          <label htmlFor="email">Adresse Email</label>
+          <input
+            type='email'
+            name='email'
+            id="email"
+            placeholder='Adresse Email'
+            className='form-control my-3'
+            value={email}
+            onChange={e => onChange(e)}
+          />
+        </div>
+        <div className="form-group">
+          <label htmlFor="password">Mot de passe</label>
+          <input
+            type='password'
+            name='password'
+            id="password"
+            placeholder='Mot de passe'
+            className='form-control my-3'
+            value={password}
+            onChange={e => onChange(e)}
+          />
+        </div>
+        <button className='custom__btn m-auto mt-5 form__btn'>Se connecter</button>
+      </form>    </>
   );
 };
 
