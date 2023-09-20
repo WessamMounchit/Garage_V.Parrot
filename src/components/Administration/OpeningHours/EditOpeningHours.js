@@ -86,12 +86,12 @@ const EditOpeningHours = ({ openingHours, modalClose, selectedDay }) => {
       try {
         dispatch(updateHours(modifiedOpeningHours))
         modalClose()
-        toast.success("Les horraires a été ajoutée avec succès.");
+        toast.success("Les horaires a été ajoutée avec succès.");
       } catch (error) {
         toast.error(error.response.data.error);
       }
     } else {
-      toast.info("La modification des horraires a échoué.");
+      toast.info("La modification des horaires a échoué.");
     }
   };
 

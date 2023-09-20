@@ -1,5 +1,6 @@
 const { SERVER_URL } = require('../constants');
 const db = require('../db')
+const fs = require('fs');
 
 exports.addTestimonial = async (req, res) => {
   try {
@@ -86,11 +87,20 @@ exports.deleteTestimonial = async (req, res) => {
   try {
     const { id } = req.params;
 
-    const query = `DELETE FROM testimonials WHERE testimonial_id = $1`;
-
+    const query = 'SELECT image_path FROM testimonials WHERE testimonial_id = $1';
     const values = [id];
+    const result = await db.query(query, values);
 
-    await db.query(query, values);
+    if (result.rows.length === 0) {
+      return res.status(404).json({ error: 'Avis non trouvé' });
+    }
+
+    const imagePath = result.rows[0].image_path;
+
+    const deleteQuery = `DELETE FROM testimonials WHERE testimonial_id = $1`;
+    await db.query(deleteQuery, values);
+
+    fs.unlinkSync(imagePath); 
 
     res.status(201).json({ info: 'Avis supprimé avec succès' });
   } catch (err) {

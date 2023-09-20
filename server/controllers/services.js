@@ -1,5 +1,7 @@
 const { SERVER_URL } = require('../constants');
 const db = require('../db')
+const fs = require('fs');
+
 
  exports.addService = async (req, res) => {
   try {
@@ -86,13 +88,26 @@ exports.deleteService = async (req, res) => {
   try {
     const { id } = req.params;
 
-    const query = `DELETE FROM services WHERE service_id = $1`;
-
+    // Récupérez d'abord le chemin de l'image associée au service
+    const query = 'SELECT image_path FROM services WHERE service_id = $1';
     const values = [id];
+    const result = await db.query(query, values);
 
-    await db.query(query, values);
+    if (result.rows.length === 0) {
+      return res.status(404).json({ error: 'Service non trouvé' });
+    }
 
-    res.status(201).json({info: 'Service supprimé avec succès'});
+    const serviceData = result.rows[0];
+    const { image_path } = serviceData;
+
+    // Supprimez le service de la base de données
+    const deleteQuery = `DELETE FROM services WHERE service_id = $1`;
+    await db.query(deleteQuery, values);
+
+    // Supprimez l'image du dossier "uploads"
+    fs.unlinkSync(image_path); // Cela supprimera le fichier associé au service
+
+    res.status(201).json({ info: 'Service supprimé avec succès' });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }

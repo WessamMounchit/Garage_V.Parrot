@@ -36,6 +36,40 @@ const ServicesSection = () => {
     }
   };
 
+  let content;
+  if (services.loading) {
+    content = <img src="spinner.svg" alt='chargement' />
+  }
+  else if (services.error) {
+    content = <p className="fw-bold fs-4 text-center">Une erreur est survenue...</p>
+  }
+  else if (services.data?.length === 0) {
+    content = <p className="fw-bold fs-4 text-center">Aucun service n'est disponible pour le moment</p>
+  }
+  else if (services.data?.length > 0) {
+    content = services.data && services.data.length > 0 && (
+      <Carousel
+        responsive={responsive}
+        swipeable={true}
+        arrows={false}
+        draggable={true}
+        showDots={true}
+        infinite={true}
+        autoPlay={true}
+        autoPlaySpeed={4000}
+        keyBoardControl={true}
+        transitionDuration={500}
+        >
+        {services.data?.map((service) => (
+          <ServiceItem
+            service={service}
+            key={service.service_id}
+          />
+        ))}
+      </Carousel >
+    )
+  }
+
 
   return (
     <Container>
@@ -46,27 +80,7 @@ const ServicesSection = () => {
         </Col>
       </Row>
 
-      {services.data && services.data.length > 0 && (
-        <Carousel
-          responsive={responsive}
-          swipeable={true}
-          arrows={false}
-          draggable={true}
-          showDots={true}
-          infinite={true}
-          autoPlay={true}
-          autoPlaySpeed={4000}
-          keyBoardControl={true}
-          transitionDuration={500}
-          >
-          {services.data?.map((service) => (
-            <ServiceItem
-              service={service}
-              key={service.service_id}
-            />
-          ))}
-        </Carousel >
-      )}
+      {content}
     </Container >
   )
 }

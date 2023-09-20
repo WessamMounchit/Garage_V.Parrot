@@ -33,7 +33,7 @@ const CarFilters = ({ filters, setFilters }) => {
     <Row className="slider__container">
       <Col md={3}>
         <Form.Group className="mb-3" controlId="brand">
-          <div className='slider__label'>Prix : {filters.minPrice} € - {filters.maxPrice} €</div>
+          <div className='slider__label'>Prix : {filters.minPrice.toLocaleString()} € - {filters.maxPrice.toLocaleString()} €</div>
           <ReactSlider
             className="horizontal-slider"
             thumbClassName="example-thumb"
@@ -61,7 +61,7 @@ const CarFilters = ({ filters, setFilters }) => {
       </Col>
       <Col md={3}>
         <Form.Group className="mb-3" controlId="brand">
-          <div className='slider__label'>Kilométrage : {filters.minMileage} km - {filters.maxMileage} km</div>
+          <div className='slider__label'>Kilométrage : {filters.minMileage.toLocaleString()} km - {filters.maxMileage.toLocaleString()} km</div>
           <ReactSlider
             className="horizontal-slider"
             thumbClassName="example-thumb"

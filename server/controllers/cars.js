@@ -1,5 +1,7 @@
 const { SERVER_URL } = require('../constants');
 const db = require('../db')
+const fs = require('fs');
+
 
 exports.addCar = async (req, res) => {
   try {
@@ -132,13 +134,30 @@ exports.deleteCar = async (req, res) => {
   try {
     const { id } = req.params;
 
-    const query = `DELETE FROM cars WHERE car_id = $1`;
-
+    const query = 'SELECT image_path, gallery FROM cars WHERE car_id = $1';
     const values = [id];
+    const result = await db.query(query, values);
 
-    await db.query(query, values);
+    if (result.rows.length === 0) {
+      return res.status(404).json({ error: 'Voiture non trouvée' });
+    }
 
-    res.status(204).end();
+    const carData = result.rows[0];
+    const { image_path, gallery } = carData;
+
+    const deleteQuery = `DELETE FROM cars WHERE car_id = $1`;
+    await db.query(deleteQuery, values);
+
+    fs.unlinkSync(image_path); 
+
+
+    for (const image of gallery) {
+      if (image) {
+        fs.unlinkSync(image); 
+      }
+    }
+
+    res.status(201).json({ info: 'Voiture supprimée avec succès' });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }

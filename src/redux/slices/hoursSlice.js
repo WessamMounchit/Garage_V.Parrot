@@ -50,10 +50,10 @@ export function fetchHours(action) {
         dispatch(fetchHours());
       } else {
         dispatch(hoursError())
-        console.error("La modification des horraires a échoué.");
+        console.error("La modification des horaires a échoué.");
       }
     } catch (error) {
-      console.error("Une erreur s'est produite lors de la modification des horraires :", error);
+      console.error("Une erreur s'est produite lors de la modification des horaires :", error);
     }
   };
 };

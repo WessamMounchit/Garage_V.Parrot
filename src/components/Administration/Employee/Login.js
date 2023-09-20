@@ -35,11 +35,15 @@ const Login = ({ closeLoginModal }) => {
       secureLocalStorage.setItem('name', name)
 
       closeLoginModal()
-      toast.success(response.data.info)
+      toast.success(response.data.info, {
+        position: toast.POSITION.TOP_CENTER, 
+      })
 
     } catch (error) {
       console.error(error.message);
-      toast.error(error.response.data.errors[0].msg)
+      toast.error(error.response.data.errors[0].msg, {
+        position: toast.POSITION.TOP_CENTER, 
+      })
     }
   };
 

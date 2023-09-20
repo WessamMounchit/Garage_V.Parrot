@@ -29,7 +29,9 @@ function Header() {
       secureLocalStorage.clear()
       dispatch(unauthenticateUser())
 
-      toast.success(response.data.message)
+      toast.success(response.data.message, {
+        position: toast.POSITION.TOP_CENTER, 
+      })
 
     } catch (error) {
       console.error(error.message);

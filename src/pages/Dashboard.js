@@ -44,7 +44,7 @@ const Dashboard = () => {
           <section>
             <Col lg="12" className="mb-4 text-center">
               <h6 className="section__subtitle">Gestion des</h6>
-              <h2 className="section__title">Horraires</h2>
+              <h2 className="section__title">Horaires</h2>
             </Col>
             <OpeningHoursAdmin />
           </section>

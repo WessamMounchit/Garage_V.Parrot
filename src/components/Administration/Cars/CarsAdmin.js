@@ -32,7 +32,7 @@ const CarsAdmin = () => {
     minYear: 2000,
     maxYear: year,
     minMileage: 0,
-    maxMileage: 100000,
+    maxMileage: 500000,
   });
 
 
@@ -143,10 +143,10 @@ const CarsAdmin = () => {
     content = <img src="spinner.svg" alt='chargement' />
   }
   else if (cars.error) {
-    content = <p>Une erreur est survenue...</p>
+    content = <p className="fw-bold fs-4 text-center">Une erreur est survenue...</p>
   }
   else if (cars.data?.length === 0) {
-    content = <p>Aucune voiture disponible</p>
+    content = <p className="fw-bold fs-4 text-center">Aucune voiture disponible</p>
   }
   else if (cars.data?.length > 0) {
     content = currentCars?.map((car) => (

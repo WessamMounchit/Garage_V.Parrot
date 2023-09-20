@@ -37,7 +37,7 @@ const OpeningHoursAdmin = () => {
     content = <img src="spinner.svg" alt='chargement' />
   }
   else if (openingHours.error) {
-    content = <p>Une erreur est survenue...</p>
+    content = <p className="fw-bold fs-4 text-center">Une erreur est survenue...</p>
   }
   else if (openingHours.data?.length > 0) {
     content = sortedOpeningHours.map((openingHour) => (

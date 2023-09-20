@@ -50,6 +50,43 @@ const Testimonial = () => {
     }
   };
 
+  let content;
+  if (testimonials.loading) {
+    content = <img src="spinner.svg" alt='chargement' />
+  }
+  else if (testimonials.error) {
+    content = <p className="fw-bold fs-4 text-center">Une erreur est survenue...</p>
+  }
+  else if (testimonials.data?.length === 0) {
+    content = <p className="fw-bold fs-4 text-center">Aucune voiture disponible</p>
+  }
+  else if (testimonials.data?.length > 0) {
+    content = testimonials.data && testimonials.data.length > 0 && (
+      <Carousel
+        responsive={responsive}
+        swipeable={true}
+        arrows={false}
+        draggable={true}
+        showDots={false}
+        infinite={true}
+        autoPlay={true}
+        autoPlaySpeed={4000}
+        keyBoardControl={true}
+        transitionDuration={500}
+      >
+        {testimonials.data
+          .filter((testimonial) => testimonial.validated === true)
+          .map((testimonial) => (
+            <TestimonialItem
+              testimonial={testimonial}
+              key={testimonial.testimonial_id}
+            />
+          ))}
+      </Carousel>
+    )
+  }
+
+
 
   return (
     <section>
@@ -60,29 +97,7 @@ const Testimonial = () => {
             <h2 className="section__title">Avis</h2>
           </Col>
 
-          {testimonials.data && testimonials.data.length > 0 && (
-            <Carousel
-              responsive={responsive}
-              swipeable={true}
-              arrows={false}
-              draggable={true}
-              showDots={false}
-              infinite={true}
-              autoPlay={true}
-              autoPlaySpeed={4000}
-              keyBoardControl={true}
-              transitionDuration={500}
-            >
-              {testimonials.data
-                .filter((testimonial) => testimonial.validated === true)
-                .map((testimonial) => (
-                  <TestimonialItem
-                    testimonial={testimonial}
-                    key={testimonial.testimonial_id}
-                  />
-                ))}
-            </Carousel>
-          )}
+          {content}
 
 
         </Row>

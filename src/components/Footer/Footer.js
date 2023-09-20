@@ -83,7 +83,7 @@ const Footer = () => {
     content = <img src="spinner.svg" alt='chargement' />
   }
   else if (openingHours.error) {
-    content = <p>Une erreur est survenue...</p>
+    content = <p className="fw-bold fs-4 text-center">Les horaires sont momentanément indisponibles...</p>
   }
   else if (openingHours.data?.length > 0) {
     content = sortedOpeningHours?.map(formatOpeningHours)
@@ -121,7 +121,7 @@ const Footer = () => {
             <Col lg="5" md="4" sm="6" className="d-flex justify-content-lg-center">
               <div className="mb-4">
                 <div className="hours__title">
-                  <h5 className="footer__link-title mb-4">Horraires d'ouverture</h5>
+                  <h5 className="footer__link-title mb-4">Horaires d'ouverture</h5>
                 </div>
                 <p className="office__info">{content}</p>
               </div>

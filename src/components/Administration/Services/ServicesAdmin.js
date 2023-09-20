@@ -90,6 +90,29 @@ const ServicesAdmin = () => {
     </i>
   )
 
+  let content;
+  if (services.loading) {
+    content = <img src="spinner.svg" alt='chargement' />
+  }
+  else if (services.error) {
+    content = <p className="fw-bold fs-4 text-center">Une erreur est survenue...</p>
+  }
+  else if (services.data?.length === 0) {
+    content = <p className="fw-bold fs-4 text-center">Aucune voiture disponible</p>
+  }
+  else if (services.data?.length > 0) {
+    content = services.data?.map((service) => (
+      <tr key={service.service_id}>
+        <th scope="row">{service.service_id}</th>
+        <td data-label="Nom du service">{service.title}</td>
+        <td data-label="Modifier">{<i className="btn ri-edit-box-line edit__icon ri-lg p-0 " onClick={() => handleModalOpen(service)}></i>}</td>
+        <td data-label="Supprimer">{<i className="btn ri-delete-bin-line delete__icon ri-lg p-0 " onClick={() => handleDeleteService(service.service_id)}></i>}</td>
+        <td data-label="Détails"><i onClick={() => handleViewModalOpen(service)} className='btn ri-eye-line ri-lg eye__icon p-0' /></td>
+      </tr>
+    ))
+  }
+
+
   return (
     <Container>
       <div className='text-end me-4'>{addIcon}</div>
@@ -104,15 +127,7 @@ const ServicesAdmin = () => {
           </tr>
         </thead>
         <tbody>
-          {services.data?.map((service) => (
-            <tr key={service.service_id}>
-              <th scope="row">{service.service_id}</th>
-              <td data-label="Nom du service">{service.title}</td>
-              <td data-label="Modifier">{<i className="btn ri-edit-box-line edit__icon ri-lg p-0 " onClick={() => handleModalOpen(service)}></i>}</td>
-              <td data-label="Supprimer">{<i className="btn ri-delete-bin-line delete__icon ri-lg p-0 " onClick={() => handleDeleteService(service.service_id)}></i>}</td>
-              <td data-label="Détails"><i onClick={() => handleViewModalOpen(service)} className='btn ri-eye-line ri-lg eye__icon p-0' /></td>
-            </tr>
-          ))}
+          {content}
         </tbody>
       </table>
       {/*   //////////  MODALS   ////////// */}

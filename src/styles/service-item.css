@@ -41,10 +41,19 @@
     height: 15rem !important;
     object-fit: cover;
   }
-  .service p {
+/*   .service p {
     font-size: 1rem;
     line-height: 1.5rem;
   }
+ */
+
+ .service-description {
+  font-size: 0.8rem;
+ }
+
+ .service-title {
+  font-size: 1rem;
+ }
 
   .service h6 {
     font-size: 1.2rem;

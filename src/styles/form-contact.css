@@ -6,16 +6,8 @@
 
 .contact__form {
   width: 100%;
-/*   display: flex;
-  align-items: center;
- */}
-
-/* .contact__label {
-   width: 5%;
-   margin-right: 2rem;
-   color: #000d6b;
 }
- */
+
 .contact__form input,
 .textarea {
   padding: 8px 15px;
@@ -23,14 +15,13 @@
   color: black;
   width: 100%;
   margin-bottom: 0.5rem;
-/*   margin-left: 2rem;
- */}
+}
 
 .contact__form select,
 .textarea {
   width: 100%;
   padding: 10px 15px;
-  color: #7c8a97;
+  color: black;
   border: 1px solid #7c8a972a;
   border-radius: 4px;
 }
