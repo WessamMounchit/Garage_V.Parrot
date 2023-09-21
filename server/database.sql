@@ -4,7 +4,7 @@ CREATE TABLE users(
   user_id uuid PRIMARY KEY DEFAULT uuid_generate_v4(),
   user_name VARCHAR(255),
   user_email VARCHAR(255) NOT NULL,
-  user_password VARCHAR(255) NOT NULL
+  user_password VARCHAR(255) NOT NULL,
   role VARCHAR(50) DEFAULT 'employee'
 );
 
@@ -18,25 +18,6 @@ VALUES (
   'Vincent Parrot'
   );
 
-
-CREATE TABLE IF NOT EXISTS cars (
-  car_id SERIAL PRIMARY KEY,
-  model VARCHAR(100) NOT NULL,
-  price VARCHAR(50) NOT NULL,
-  year VARCHAR(4) NOT NULL,
-  mileage VARCHAR(50) NOT NULL,
-  image_path VARCHAR(255) NOT NULL,
-  gallery TEXT [],
-  features TEXT [],
-  equipment TEXT []
-);
-
-CREATE TABLE cars (
-  seat VARCHAR(2),
-  doors VARCHAR(2),
-  automatic VARCHAR(20),
-  description TEXT
-);
 
 CREATE TABLE IF NOT EXISTS cars (
   car_id SERIAL PRIMARY KEY,
