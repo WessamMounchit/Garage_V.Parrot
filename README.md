@@ -6,6 +6,12 @@ Les fonctionnalités clés de ce projet comprennent la possibilité de se connec
 
 L'administrateur bénéficiera d'un espace dédié lui permettant de gérer facilement les informations du site. Dans l'ensemble, cette application vise à créer une présence en ligne pour le garage, fournissant aux visiteurs des informations claires et la possibilité de contacter le garage ou de laisser leurs propres témoignages.
 
+Vous trouverez dans mon repository Github le lien vers le site déployé en ligne ainsi que dans mon Notion.
+
+Voici le lien vers mon Notion: Suivre [ce lien](https://www.notion.so/D-velopper-l-application-web-Garage-Vincent-Parrot-6067ef53e06e4f2abd79fb53bf52d0ae)
+
+
+
 Ci dessous les démarches de déploiment en local.
 
 ## Déployer l'application localement
@@ -36,5 +42,13 @@ Démarrer le front :
 Démarrer le back :
 
 ```bash
-    npm nodemon index.js
+    nodemon index.js
 ```
+
+### Vous retrouverez mes livrables ici :
+
+Suivre [ce lien](https://www.notion.so/D-velopper-l-application-web-Garage-Vincent-Parrot-6067ef53e06e4f2abd79fb53bf52d0ae) 
+
+## Auteur
+
+-[@Emi2710](https://github.com/Emi2710)
