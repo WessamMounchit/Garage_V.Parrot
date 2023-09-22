@@ -47,7 +47,7 @@ Démarrer le back :
 
 ### Vous retrouverez mes livrables ici :
 
-Suivre [ce lien](https://www.notion.so/D-velopper-l-application-web-Garage-Vincent-Parrot-6067ef53e06e4f2abd79fb53bf52d0ae) 
+Suivre [ce lien](https://pickled-raincoat-f6b.notion.site/D-velopper-l-application-web-Garage-Vincent-Parrot-6067ef53e06e4f2abd79fb53bf52d0ae) 
 
 ## Auteur
 
