@@ -8,7 +8,7 @@ L'administrateur bénéficiera d'un espace dédié lui permettant de gérer faci
 
 Vous trouverez dans mon repository Github le lien vers le site déployé en ligne ainsi que dans mon Notion.
 
-Voici le lien vers mon Notion: Suivre [ce lien](https://www.notion.so/D-velopper-l-application-web-Garage-Vincent-Parrot-6067ef53e06e4f2abd79fb53bf52d0ae)
+Voici le lien vers mon Notion: Suivre [ce lien](https://pickled-raincoat-f6b.notion.site/D-velopper-l-application-web-Garage-Vincent-Parrot-6067ef53e06e4f2abd79fb53bf52d0ae)
 
 
 
@@ -24,6 +24,7 @@ Cloner le projet
 Installer les dépendances pour le côté client
 
 ```bash
+    cd client
     npm install
 ```
 Installer les dépendances pour le côté server
@@ -42,7 +43,7 @@ Démarrer le front :
 Démarrer le back :
 
 ```bash
-    nodemon index.js
+    node index.js
 ```
 
 ### Vous retrouverez mes livrables ici :

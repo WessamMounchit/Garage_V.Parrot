@@ -59,7 +59,7 @@ function Header() {
   return (
     <header className='w-100 d-flex justify-content-between'>
       <Navbar expand={expand} className="bg-body-tertiary w-100 p-0">
-        <Container fluid>
+        <Container fluid style={{backgroundColor: "white"}}>
           <Navbar.Brand href="#">
             <Link to="/" className="logo d-flex align-items-center">
               <img src={logo} alt='logo' />
