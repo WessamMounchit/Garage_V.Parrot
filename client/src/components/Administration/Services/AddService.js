@@ -53,6 +53,7 @@ const AddService = ({ onSubmit }) => {
           value={serviceData.title}
           onChange={handleInputChange}
           placeholder="Entrez le titre du service"
+          required
         />
       </Form.Group>
       <Form.Group className="mb-3" controlId="description">
@@ -63,6 +64,7 @@ const AddService = ({ onSubmit }) => {
           value={serviceData.description}
           onChange={handleInputChange}
           placeholder="Entrez la description du service"
+          required
         />
       </Form.Group>
       <Form.Group className="mb-3" controlId="image">
@@ -72,6 +74,7 @@ const AddService = ({ onSubmit }) => {
           onChange={handleImageChange}
           name="image_path"
           accept="image/png, image/jpeg"
+          required
         />
       </Form.Group>
       <button className="custom__btn form__btn m-auto mt-5" type="submit">

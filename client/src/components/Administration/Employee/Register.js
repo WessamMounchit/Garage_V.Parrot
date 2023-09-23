@@ -45,6 +45,7 @@ const Register = ({ onSubmit }) => {
             className="form-control my-3"
             value={email}
             onChange={onChange}
+            required
           />
         </div>
         <div className="form-group">
@@ -57,6 +58,7 @@ const Register = ({ onSubmit }) => {
             className="form-control my-3"
             value={password}
             onChange={onChange}
+            required
           />
         </div>
         <div className="form-group">
@@ -69,6 +71,7 @@ const Register = ({ onSubmit }) => {
             className="form-control my-3"
             value={name}
             onChange={onChange}
+            required
           />
         </div>
         <button type="submit" className="custom__btn m-auto mt-5 form__btn">

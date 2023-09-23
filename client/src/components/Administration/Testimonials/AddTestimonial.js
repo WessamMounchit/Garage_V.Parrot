@@ -60,6 +60,7 @@ const AddTestimonial = ({ onSubmit }) => {
           value={testimonialData.first_name}
           onChange={handleInputChange}
           placeholder="Entrez le prénom"
+          required
         />
       </Form.Group>
       <Form.Group className="mb-3" controlId="last_name">
@@ -70,6 +71,7 @@ const AddTestimonial = ({ onSubmit }) => {
           value={testimonialData.last_name}
           onChange={handleInputChange}
           placeholder="Entrez le nom"
+          required
         />
       </Form.Group>
       <Form.Group className="mb-3" controlId="job">
@@ -80,6 +82,7 @@ const AddTestimonial = ({ onSubmit }) => {
           value={testimonialData.job}
           onChange={handleInputChange}
           placeholder="Entrez le métier"
+          required
         />
       </Form.Group>
       <Form.Group className="mb-3" controlId="description">
@@ -90,6 +93,7 @@ const AddTestimonial = ({ onSubmit }) => {
           value={testimonialData.description}
           onChange={handleInputChange}
           placeholder="Entrez l'avis"
+          required
         />
       </Form.Group>
       <Form.Group className="mb-3" controlId="mark">
@@ -99,6 +103,7 @@ const AddTestimonial = ({ onSubmit }) => {
           name="mark"
           value={testimonialData.mark}
           onChange={handleInputChange}
+          required
         >
           <option value="">Sélectionnez le nombre d'étoiles</option>
           <option value="1">1</option>
@@ -115,6 +120,7 @@ const AddTestimonial = ({ onSubmit }) => {
           onChange={handleImageChange}
           name="image_path"
           accept="image/png, image/jpeg"
+          required
         />
       </Form.Group>
       {isAuth && <input type="hidden" name="validated" value="true" />}

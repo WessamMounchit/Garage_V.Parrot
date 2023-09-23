@@ -75,6 +75,7 @@ const AddCar = ({ onSubmit }) => {
           value={carData.brand}
           onChange={handleInputChange}
           placeholder="Entrez la marque"
+          required
         />
       </Form.Group>
       <Form.Group className="mb-3" controlId="car_name">
@@ -85,6 +86,7 @@ const AddCar = ({ onSubmit }) => {
           value={carData.car_name}
           onChange={handleInputChange}
           placeholder="Entrez le nom de la voiture"
+          required
         />
       </Form.Group>
       <Form.Group className="mb-3" controlId="fuel_type">
@@ -94,6 +96,7 @@ const AddCar = ({ onSubmit }) => {
           name="fuel_type"
           value={carData.fuel_type}
           onChange={handleInputChange}
+          required
         >
           <option value="">Sélectionnez le type de carburant</option>
           <option value="gazole">Gazole</option>
@@ -110,6 +113,7 @@ const AddCar = ({ onSubmit }) => {
           value={carData.price}
           onChange={handleInputChange}
           placeholder="Entrez le prix"
+          required
         />
       </Form.Group>
       <Form.Group className="mb-3" controlId="year">
@@ -122,6 +126,7 @@ const AddCar = ({ onSubmit }) => {
           value={carData.year}
           onChange={handleInputChange}
           placeholder="Entrez l'année de mise en circulation"
+          required
         />
       </Form.Group>
       <Form.Group className="mb-3" controlId="mileage">
@@ -132,6 +137,7 @@ const AddCar = ({ onSubmit }) => {
           value={carData.mileage}
           onChange={handleInputChange}
           placeholder="Entrez le kilométrage"
+          required
         />
       </Form.Group>
       <Form.Group className="mb-3" controlId="seat">
@@ -141,6 +147,7 @@ const AddCar = ({ onSubmit }) => {
           name="seat"
           value={carData.seat}
           onChange={handleInputChange}
+          required
         >
           <option value="">Sélectionnez le nombre de places</option>
           <option value="5">5</option>
@@ -155,6 +162,7 @@ const AddCar = ({ onSubmit }) => {
           name="doors"
           value={carData.doors}
           onChange={handleInputChange}
+          required
         >
           <option value="">Sélectionnez le nombre de portes</option>
           <option value="2">2</option>
@@ -170,6 +178,7 @@ const AddCar = ({ onSubmit }) => {
           name="automatic"
           value={carData.automatic}
           onChange={handleInputChange}
+          required
         >
           <option value="">Sélectionnez le type de transmission</option>
           <option value="Manuelle">Manuelle</option>
@@ -184,6 +193,7 @@ const AddCar = ({ onSubmit }) => {
           value={carData.description}
           onChange={handleInputChange}
           placeholder="Entrez la description"
+          required
         />
       </Form.Group>
       <Form.Group className="mb-3" controlId="image">
@@ -193,6 +203,7 @@ const AddCar = ({ onSubmit }) => {
           onChange={handleImageChange}
           name="image"
           accept="image/png, image/jpeg"
+          required
         />
       </Form.Group>
       <Form.Group className="mb-3" controlId="gallery">
@@ -203,6 +214,7 @@ const AddCar = ({ onSubmit }) => {
           name="gallery"
           multiple
           accept="image/png, image/jpeg"
+          required
         />
       </Form.Group>
       <button type="submit" className="custom__btn m-auto mt-5 form__btn">
