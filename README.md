@@ -1,4 +1,4 @@
-# Evaluation d'entraînement en cours de formation, Garage de Vincent Parrot
+# Evaluation en cours de formation, Garage de Vincent Parrot
 
 Lien vers site : https://garage-vincent-parrot.onrender.com/
 
