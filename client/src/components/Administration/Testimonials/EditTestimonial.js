@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { toast } from "react-toastify";
-import { Form, Button } from "react-bootstrap";
+import { Form } from "react-bootstrap";
 import { onUpdateTestimonial } from "../../../api/testimonials";
 import { useSelector } from "react-redux";
 
@@ -128,9 +128,9 @@ const EditTestimonial = ({ testimonial, onSubmit }) => {
         />
       </Form.Group>
       {isAuth && <input type="hidden" name="validated" value="true" />}
-      <Button variant="success" type="submit">
+      <button type="submit" className="custom__btn m-auto mt-5 form__btn">
         Enregistrer
-      </Button>
+      </button>
     </Form>
   );
 };

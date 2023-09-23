@@ -55,7 +55,7 @@ const EditEmployeeInfos = ({ employee, onSubmit }) => {
           onChange={handleEmailChange}
         />
       </div>
-      <button type="button" className="btn btn-primary" onClick={handleSubmit}>
+      <button type="submit" className="custom__btn m-auto mt-5 form__btn" onClick={handleSubmit}>
         Enregistrer
       </button>
     </div>

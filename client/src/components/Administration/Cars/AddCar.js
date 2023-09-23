@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { toast } from "react-toastify";
-import { Form, Button } from "react-bootstrap";
+import { Form } from "react-bootstrap";
 import { onAddCar } from "../../../api/cars";
 
 const AddCar = ({ onSubmit }) => {
@@ -205,9 +205,9 @@ const AddCar = ({ onSubmit }) => {
           accept="image/png, image/jpeg"
         />
       </Form.Group>
-      <Button variant="primary" type="submit">
+      <button type="submit" className="custom__btn m-auto mt-5 form__btn">
         Ajouter la voiture
-      </Button>
+      </button>
     </Form>
   );
 };

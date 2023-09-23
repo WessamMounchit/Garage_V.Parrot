@@ -118,6 +118,10 @@ const TestimonialAdmin = () => {
       <p className="fw-bold fs-4 text-center">Aucune voiture disponible</p>
     );
   } else if (testimonials.data?.length > 0) {
+    const sortedTestimonials = [...testimonials.data].sort(
+      (a, b) => a.testimonial_id - b.testimonial_id
+    );
+
     content = (
       <table className="table styled-table">
         <thead>
@@ -133,7 +137,7 @@ const TestimonialAdmin = () => {
           </tr>
         </thead>
         <tbody>
-          {testimonials.data?.map((testimonial) => (
+          {sortedTestimonials?.map((testimonial) => (
             <tr key={testimonial.testimonial_id}>
               <th scope="row">{testimonial.testimonial_id}</th>
               <td data-label="Prénom">{testimonial.first_name}</td>

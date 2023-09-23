@@ -103,6 +103,10 @@ const ServicesAdmin = () => {
       </p>
     );
   } else if (services.data?.length > 0) {
+    const sortedServices = [...services.data].sort(
+      (a, b) => a.service_id - b.service_id
+    );
+
     content = (
       <table className="table styled-table">
         <thead>
@@ -115,7 +119,7 @@ const ServicesAdmin = () => {
           </tr>
         </thead>
         <tbody>
-          {services.data?.map((service) => (
+          {sortedServices?.map((service) => (
             <tr key={service.service_id}>
               <th scope="row">{service.service_id}</th>
               <td data-label="Nom du service">{service.title}</td>

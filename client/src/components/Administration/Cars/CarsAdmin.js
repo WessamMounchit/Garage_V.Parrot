@@ -116,8 +116,12 @@ const CarsAdmin = () => {
   const filteredCars = filteredCarsByRange?.filter((car) =>
     car.car_name.toLowerCase().includes(searchTerm.toLowerCase())
   );
-  const totalPages = Math.ceil(filteredCars?.length / carsPerPage);
-  const currentCars = paginate(filteredCars, carsPerPage, currentPage);
+
+  const sortedCars = filteredCars?.sort(
+    (a, b) => a.car_id - b.car_id
+  );
+  const totalPages = Math.ceil(sortedCars?.length / carsPerPage);
+  const currentCars = paginate(sortedCars, carsPerPage, currentPage);
 
   //////////  ICONS   //////////
 
