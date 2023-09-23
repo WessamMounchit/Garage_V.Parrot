@@ -1,5 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { onGetOpeningHours, onUpdateOpeningHours } from "../../api/openingHours";
+import {
+  onGetOpeningHours,
+  onUpdateOpeningHours,
+} from "../../api/openingHours";
 
 const hoursSlice = createSlice({
   name: "hours",
@@ -38,26 +41,27 @@ export function fetchHours(action) {
   };
 }
 
-
- export function updateHours(hourUpdated) {
+export function updateHours(hourUpdated) {
   return async function (dispatch, getState) {
     dispatch(hoursLoading());
-    
+
     try {
       const response = await onUpdateOpeningHours(hourUpdated);
-      
+
       if (response.status === 200) {
         dispatch(fetchHours());
       } else {
-        dispatch(hoursError())
+        dispatch(hoursError());
         console.error("La modification des horaires a échoué.");
       }
     } catch (error) {
-      console.error("Une erreur s'est produite lors de la modification des horaires :", error);
+      console.error(
+        "Une erreur s'est produite lors de la modification des horaires :",
+        error
+      );
     }
   };
-};
- 
+}
 
 export const { hoursLoading, hoursLoaded, hoursError } = hoursSlice.actions;
 export default hoursSlice.reducer;

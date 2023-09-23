@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import { onUpdateEmployee } from '../../../api/employee';
-import { toast } from 'react-toastify';
+import React, { useState } from "react";
+import { onUpdateEmployee } from "../../../api/employee";
+import { toast } from "react-toastify";
 
 const EditEmployeeInfos = ({ employee, onSubmit }) => {
   const [newName, setNewName] = useState(employee.user_name);
@@ -22,11 +22,10 @@ const EditEmployeeInfos = ({ employee, onSubmit }) => {
     };
 
     try {
-      await onUpdateEmployee(employee.user_id, updatedEmployee)
+      await onUpdateEmployee(employee.user_id, updatedEmployee);
       onSubmit();
     } catch (error) {
       toast.error(error.response.data.error);
-
     }
   };
 
@@ -56,11 +55,7 @@ const EditEmployeeInfos = ({ employee, onSubmit }) => {
           onChange={handleEmailChange}
         />
       </div>
-      <button
-        type="button"
-        className="btn btn-primary"
-        onClick={handleSubmit}
-      >
+      <button type="button" className="btn btn-primary" onClick={handleSubmit}>
         Enregistrer
       </button>
     </div>

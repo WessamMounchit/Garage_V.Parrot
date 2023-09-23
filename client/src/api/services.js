@@ -1,32 +1,36 @@
-import axios from 'axios'
-axios.defaults.withCredentials = true
+import axios from "axios";
+import { apiBaseUrl } from "../config";
 
-//ADD Service
+axios.defaults.withCredentials = true;
+
+//ADD SERVICE
 export async function onAddService(formData) {
-  
-  return await axios.post('http://localhost:5000/api/addServices', formData , {
-  headers: {
-    'Content-Type': 'multipart/form-data',
-  },
-} )};
-
-//GET ServiceS
-export async function onGetServices() {
-  return await axios.get(
-    'http://localhost:5000/api/getServices',
-  )
-}
-
-//UPTADE Service
-export async function onUpdateService(ServiceId, formData) {
-  return await axios.put(`http://localhost:5000/api/updateService/${ServiceId}`, formData, {
+  return await axios.post(`${apiBaseUrl}/api/addServices`, formData, {
     headers: {
-      'Content-Type': 'multipart/form-data',
+      "Content-Type": "multipart/form-data",
     },
   });
 }
 
-//DELETE Service
+//GET SERVICES
+export async function onGetServices() {
+  return await axios.get(`${apiBaseUrl}/api/getServices`);
+}
+
+//UPTADE SERVICE
+export async function onUpdateService(ServiceId, formData) {
+  return await axios.put(
+    `${apiBaseUrl}/api/updateService/${ServiceId}`,
+    formData,
+    {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    }
+  );
+}
+
+//DELETE SERVICE
 export async function onDeleteService(ServiceId) {
-  return await axios.delete(`http://localhost:5000/api/deleteService/${ServiceId}`)
+  return await axios.delete(`${apiBaseUrl}/api/deleteService/${ServiceId}`);
 }

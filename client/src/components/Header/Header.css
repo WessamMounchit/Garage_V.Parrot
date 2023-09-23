@@ -1,4 +1,4 @@
-.logo img{
+.logo img {
   height: 3.2rem;
 }
 
@@ -6,8 +6,7 @@
   font-size: 1.3rem;
 }
 
-
-.nav__container{
+.nav__container {
   margin: auto;
   display: flex;
   justify-content: center;
@@ -24,11 +23,11 @@
 }
 
 .nav__container a.active {
-  color: #D92332;
+  color: #d92332;
 }
 
 .nav__container a:hover {
-  color: #D92332;
+  color: #d92332;
 }
 
 .canvas__header {
@@ -69,8 +68,7 @@
 }
 
 @media (min-width: 1200px) {
-  .canvas__header{
+  .canvas__header {
     display: none !important;
   }
-
 }

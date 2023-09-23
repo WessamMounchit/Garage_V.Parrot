@@ -26,7 +26,6 @@
   border-radius: 4px;
 }
 
-
 .textarea:focus,
 .contact__form input:focus,
 .contact__form select:focus {
@@ -36,7 +35,7 @@
 .social__link-icon {
   text-decoration: none;
 
-  color: #D92332;
+  color: #d92332;
   font-weight: 500;
   font-size: 1.2rem;
 }
@@ -46,12 +45,10 @@
 }
 
 .label__contact {
-  color: #D92332;
+  color: #d92332;
   font-size: 1rem;
   margin: 0;
-
 }
-
 
 @media only screen and (max-width: 768px) {
   .contact__form {
@@ -75,5 +72,3 @@
     font-size: 0.9rem;
   }
 }
-
-

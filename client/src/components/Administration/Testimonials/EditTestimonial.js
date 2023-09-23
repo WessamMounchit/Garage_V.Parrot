@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
-import { toast } from 'react-toastify';
-import { Form, Button } from 'react-bootstrap';
-import { onUpdateTestimonial } from '../../../api/testimonials';
-import { useSelector } from 'react-redux';
+import React, { useState } from "react";
+import { toast } from "react-toastify";
+import { Form, Button } from "react-bootstrap";
+import { onUpdateTestimonial } from "../../../api/testimonials";
+import { useSelector } from "react-redux";
 
 const EditTestimonial = ({ testimonial, onSubmit }) => {
   const { isAuth } = useSelector((state) => state.auth);
-  const [testimonialData, setTestimonialData] = useState({...testimonial});
+  const [testimonialData, setTestimonialData] = useState({ ...testimonial });
   const [image_path, setImage_path] = useState(null);
 
   const handleImageChange = (e) => {
@@ -33,8 +33,8 @@ const EditTestimonial = ({ testimonial, onSubmit }) => {
           formData.append(key, testimonialData[key]);
         }
       });
-      image_path && formData.append('image_path', image_path);
-      isAuth && formData.append('validated', true);
+      image_path && formData.append("image_path", image_path);
+      isAuth && formData.append("validated", true);
 
       if (formData.entries().next().done === false) {
         try {
@@ -54,7 +54,7 @@ const EditTestimonial = ({ testimonial, onSubmit }) => {
   };
 
   const getFileNameFromPath = (path) => {
-    const segments = path.split('\\');
+    const segments = path.split("\\");
     const fileName = segments[segments.length - 1];
     return fileName;
   };

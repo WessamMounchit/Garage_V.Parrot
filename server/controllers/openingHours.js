@@ -15,7 +15,6 @@ exports.getOpeningHours = async (req, res) => {
 
 exports.updateOpeningHours = async (req, res) => {
   const openingHoursData = req.body;
-  console.log(openingHoursData)
 
   try {
     for (const item of openingHoursData) {

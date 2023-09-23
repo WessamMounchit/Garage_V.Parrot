@@ -1,21 +1,25 @@
-import React, { useState } from 'react';
-import { Form, Button } from 'react-bootstrap';
-import { toast } from 'react-toastify';
-import { useDispatch } from 'react-redux';
-import { updateHours } from '../../../redux/slices/hoursSlice';
+import React, { useState } from "react";
+import { Form } from "react-bootstrap";
+import { toast } from "react-toastify";
+import { useDispatch } from "react-redux";
+import { updateHours } from "../../../redux/slices/hoursSlice";
 
 const EditOpeningHours = ({ openingHours, modalClose, selectedDay }) => {
   const [openingHoursData, setOpeningHoursData] = useState([...openingHours]);
   const [modifiedIndices, setModifiedIndices] = useState([]);
-  const openingHoursOfDay = openingHoursData.filter((item) => item.day === selectedDay);
+  const openingHoursOfDay = openingHoursData.filter(
+    (item) => item.day === selectedDay
+  );
   const dispatch = useDispatch();
-
 
   const markAsModified = (day) => {
     const index = openingHoursData.findIndex((item) => item.day === day);
     if (index !== -1) {
       if (!modifiedIndices.includes(index)) {
-        setModifiedIndices((prevModifiedIndices) => [...prevModifiedIndices, index]);
+        setModifiedIndices((prevModifiedIndices) => [
+          ...prevModifiedIndices,
+          index,
+        ]);
       }
     }
   };
@@ -35,12 +39,12 @@ const EditOpeningHours = ({ openingHours, modalClose, selectedDay }) => {
       prevOpeningHours.map((item) =>
         item.day === day
           ? {
-            ...item,
-            morning_open: null,
-            morning_close: null,
-            afternoon_open: null,
-            afternoon_close: null,
-          }
+              ...item,
+              morning_open: null,
+              morning_close: null,
+              afternoon_open: null,
+              afternoon_close: null,
+            }
           : item
       )
     );
@@ -52,10 +56,10 @@ const EditOpeningHours = ({ openingHours, modalClose, selectedDay }) => {
       prevOpeningHours.map((item) =>
         item.day === day
           ? {
-            ...item,
-            afternoon_open: null,
-            afternoon_close: null,
-          }
+              ...item,
+              afternoon_open: null,
+              afternoon_close: null,
+            }
           : item
       )
     );
@@ -67,10 +71,10 @@ const EditOpeningHours = ({ openingHours, modalClose, selectedDay }) => {
       prevOpeningHours.map((item) =>
         item.day === day
           ? {
-            ...item,
-            morning_open: null,
-            morning_close: null,
-          }
+              ...item,
+              morning_open: null,
+              morning_close: null,
+            }
           : item
       )
     );
@@ -80,12 +84,14 @@ const EditOpeningHours = ({ openingHours, modalClose, selectedDay }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const modifiedOpeningHours = modifiedIndices.map((index) => openingHoursData[index]);
+    const modifiedOpeningHours = modifiedIndices.map(
+      (index) => openingHoursData[index]
+    );
 
     if (modifiedOpeningHours.length > 0) {
       try {
-        dispatch(updateHours(modifiedOpeningHours))
-        modalClose()
+        dispatch(updateHours(modifiedOpeningHours));
+        modalClose();
         toast.success("Les horaires a été ajoutée avec succès.");
       } catch (error) {
         toast.error(error.response.data.error);
@@ -105,8 +111,8 @@ const EditOpeningHours = ({ openingHours, modalClose, selectedDay }) => {
               <Form.Label>Matin (ouverture) :</Form.Label>
               <Form.Control
                 type="time"
-                value={item.morning_open || ''}
-                onChange={(e) => handleChange(e, item.day, 'morning_open')}
+                value={item.morning_open || ""}
+                onChange={(e) => handleChange(e, item.day, "morning_open")}
                 className="form-control"
                 placeholder="Entrez l'heure d'ouverture du matin"
               />
@@ -115,8 +121,8 @@ const EditOpeningHours = ({ openingHours, modalClose, selectedDay }) => {
               <Form.Label>Matin (fermeture) :</Form.Label>
               <Form.Control
                 type="time"
-                value={item.morning_close || ''}
-                onChange={(e) => handleChange(e, item.day, 'morning_close')}
+                value={item.morning_close || ""}
+                onChange={(e) => handleChange(e, item.day, "morning_close")}
                 className="form-control"
                 placeholder="Entrez l'heure de fermeture du matin"
               />
@@ -125,8 +131,8 @@ const EditOpeningHours = ({ openingHours, modalClose, selectedDay }) => {
               <Form.Label>Après-midi (ouverture) :</Form.Label>
               <Form.Control
                 type="time"
-                value={item.afternoon_open || ''}
-                onChange={(e) => handleChange(e, item.day, 'afternoon_open')}
+                value={item.afternoon_open || ""}
+                onChange={(e) => handleChange(e, item.day, "afternoon_open")}
                 className="form-control"
                 placeholder="Entrez l'heure d'ouverture de l'après-midi"
               />
@@ -135,27 +141,36 @@ const EditOpeningHours = ({ openingHours, modalClose, selectedDay }) => {
               <Form.Label>Après-midi (fermeture) :</Form.Label>
               <Form.Control
                 type="time"
-                value={item.afternoon_close || ''}
-                onChange={(e) => handleChange(e, item.day, 'afternoon_close')}
+                value={item.afternoon_close || ""}
+                onChange={(e) => handleChange(e, item.day, "afternoon_close")}
                 className="form-control"
                 placeholder="Entrez l'heure de fermeture de l'après-midi"
               />
             </Form.Group>
 
-            <div className='hours__btn-container'>
-              <button className='custom__btn white__btn mx-3 w-100' onClick={() => handleSetClosed(item.day)}>
+            <div className="hours__btn-container">
+              <button
+                className="custom__btn white__btn mx-3 w-100"
+                onClick={() => handleSetClosed(item.day)}
+              >
                 Fermer toute la journée
               </button>
-              <button className='custom__btn white__btn mx-3 w-100' onClick={() => handleCloseMorningOnly(item.day)}>
+              <button
+                className="custom__btn white__btn mx-3 w-100"
+                onClick={() => handleCloseMorningOnly(item.day)}
+              >
                 Fermer le matin
               </button>
-              <button className='custom__btn white__btn mx-3 w-100' onClick={() => handleCloseAfternoonOnly(item.day)}>
+              <button
+                className="custom__btn white__btn mx-3 w-100"
+                onClick={() => handleCloseAfternoonOnly(item.day)}
+              >
                 Fermer l'après-midi
               </button>
             </div>
           </div>
         ))}
-        <button className='custom__btn form__btn m-auto mt-5' type="submit">
+        <button className="custom__btn form__btn m-auto mt-5" type="submit">
           Enregistrer
         </button>
       </Form>

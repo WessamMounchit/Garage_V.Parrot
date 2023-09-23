@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
-import { toast } from 'react-toastify';
-import { Form } from 'react-bootstrap';
-import { onAddService } from '../../../api/services';
+import React, { useState } from "react";
+import { toast } from "react-toastify";
+import { Form } from "react-bootstrap";
+import { onAddService } from "../../../api/services";
 
 const AddService = ({ onSubmit }) => {
   const [serviceData, setServiceData] = useState({
-    title: '',
-    description: ''
+    title: "",
+    description: "",
   });
 
   const [image_path, setImage_path] = useState(null);
@@ -14,7 +14,6 @@ const AddService = ({ onSubmit }) => {
   const handleImageChange = (e) => {
     const selectedFile = e.target.files[0];
     setImage_path(selectedFile);
-    console.log(selectedFile);
   };
 
   const handleInputChange = (event) => {
@@ -31,9 +30,9 @@ const AddService = ({ onSubmit }) => {
     try {
       const formData = new FormData();
 
-      formData.append('title', serviceData.title);
-      formData.append('description', serviceData.description);
-      formData.append('image_path', image_path);
+      formData.append("title", serviceData.title);
+      formData.append("description", serviceData.description);
+      formData.append("image_path", image_path);
 
       const response = await onAddService(formData);
       toast.success(response.data.info);
@@ -75,7 +74,7 @@ const AddService = ({ onSubmit }) => {
           accept="image/png, image/jpeg"
         />
       </Form.Group>
-      <button className='custom__btn form__btn m-auto mt-5' type="submit">
+      <button className="custom__btn form__btn m-auto mt-5" type="submit">
         Ajouter le service
       </button>
     </Form>

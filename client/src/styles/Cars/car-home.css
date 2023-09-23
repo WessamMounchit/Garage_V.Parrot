@@ -4,11 +4,11 @@
 }
 
 .all_cars-btn:hover {
-  background-color: #D92332;
+  background-color: #d92332;
 }
 
 @media (max-width: 767px) {
-  .all_cars-btn{
+  .all_cars-btn {
     width: auto;
   }
 }

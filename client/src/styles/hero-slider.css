@@ -27,7 +27,7 @@
   font-size: 27px;
   font-weight: 600;
   --tw-text-opacity: 1;
-  color: #D92332;
+  color: #d92332;
 }
 
 .btn-text {
@@ -54,42 +54,39 @@
 }
 
 .hero__image img {
-    position: absolute;
-    height: 100%;
-    width: 100%;
-    left: 0;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    color: transparent;
-    object-fit: contain;
-    max-width: 100%;
-    display: block;
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  color: transparent;
+  object-fit: contain;
+  max-width: 100%;
+  display: block;
 }
-
-
-
 
 @media (min-width: 1280px) {
   .hero {
-      flex-direction: row;
+    flex-direction: row;
   }
   .hero__image-container {
     height: 100vh;
     flex: 1.5;
-}
-.hero__image {
-  height: 100%;
-  width: 100%;
-}
+  }
+  .hero__image {
+    height: 100%;
+    width: 100%;
+  }
 }
 
 @media (min-width: 640px) {
   .hero__left {
-      padding-left: 4rem;
-      padding-right: 4rem;
+    padding-left: 4rem;
+    padding-right: 4rem;
   }
   .hero__title {
     font-size: 64px;
-}
+  }
 }

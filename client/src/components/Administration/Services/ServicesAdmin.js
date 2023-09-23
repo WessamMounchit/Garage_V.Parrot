@@ -1,21 +1,20 @@
-import React, { useEffect, useState } from 'react'
-import { Container } from 'react-bootstrap'
-import fetchData from '../../../utils/fetchData';
-import { onDeleteService, onGetServices } from '../../../api/services';
-import { toast } from 'react-toastify';
-import CustomModal from '../../UI/CustomModal';
-import AddService from './AddService';
-import EditService from './EditService';
-import ServiceItem from '../../Services/ServiceItem'
+import React, { useEffect, useState } from "react";
+import { Container } from "react-bootstrap";
+import fetchData from "../../../utils/fetchData";
+import { onDeleteService, onGetServices } from "../../../api/services";
+import { toast } from "react-toastify";
+import CustomModal from "../../UI/CustomModal";
+import AddService from "./AddService";
+import EditService from "./EditService";
+import ServiceItem from "../../Services/ServiceItem";
 
 const ServicesAdmin = () => {
-
   //////////  STATE   //////////
 
   const [services, setServices] = useState({
     loading: false,
     error: false,
-    data: undefined
+    data: undefined,
   });
   const [isViewModalOpen, setIsViewModalOpen] = useState(false);
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
@@ -28,7 +27,6 @@ const ServicesAdmin = () => {
 
   //////////  HANDLE MODALS   //////////
 
-
   const handleViewModalOpen = (service) => {
     setSelectedService({ ...service });
     setIsViewModalOpen(true);
@@ -38,7 +36,6 @@ const ServicesAdmin = () => {
     setSelectedService(null);
     setIsViewModalOpen(false);
   };
-
 
   const handleModalOpen = (service) => {
     setSelectedService({ ...service });
@@ -52,12 +49,11 @@ const ServicesAdmin = () => {
 
   //////////  API   //////////
 
-
   const handleAddService = async () => {
     try {
       fetchData(setServices, onGetServices);
 
-      setIsAddModalOpen(false)
+      setIsAddModalOpen(false);
     } catch (error) {
       console.error(error);
     }
@@ -74,11 +70,10 @@ const ServicesAdmin = () => {
 
   const handleDeleteService = async (serviceId) => {
     try {
-      const response = await onDeleteService(serviceId)
-      toast.success(response.data.info)
-
+      const response = await onDeleteService(serviceId);
+      toast.success(response.data.info);
     } catch (error) {
-      toast.error(error.response.data.error)
+      toast.error(error.response.data.error);
     }
     fetchData(setServices, onGetServices);
   };
@@ -86,36 +81,29 @@ const ServicesAdmin = () => {
   const addIcon = (
     <i
       className="btn ri-add-circle-line add__icon text-end ri-lg p-0 "
-      onClick={() => setIsAddModalOpen(true)}>
-    </i>
-  )
+      onClick={() => setIsAddModalOpen(true)}
+    ></i>
+  );
 
   let content;
   if (services.loading) {
-    content = <img src="spinner.svg" alt='chargement' />
-  }
-  else if (services.error) {
-    content = <p className="fw-bold fs-4 text-center">Une erreur est survenue...</p>
-  }
-  else if (services.data?.length === 0) {
-    content = <p className="fw-bold fs-4 text-center">Aucune voiture disponible</p>
-  }
-  else if (services.data?.length > 0) {
-    content = services.data?.map((service) => (
-      <tr key={service.service_id}>
-        <th scope="row">{service.service_id}</th>
-        <td data-label="Nom du service">{service.title}</td>
-        <td data-label="Modifier">{<i className="btn ri-edit-box-line edit__icon ri-lg p-0 " onClick={() => handleModalOpen(service)}></i>}</td>
-        <td data-label="Supprimer">{<i className="btn ri-delete-bin-line delete__icon ri-lg p-0 " onClick={() => handleDeleteService(service.service_id)}></i>}</td>
-        <td data-label="Détails"><i onClick={() => handleViewModalOpen(service)} className='btn ri-eye-line ri-lg eye__icon p-0' /></td>
-      </tr>
-    ))
-  }
-
-
-  return (
-    <Container>
-      <div className='text-end me-4'>{addIcon}</div>
+    content = (
+      <div className="d-flex justify-content-center align-items-center">
+        <img src="spinner.svg" alt="chargement" />
+      </div>
+    );
+  } else if (services.error) {
+    content = (
+      <p className="fw-bold fs-4 text-center">Une erreur est survenue...</p>
+    );
+  } else if (services.data?.length === 0) {
+    content = (
+      <p className="fw-bold fs-4 text-center">
+        Aucun service disponible pour le moment
+      </p>
+    );
+  } else if (services.data?.length > 0) {
+    content = (
       <table className="table styled-table">
         <thead>
           <tr>
@@ -127,15 +115,50 @@ const ServicesAdmin = () => {
           </tr>
         </thead>
         <tbody>
-          {content}
+          {services.data?.map((service) => (
+            <tr key={service.service_id}>
+              <th scope="row">{service.service_id}</th>
+              <td data-label="Nom du service">{service.title}</td>
+              <td data-label="Modifier">
+                {
+                  <i
+                    className="btn ri-edit-box-line edit__icon ri-lg p-0 "
+                    onClick={() => handleModalOpen(service)}
+                  ></i>
+                }
+              </td>
+              <td data-label="Supprimer">
+                {
+                  <i
+                    className="btn ri-delete-bin-line delete__icon ri-lg p-0 "
+                    onClick={() => handleDeleteService(service.service_id)}
+                  ></i>
+                }
+              </td>
+              <td data-label="Détails">
+                <i
+                  onClick={() => handleViewModalOpen(service)}
+                  className="btn ri-eye-line ri-lg eye__icon p-0"
+                />
+              </td>
+            </tr>
+          ))}
         </tbody>
       </table>
+    );
+  }
+
+  return (
+    <Container>
+      <div className="text-end me-4">{addIcon}</div>
+      {content}
+
       {/*   //////////  MODALS   ////////// */}
 
       <CustomModal
         isOpen={isViewModalOpen}
         onClose={handleViewModalClose}
-        title='Visualisation'
+        title="Visualisation"
       >
         {selectedService && <ServiceItem service={selectedService} />}
       </CustomModal>
@@ -143,7 +166,7 @@ const ServicesAdmin = () => {
       <CustomModal
         isOpen={isAddModalOpen}
         onClose={() => setIsAddModalOpen(false)}
-        title='Ajouter un service'
+        title="Ajouter un service"
       >
         <AddService onSubmit={handleAddService} />
       </CustomModal>
@@ -151,18 +174,17 @@ const ServicesAdmin = () => {
       <CustomModal
         isOpen={isUpdateModalOpen}
         onClose={handleModalClose}
-        title='Modifier une voiture'
+        title="Modifier une voiture"
       >
-        {selectedService &&
+        {selectedService && (
           <EditService
             service={selectedService}
             onSubmit={handleUpdateService}
-          />}
+          />
+        )}
       </CustomModal>
-
-
     </Container>
-  )
-}
+  );
+};
 
-export default ServicesAdmin
+export default ServicesAdmin;

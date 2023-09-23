@@ -1,10 +1,9 @@
-import React, { useState } from 'react';
-import { toast } from 'react-toastify';
-import { Form } from 'react-bootstrap';
-import { onUpdateService } from '../../../api/services';
+import React, { useState } from "react";
+import { toast } from "react-toastify";
+import { Form } from "react-bootstrap";
+import { onUpdateService } from "../../../api/services";
 
 const EditService = ({ service, onSubmit }) => {
-
   const [serviceData, setServiceData] = useState({
     service_id: service.service_id,
     title: service.title,
@@ -38,25 +37,27 @@ const EditService = ({ service, onSubmit }) => {
         }
       });
 
-      image && formData.append('image_path', image);
+      image && formData.append("image_path", image);
 
       if (!formData.entries().next().done) {
         try {
-          const response = await onUpdateService(serviceData.service_id, formData);
+          const response = await onUpdateService(
+            serviceData.service_id,
+            formData
+          );
           toast.success(response.data.info);
           onSubmit();
         } catch (error) {
           toast.error(error.response.data.error);
         }
       }
-
     } catch (error) {
       console.error(error);
     }
   };
 
   const getFileNameFromPath = (path) => {
-    const segments = path.split('\\');
+    const segments = path.split("\\");
     const fileName = segments[segments.length - 1];
     return fileName;
   };
@@ -93,7 +94,7 @@ const EditService = ({ service, onSubmit }) => {
           accept="image/png, image/jpeg"
         />
       </Form.Group>
-      <button className='custom__btn form__btn m-auto mt-5' type="submit">
+      <button className="custom__btn form__btn m-auto mt-5" type="submit">
         Enregistrer
       </button>
     </Form>

@@ -12,14 +12,14 @@
   justify-content: space-between;
 }
 .car__img {
-  height: 15rem; 
+  height: 15rem;
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: visible;
 }
 
-.car__img img{
+.car__img img {
   height: auto;
   width: 100%;
   border-radius: 5px;
@@ -29,12 +29,12 @@
 }
 
 .car__name {
-  color: #D92332;
+  color: #d92332;
   font-weight: 700;
 }
 
 .car__item-info span i {
-  color: #D92332;
+  color: #d92332;
   font-size: 1.1rem;
 }
 
@@ -58,84 +58,84 @@
 @media only screen and (max-width: 1400px) {
   .car__item {
     height: auto;
-}
+  }
 }
 
 @media only screen and (max-width: 1200px) {
   .car__img {
     height: 190px;
-}
+  }
   .car__img img {
     width: 100%;
-}
+  }
 }
 
 @media only screen and (max-width: 992px) {
   .car__item {
     width: auto;
-}
+  }
   .car__img {
     height: 190px;
-}
-.car__item-content {
-  margin-top: 1rem;
-}
+  }
+  .car__item-content {
+    margin-top: 1rem;
+  }
 
-.car__item h4 {
-  font-size: 1.1rem;
-  margin-bottom: 0;
-}
+  .car__item h4 {
+    font-size: 1.1rem;
+    margin-bottom: 0;
+  }
 
-.car__item h6 {
-  font-size: 1rem;
-  margin-top: 10px;
-}
+  .car__item h6 {
+    font-size: 1rem;
+    margin-top: 10px;
+  }
 
-.car__item-info {
-  flex-wrap: wrap;
-}
+  .car__item-info {
+    flex-wrap: wrap;
+  }
 
-.car__item-info span {
-  font-size: 0.8rem;
-  justify-content: space-between;
-}
+  .car__item-info span {
+    font-size: 0.8rem;
+    justify-content: space-between;
+  }
 
-.car__item-btn {
-  padding: 5px 10px;
-  font-size: 0.9rem;
-}
+  .car__item-btn {
+    padding: 5px 10px;
+    font-size: 0.9rem;
+  }
 }
 
 @media only screen and (max-width: 768px) {
   .car__img {
     height: 100%;
-}
+  }
   .car__item-content {
     margin-top: 0;
   }
   .car__item h4 {
     font-size: 1rem;
-}
+  }
 
   .car__item h6 {
     font-size: 0.9rem;
-}
+  }
 
   .car__item-info span {
     font-size: 0.7rem;
-}
+  }
 
   .car__item-info span i {
     font-size: 0.9rem;
-}
+  }
 
   .car__item-btn {
     font-size: 0.8rem;
-}
+  }
 }
 
 @media only screen and (max-width: 576px) {
   .car__img {
     height: auto;
-}
+  }
 }

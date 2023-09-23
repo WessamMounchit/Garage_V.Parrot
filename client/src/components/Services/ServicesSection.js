@@ -1,52 +1,58 @@
-import React, { useEffect, useState } from 'react'
-import fetchData from '../../utils/fetchData';
-import { onGetServices } from '../../api/services';
-import { Col, Container, Row } from 'react-bootstrap';
+import React, { useEffect, useState } from "react";
+import fetchData from "../../utils/fetchData";
+import { onGetServices } from "../../api/services";
+import { Col, Container, Row } from "react-bootstrap";
 import ServiceItem from "./ServiceItem";
-import Carousel from 'react-multi-carousel';
+import Carousel from "react-multi-carousel";
 
 const ServicesSection = () => {
   const [services, setServices] = useState({
     loading: false,
     error: false,
-    data: undefined
+    data: undefined,
   });
 
   useEffect(() => {
     fetchData(setServices, onGetServices);
   }, []);
 
-
   const responsive = {
     superLargeDesktop: {
       breakpoint: { max: 4000, min: 3000 },
-      items: 5
+      items: 5,
     },
     desktop: {
       breakpoint: { max: 3000, min: 1024 },
-      items: 3
+      items: 3,
     },
     tablet: {
       breakpoint: { max: 1024, min: 464 },
-      items: 2
+      items: 2,
     },
     mobile: {
       breakpoint: { max: 464, min: 0 },
-      items: 1
-    }
+      items: 1,
+    },
   };
 
   let content;
   if (services.loading) {
-    content = <img src="spinner.svg" alt='chargement' />
-  }
-  else if (services.error) {
-    content = <p className="fw-bold fs-4 text-center">Une erreur est survenue...</p>
-  }
-  else if (services.data?.length === 0) {
-    content = <p className="fw-bold fs-4 text-center">Aucun service n'est disponible pour le moment</p>
-  }
-  else if (services.data?.length > 0) {
+    content = (
+      <div className="d-flex justify-content-center align-items-center">
+        <img src="spinner.svg" alt="chargement" />
+      </div>
+    );
+  } else if (services.error) {
+    content = (
+      <p className="fw-bold fs-4 text-center">Une erreur est survenue...</p>
+    );
+  } else if (services.data?.length === 0) {
+    content = (
+      <p className="fw-bold fs-4 text-center">
+        Aucun service n'est disponible pour le moment
+      </p>
+    );
+  } else if (services.data?.length > 0) {
     content = services.data && services.data.length > 0 && (
       <Carousel
         responsive={responsive}
@@ -59,17 +65,13 @@ const ServicesSection = () => {
         autoPlaySpeed={4000}
         keyBoardControl={true}
         transitionDuration={500}
-        >
+      >
         {services.data?.map((service) => (
-          <ServiceItem
-            service={service}
-            key={service.service_id}
-          />
+          <ServiceItem service={service} key={service.service_id} />
         ))}
-      </Carousel >
-    )
+      </Carousel>
+    );
   }
-
 
   return (
     <Container>
@@ -81,8 +83,8 @@ const ServicesSection = () => {
       </Row>
 
       {content}
-    </Container >
-  )
-}
+    </Container>
+  );
+};
 
-export default ServicesSection
+export default ServicesSection;

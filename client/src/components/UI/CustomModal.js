@@ -1,5 +1,5 @@
-import React from 'react';
-import { Modal, Button } from 'react-bootstrap';
+import React from "react";
+import { Modal } from "react-bootstrap";
 
 const CustomModal = ({ isOpen, onClose, title, children }) => {
   return (
@@ -9,7 +9,7 @@ const CustomModal = ({ isOpen, onClose, title, children }) => {
       </Modal.Header>
       <Modal.Body>{children}</Modal.Body>
       <Modal.Footer>
-        <button className='custom__btn' onClick={onClose}>
+        <button className="custom__btn" onClick={onClose}>
           Fermer
         </button>
       </Modal.Footer>

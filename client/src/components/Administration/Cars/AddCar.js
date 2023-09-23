@@ -1,20 +1,20 @@
-import React, { useState } from 'react';
-import { toast } from 'react-toastify';
-import { Form, Button } from 'react-bootstrap';
-import { onAddCar } from '../../../api/cars';
+import React, { useState } from "react";
+import { toast } from "react-toastify";
+import { Form, Button } from "react-bootstrap";
+import { onAddCar } from "../../../api/cars";
 
 const AddCar = ({ onSubmit }) => {
   const [carData, setCarData] = useState({
-    brand: '',
-    car_name: '',
-    fuel_type: '',
+    brand: "",
+    car_name: "",
+    fuel_type: "",
     price: null,
     year: null,
     mileage: null,
     seat: null,
     doors: null,
-    automatic: '',
-    description: ''
+    automatic: "",
+    description: "",
   });
 
   const [gallery, setGallery] = useState([]);
@@ -48,7 +48,7 @@ const AddCar = ({ onSubmit }) => {
         formData.append(key, carData[key]);
       });
 
-      formData.append('image_path', image_path);
+      formData.append("image_path", image_path);
       gallery.forEach((file) => {
         formData.append(`gallery`, file);
       });
@@ -56,9 +56,8 @@ const AddCar = ({ onSubmit }) => {
       const response = await onAddCar(formData);
       toast.success(response.data.info);
       onSubmit();
-
     } catch (error) {
-      toast.error(error.response.data.error)
+      toast.error(error.response.data.error);
       console.error(error);
     }
   };

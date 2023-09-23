@@ -1,17 +1,22 @@
-import axios from 'axios';
+import axios from "axios";
+import { apiBaseUrl } from "../config";
+
 axios.defaults.withCredentials = true;
 
-// Obtenez la liste des employés
+// GET EMPLOYEES
 export async function onGetEmployees() {
-  return await axios.get('http://localhost:5000/api/getEmployee');
+  return await axios.get(`${apiBaseUrl}/api/getEmployee`);
 }
 
-// Mettez à jour les informations d'un employé
+// UPDATE EMPLOYEES INFOS
 export async function onUpdateEmployee(id, employeeData) {
-  return await axios.put(`http://localhost:5000/api/updateEmployee/${id}`, employeeData);
+  return await axios.put(
+    `${apiBaseUrl}/api/updateEmployee/${id}`,
+    employeeData
+  );
 }
 
-// Supprimez un employé
+// DELETE EMPLOYEE
 export async function onDeleteEmployee(id) {
-  return await axios.delete(`http://localhost:5000/api/deleteEmployee/${id}`);
+  return await axios.delete(`${apiBaseUrl}/api/deleteEmployee/${id}`);
 }

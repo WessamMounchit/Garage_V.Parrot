@@ -1,14 +1,12 @@
-import React, { useState } from 'react';
-import { toast } from 'react-toastify';
-import { Form, Button } from 'react-bootstrap';
-import { onUpdateCar } from '../../../api/cars';
+import React, { useState } from "react";
+import { toast } from "react-toastify";
+import { Form, Button } from "react-bootstrap";
+import { onUpdateCar } from "../../../api/cars";
 
 const EditCar = ({ car, onSubmit }) => {
-
   const [carData, setCarData] = useState({ ...car });
   const [image_path, setImage_path] = useState(null);
   const [gallery, setGallery] = useState([]);
-
 
   const handleImageChange = (e) => {
     const selectedFile = e.target.files[0];
@@ -40,23 +38,22 @@ const EditCar = ({ car, onSubmit }) => {
         }
       });
 
-      image_path && formData.append('image_path', image_path);
-      gallery.length > 0 && gallery.forEach((file) => {
-        formData.append('gallery', file);
-      });
+      image_path && formData.append("image_path", image_path);
+      gallery.length > 0 &&
+        gallery.forEach((file) => {
+          formData.append("gallery", file);
+        });
 
       if (formData.entries().next().done === false) {
         try {
           const response = await onUpdateCar(carData.car_id, formData);
-          onSubmit()
-          toast.success(response.data.info)
-          
+          onSubmit();
+          toast.success(response.data.info);
         } catch (error) {
           toast.error(error.response.data.error);
-          console.log(error)
+          console.error(error);
         }
       }
-
     } catch (error) {
       console.error(error);
     }

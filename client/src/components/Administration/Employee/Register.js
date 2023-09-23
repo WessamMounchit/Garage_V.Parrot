@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
-import { toast } from 'react-toastify';
-import { onEmployeeRegistration } from '../../../api/auth';
+import React, { useState } from "react";
+import { toast } from "react-toastify";
+import { onEmployeeRegistration } from "../../../api/auth";
 
-const Register = ({ closeRegisterModal, onSubmit }) => {
+const Register = ({ onSubmit }) => {
   const [inputs, setInputs] = useState({
-    email: '',
-    password: '',
-    name: '',
+    email: "",
+    password: "",
+    name: "",
   });
 
   const { email, password, name } = inputs;
@@ -23,12 +23,9 @@ const Register = ({ closeRegisterModal, onSubmit }) => {
       const response = await onEmployeeRegistration(registrationData);
 
       if (response.data.success) {
-
-      //closeRegisterModal();
-      onSubmit()
-      toast.success("Compte employé créer avec succès");
+        onSubmit();
+        toast.success("Compte employé créer avec succès");
       }
-
     } catch (error) {
       console.error(error.message);
       toast.error("erreur lors la création du compte employé");

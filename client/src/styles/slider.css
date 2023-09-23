@@ -7,7 +7,6 @@
   display: flex;
   justify-content: space-around;
   align-items: flex-end;
-  /* margin-bottom: 3rem; */
 }
 
 .horizontal-slider {
@@ -43,7 +42,7 @@
   border-radius: 50%;
   font-size: 0.9rem;
   text-align: center;
-  background-color: #D92332;
+  background-color: #d92332;
   color: white;
   cursor: pointer;
   box-sizing: border-box;
@@ -53,6 +52,6 @@
 .slider__label {
   text-align: center;
   font-weight: 600;
-  color: #D92332;
+  color: #d92332;
   white-space: nowrap;
 }

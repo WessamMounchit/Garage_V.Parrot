@@ -5,21 +5,19 @@ import { Col, Container, Row } from "react-bootstrap";
 import TestimonialItem from "./TestimonialItem";
 import CustomModal from "../UI/CustomModal";
 import AddTestimonial from "../Administration/Testimonials/AddTestimonial";
-import Carousel from 'react-multi-carousel';
+import Carousel from "react-multi-carousel";
 
 const Testimonial = () => {
-
   const [testimonials, setTestimonials] = useState({
     loading: false,
     error: false,
-    data: undefined
+    data: undefined,
   });
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
 
   useEffect(() => {
     fetchData(setTestimonials, onGetTestimonials);
   }, []);
-
 
   const handleAddTestimonial = async () => {
     try {
@@ -34,33 +32,38 @@ const Testimonial = () => {
   const responsive = {
     superLargeDesktop: {
       breakpoint: { max: 4000, min: 3000 },
-      items: 5
+      items: 5,
     },
     desktop: {
       breakpoint: { max: 3000, min: 1024 },
-      items: 3
+      items: 3,
     },
     tablet: {
       breakpoint: { max: 1024, min: 767 },
-      items: 2
+      items: 2,
     },
     mobile: {
       breakpoint: { max: 767, min: 0 },
-      items: 1
-    }
+      items: 1,
+    },
   };
 
   let content;
   if (testimonials.loading) {
-    content = <img src="spinner.svg" alt='chargement' />
-  }
-  else if (testimonials.error) {
-    content = <p className="fw-bold fs-4 text-center">Une erreur est survenue...</p>
-  }
-  else if (testimonials.data?.length === 0) {
-    content = <p className="fw-bold fs-4 text-center">Aucune voiture disponible</p>
-  }
-  else if (testimonials.data?.length > 0) {
+    content = (
+      <div className="d-flex justify-content-center align-items-center">
+        <img src="spinner.svg" alt="chargement" />
+      </div>
+    );
+  } else if (testimonials.error) {
+    content = (
+      <p className="fw-bold fs-4 text-center">Une erreur est survenue...</p>
+    );
+  } else if (testimonials.data?.length === 0) {
+    content = (
+      <p className="fw-bold fs-4 text-center">Aucune voiture disponible</p>
+    );
+  } else if (testimonials.data?.length > 0) {
     content = testimonials.data && testimonials.data.length > 0 && (
       <Carousel
         responsive={responsive}
@@ -83,10 +86,8 @@ const Testimonial = () => {
             />
           ))}
       </Carousel>
-    )
+    );
   }
-
-
 
   return (
     <section>
@@ -98,20 +99,22 @@ const Testimonial = () => {
           </Col>
 
           {content}
-
-
         </Row>
-        <button onClick={() => setIsAddModalOpen(true)} className="custom__btn mt-4 ms-auto me-4">Laissez un avis</button>
+        <button
+          onClick={() => setIsAddModalOpen(true)}
+          className="custom__btn mt-4 ms-auto me-4"
+        >
+          Laissez un avis
+        </button>
       </Container>
 
       <CustomModal
         isOpen={isAddModalOpen}
         onClose={() => setIsAddModalOpen(false)}
-        title='Ajouter un avis'
+        title="Ajouter un avis"
       >
         <AddTestimonial onSubmit={handleAddTestimonial} />
       </CustomModal>
-
     </section>
   );
 };

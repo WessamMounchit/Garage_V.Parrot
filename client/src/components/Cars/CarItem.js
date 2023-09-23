@@ -4,17 +4,7 @@ import { Link } from "react-router-dom";
 import "../../styles/Cars/car-item.css";
 
 const CarItem = ({ car }) => {
-
-  const {
-    car_id,
-    car_name,
-    price,
-    year,
-    mileage,
-    image_path,
-    automatic
-  } = car;
-
+  const { car_id, car_name, price, year, mileage, image_path, automatic } = car;
 
   return (
     <Col xxl="4" xl="4" lg="6" md="6" className="mb-5 card__container">
@@ -31,20 +21,19 @@ const CarItem = ({ car }) => {
 
           <div className="car__item-info d-flex align-items-center justify-content-between mt-3 mb-4">
             <span className=" d-flex align-items-center gap-1">
-              <i class="ri-car-fill"></i> Modèle-{year}
+              <i className="ri-car-fill"></i> Modèle-{year}
             </span>
             <span className=" d-flex align-items-center gap-1">
-              <i class="ri-settings-2-fill"></i> {automatic}
+              <i className="ri-settings-2-fill"></i> {automatic}
             </span>
             <span className=" d-flex align-items-center gap-1">
-              <i class="ri-dashboard-3-fill"></i> {mileage.toLocaleString("")} <span>km</span>
+              <i className="ri-dashboard-3-fill"></i>{" "}
+              {mileage.toLocaleString("")} <span>km</span>
             </span>
           </div>
 
           <Link to={`/${car_name}/${car_id}`} className="text-decoration-none ">
-            <button className="w-100 custom__btn">
-              Details
-            </button>
+            <button className="w-100 custom__btn">Details</button>
           </Link>
         </div>
       </div>

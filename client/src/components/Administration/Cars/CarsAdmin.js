@@ -1,17 +1,16 @@
-import React, { useEffect, useState } from 'react'
-import { Container } from 'react-bootstrap'
-import { toast } from 'react-toastify';
-import CustomModal from '../../UI/CustomModal';
-import EditCar from './EditCar';
-import AddCar from './AddCar';
-import CarPagination from '../../Cars/CarPagination';
-import { onDeleteCar, onGetCars } from '../../../api/cars';
-import fetchData from '../../../utils/fetchData';
-import { Link } from 'react-router-dom';
-import CarFilters from '../../Cars/CarFilters';
+import React, { useEffect, useState } from "react";
+import { Container } from "react-bootstrap";
+import { toast } from "react-toastify";
+import CustomModal from "../../UI/CustomModal";
+import EditCar from "./EditCar";
+import AddCar from "./AddCar";
+import CarPagination from "../../Cars/CarPagination";
+import { onDeleteCar, onGetCars } from "../../../api/cars";
+import fetchData from "../../../utils/fetchData";
+import { Link } from "react-router-dom";
+import CarFilters from "../../Cars/CarFilters";
 
 const CarsAdmin = () => {
-
   //////////  STATE   //////////
 
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
@@ -35,18 +34,16 @@ const CarsAdmin = () => {
     maxMileage: 500000,
   });
 
-
   //////////  API   //////////
 
   useEffect(() => {
     fetchData(setCars, onGetCars);
   }, []);
 
-
   const handleAddCar = () => {
     try {
-      fetchData(setCars, onGetCars)
-      setIsAddModalOpen(false)
+      fetchData(setCars, onGetCars);
+      setIsAddModalOpen(false);
     } catch (error) {
       console.error(error);
     }
@@ -54,7 +51,7 @@ const CarsAdmin = () => {
 
   const handleUpdateCar = async () => {
     try {
-      fetchData(setCars, onGetCars)
+      fetchData(setCars, onGetCars);
       handleModalClose();
     } catch (error) {
       console.error(error);
@@ -63,17 +60,15 @@ const CarsAdmin = () => {
 
   const handleDeleteCar = async (carId) => {
     try {
-      await onDeleteCar(carId)
-      toast.success("La voiture a été supprimée avec succès")
-
+      await onDeleteCar(carId);
+      toast.success("La voiture a été supprimée avec succès");
     } catch (error) {
-      toast.error(error.response.data.error)
+      toast.error(error.response.data.error);
     }
 
-    fetchData(setCars, onGetCars)
+    fetchData(setCars, onGetCars);
   };
   //////////  MODAL   //////////
-
 
   const handleModalOpen = (car) => {
     setSelectedCar({ ...car });
@@ -85,7 +80,6 @@ const CarsAdmin = () => {
     setIsUpdateModalOpen(false);
   };
 
-
   //////////  FILTERS   //////////
 
   const filteredCarsByRange = cars.data?.filter((car) => {
@@ -94,17 +88,16 @@ const CarsAdmin = () => {
     const mileage = car.mileage;
 
     return (
-      (filters.minPrice === '' || price >= filters.minPrice) &&
-      (filters.maxPrice === '' || price <= filters.maxPrice) &&
-      (filters.minYear === '' || year >= filters.minYear) &&
-      (filters.maxYear === '' || year <= filters.maxYear) &&
-      (filters.minMileage === '' || mileage >= filters.minMileage) &&
-      (filters.maxMileage === '' || mileage <= filters.maxMileage)
+      (filters.minPrice === "" || price >= filters.minPrice) &&
+      (filters.maxPrice === "" || price <= filters.maxPrice) &&
+      (filters.minYear === "" || year >= filters.minYear) &&
+      (filters.maxYear === "" || year <= filters.maxYear) &&
+      (filters.minMileage === "" || mileage >= filters.minMileage) &&
+      (filters.maxMileage === "" || mileage <= filters.maxMileage)
     );
   });
 
   //////////  PAGINATION & SEARCH   //////////
-
 
   const handleSearch = (newSearchTerm) => {
     setSearchTerm(newSearchTerm);
@@ -122,69 +115,38 @@ const CarsAdmin = () => {
 
   const filteredCars = filteredCarsByRange?.filter((car) =>
     car.car_name.toLowerCase().includes(searchTerm.toLowerCase())
-  )
+  );
   const totalPages = Math.ceil(filteredCars?.length / carsPerPage);
   const currentCars = paginate(filteredCars, carsPerPage, currentPage);
-
 
   //////////  ICONS   //////////
 
   const addIcon = (
     <i
       className="btn ri-add-circle-line add__icon text-end ri-lg p-0 "
-      onClick={() => setIsAddModalOpen(true)}>
-    </i>
-  )
+      onClick={() => setIsAddModalOpen(true)}
+    ></i>
+  );
 
   //////////  CONTENT   //////////
 
   let content;
   if (cars.loading) {
-    content = <img src="spinner.svg" alt='chargement' />
-  }
-  else if (cars.error) {
-    content = <p className="fw-bold fs-4 text-center">Une erreur est survenue...</p>
-  }
-  else if (cars.data?.length === 0) {
-    content = <p className="fw-bold fs-4 text-center">Aucune voiture disponible</p>
-  }
-  else if (cars.data?.length > 0) {
-    content = currentCars?.map((car) => (
-      <tr key={car.car_id}>
-        <th scope="row">{car.car_id}</th>
-        <td data-label="Nom">{car.car_name}</td>
-        <td data-label="Année">{car.year}</td>
-        <td data-label="Prix">{car.price.toLocaleString()} €</td>
-        <td data-label="Kilometrage">{car.mileage.toLocaleString()} km</td>
-        <td data-label="Modifier">{<i className="btn ri-edit-box-line edit__icon ri-lg p-0 " onClick={() => handleModalOpen(car)}></i>}</td>
-        <td data-label="Supprimer">{<i className="btn ri-delete-bin-line delete__icon ri-lg p-0 " onClick={() => handleDeleteCar(car.car_id)}></i>}</td>
-        <td data-label="Détails">
-          <Link to={`/${car.car_name}/${car.car_id}`}>
-            <i className='btn ri-eye-line ri-lg eye__icon p-0'></i>
-          </Link>
-        </td>
-      </tr>
-    ))
-  }
-
-  return (
-    <Container>
-      <div className="search">
-        <input
-          type="text"
-          placeholder="Recherchez par nom de voiture"
-          value={searchTerm}
-          onChange={(e) => handleSearch(e.target.value)}
-        />
-        <span>
-          <i class="ri-search-line ri-lg"></i>
-        </span>
+    content = (
+      <div className="d-flex justify-content-center align-items-center">
+        <img src="spinner.svg" alt="chargement" />
       </div>
-      <CarFilters
-        filters={filters}
-        setFilters={setFilters}
-      />
-      <div className='text-end me-4'>{addIcon}</div>
+    );
+  } else if (cars.error) {
+    content = (
+      <p className="fw-bold fs-4 text-center">Une erreur est survenue...</p>
+    );
+  } else if (cars.data?.length === 0) {
+    content = (
+      <p className="fw-bold fs-4 text-center">Aucune voiture disponible</p>
+    );
+  } else if (cars.data?.length > 0) {
+    content = (
       <table className="table styled-table">
         <thead>
           <tr>
@@ -199,20 +161,71 @@ const CarsAdmin = () => {
           </tr>
         </thead>
         <tbody>
-          {content}
+          {currentCars?.map((car) => (
+            <tr key={car.car_id}>
+              <th scope="row">{car.car_id}</th>
+              <td data-label="Nom">{car.car_name}</td>
+              <td data-label="Année">{car.year}</td>
+              <td data-label="Prix">{car.price.toLocaleString()} €</td>
+              <td data-label="Kilometrage">
+                {car.mileage.toLocaleString()} km
+              </td>
+              <td data-label="Modifier">
+                {
+                  <i
+                    className="btn ri-edit-box-line edit__icon ri-lg p-0 "
+                    onClick={() => handleModalOpen(car)}
+                  ></i>
+                }
+              </td>
+              <td data-label="Supprimer">
+                {
+                  <i
+                    className="btn ri-delete-bin-line delete__icon ri-lg p-0 "
+                    onClick={() => handleDeleteCar(car.car_id)}
+                  ></i>
+                }
+              </td>
+              <td data-label="Détails">
+                <Link to={`/${car.car_name}/${car.car_id}`}>
+                  <i className="btn ri-eye-line ri-lg eye__icon p-0"></i>
+                </Link>
+              </td>
+            </tr>
+          ))}
         </tbody>
       </table>
-      <CarPagination currentPage={currentPage} setCurrentPage={setCurrentPage} totalPages={totalPages} />
+    );
+  }
 
-
+  return (
+    <Container>
+      <div className="search">
+        <input
+          type="text"
+          placeholder="Recherchez par nom de voiture"
+          value={searchTerm}
+          onChange={(e) => handleSearch(e.target.value)}
+        />
+        <span>
+          <i className="ri-search-line ri-lg"></i>
+        </span>
+      </div>
+      <CarFilters filters={filters} setFilters={setFilters} />
+      <div className="text-end me-4">{addIcon}</div>
+      {content}
+      <CarPagination
+        currentPage={currentPage}
+        setCurrentPage={setCurrentPage}
+        totalPages={totalPages}
+      />
 
       {/*   //////////  MODALS   ////////// */}
-
 
       <CustomModal
         isOpen={isAddModalOpen}
         onClose={() => setIsAddModalOpen(false)}
-        title='Ajouter une voiture'
+        title="Ajouter une voiture"
       >
         <AddCar onSubmit={handleAddCar} />
       </CustomModal>
@@ -220,21 +233,14 @@ const CarsAdmin = () => {
       <CustomModal
         isOpen={isUpdateModalOpen}
         onClose={handleModalClose}
-        title='Modifier une voiture'
+        title="Modifier une voiture"
       >
-        {selectedCar &&
-          <EditCar
-            car={selectedCar}
-            onSubmit={handleUpdateCar}
-          />}
+        {selectedCar && (
+          <EditCar car={selectedCar} onSubmit={handleUpdateCar} />
+        )}
       </CustomModal>
-
-
-
-
     </Container>
+  );
+};
 
-  )
-}
-
-export default CarsAdmin
+export default CarsAdmin;
