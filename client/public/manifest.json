@@ -1,5 +1,5 @@
 {
-  "short_name": "React App",
+  "short_name": "Garage V.Parrot",
   "name": "Garage Vincent Parrot",
   "icons": [
     {
@@ -20,6 +20,6 @@
   ],
   "start_url": ".",
   "display": "standalone",
-  "theme_color": "#000000",
-  "background_color": "#ffffff"
+  "theme_color": "#262526",
+  "background_color": "#262526"
 }

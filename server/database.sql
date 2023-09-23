@@ -10,14 +10,15 @@ CREATE TABLE users(
 
 /* REQUETE POUR INSERER L'ADMIN EN BDD */
 /* ENCRYPTAGE DE MDP AVEC BCRYPT VIA LE SITE : https://www.browserling.com/tools/bcrypt (ROUNDS: 10) */
-INSERT INTO users (user_email, user_password, role, user_name)
-VALUES (
-  'vincentparrot@gmail.com',
-  '$2a$10$cN8vLuJ69D9kpnI6T0B2deLOsXy.SlSW5vYqncdfWcHXTOBuDrS1u',
-  'admin',
-  'Vincent Parrot'
+INSERT INTO
+  users (user_email, user_password, role, user_name)
+VALUES
+  (
+    'vincentparrot@gmail.com',
+    '$2a$10$cN8vLuJ69D9kpnI6T0B2deLOsXy.SlSW5vYqncdfWcHXTOBuDrS1u',
+    'admin',
+    'Vincent Parrot'
   );
-
 
 CREATE TABLE IF NOT EXISTS cars (
   car_id SERIAL PRIMARY KEY,

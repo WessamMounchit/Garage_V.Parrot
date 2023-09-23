@@ -28,7 +28,7 @@ const Register = ({ onSubmit }) => {
       }
     } catch (error) {
       console.error(error.message);
-      toast.error("erreur lors la création du compte employé");
+      toast.error(error.response.data.errors[0].msg);
     }
   };
 

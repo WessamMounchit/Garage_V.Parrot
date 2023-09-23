@@ -1,80 +1,73 @@
-const { hash } = require('bcryptjs');
-const { sign } = require('jsonwebtoken');
-const { SECRET } = require('../constants');
-const db = require('../db');
-
-
+const { hash } = require("bcryptjs");
+const { sign } = require("jsonwebtoken");
+const { SECRET } = require("../constants");
+const db = require("../db");
 
 exports.createEmployee = async (req, res) => {
   const { email, password, name } = req.body;
   try {
+    const hashedPassword = await hash(password, 10);
 
-    const hashedPassword = await hash(password, 10)
-
-    await db.query('INSERT INTO users (user_email, user_password, role, user_name) VALUES ($1, $2, $3, $4) RETURNING *', [
-      email,
-      hashedPassword,
-      'employee',
-      name
-    ]);
+    await db.query(
+      "INSERT INTO users (user_email, user_password, role, user_name) VALUES ($1, $2, $3, $4) RETURNING *",
+      [email, hashedPassword, "employee", name]
+    );
 
     return res.status(201).json({
       success: true,
-      message: 'Employé créé avec succès',
-    })
+      message: "Employé créé avec succès",
+    });
   } catch (error) {
-    console.log(error.message)
+    console.log(error.message);
     return res.status(500).json({
       error: error.message,
-    })
+    });
   }
-}
-
+};
 
 exports.login = async (req, res) => {
-  let user = req.user
+  let user = req.user;
 
   let payload = {
     id: user.user_id,
     email: user.user_email,
-  }
+  };
 
   try {
-    const token = await sign(payload, SECRET)
+    const token = await sign(payload, SECRET);
 
-    return res.status(200).cookie('token', token, { httpOnly: true }).json(
-      {
-        success: true,
-        info: 'Connexion réalisée avec succès',
-        role: user.role,
-        name: user.user_name
-      })
+    return res.status(200).cookie("token", token, { httpOnly: true }).json({
+      success: true,
+      info: "Connexion réalisée avec succès",
+      role: user.role,
+      name: user.user_name,
+    });
   } catch (error) {
-    console.log(error.message)
+    console.log(error.message);
     return res.status(500).json({
       error: error.message,
-    })
+    });
   }
-}
+};
 
 exports.logout = async (req, res) => {
   try {
-    return res.status(200).clearCookie('token', { httpOnly: true }).json({
+    return res.status(200).clearCookie("token", { httpOnly: true }).json({
       success: true,
-      message: 'Déconnexion réalisée avec succès',
-    })
+      message: "Déconnexion réalisée avec succès",
+    });
   } catch (error) {
-    console.log(error.message)
+    console.log(error.message);
     return res.status(500).json({
       error: error.message,
-    })
+    });
   }
-}
+};
 
 exports.getEmployee = async (req, res) => {
   try {
-    const query = 'SELECT * FROM users WHERE role = $1';
-    const values = ['employee'];
+    const query = "SELECT * FROM users WHERE role = $1";
+    const values = ["employee"];
     const result = await db.query(query, values);
     const employees = result.rows;
 
@@ -93,62 +86,85 @@ exports.updateEmployee = async (req, res) => {
     let values;
 
     if (email && name && newEmail) {
-      // Vérifier si le nouvel e-mail existe déjà
-      const checkEmailQuery = 'SELECT * FROM users WHERE user_email = $1';
+      const checkEmailQuery = "SELECT * FROM users WHERE user_email = $1";
       const checkEmailResult = await db.query(checkEmailQuery, [newEmail]);
 
-      if (checkEmailResult.rows.length > 0 && checkEmailResult.rows[0].user_id !== id) {
-        res.status(400).json({ error: 'Le nouvel e-mail existe déjà.' });
+      if (
+        checkEmailResult.rows.length > 0 &&
+        checkEmailResult.rows[0].user_id !== id
+      ) {
+        res.status(400).json({ error: "Le nouvel e-mail existe déjà." });
         return;
       }
 
-      query = 'UPDATE users SET user_name = $1, user_email = $2 WHERE user_id = $3 RETURNING *';
+      query =
+        "UPDATE users SET user_name = $1, user_email = $2 WHERE user_id = $3 RETURNING *";
       values = [name, newEmail, id];
     } else if (email && name) {
-      query = 'UPDATE users SET user_name = $1 WHERE user_id = $2 RETURNING *';
+      query = "UPDATE users SET user_name = $1 WHERE user_id = $2 RETURNING *";
       values = [name, id];
     } else if (email && newEmail) {
-      // Vérifier si le nouvel e-mail existe déjà
-      const checkEmailQuery = 'SELECT * FROM users WHERE user_email = $1';
+      const checkEmailQuery = "SELECT * FROM users WHERE user_email = $1";
       const checkEmailResult = await db.query(checkEmailQuery, [newEmail]);
 
-      if (checkEmailResult.rows.length > 0 && checkEmailResult.rows[0].user_id !== id) {
-        res.status(400).json({ error: 'Le nouvel e-mail existe déjà dans la base de données.' });
+      if (
+        checkEmailResult.rows.length > 0 &&
+        checkEmailResult.rows[0].user_id !== id
+      ) {
+        res
+          .status(400)
+          .json({
+            error: "Le nouvel e-mail existe déjà dans la base de données.",
+          });
         return;
       }
 
-      query = 'UPDATE users SET user_email = $1 WHERE user_id = $2 RETURNING *';
+      query = "UPDATE users SET user_email = $1 WHERE user_id = $2 RETURNING *";
       values = [newEmail, id];
     } else {
-      res.status(400).json({ error: 'Veuillez fournir soit le nom et l\'e-mail, soit l\'e-mail actuel et le nouvel e-mail.' });
+      res
+        .status(400)
+        .json({
+          error:
+            "Veuillez fournir soit le nom et l'e-mail, soit l'e-mail actuel et le nouvel e-mail.",
+        });
       return;
     }
 
     const result = await db.query(query, values);
 
     if (result.rows.length === 0) {
-      res.status(404).json({ error: 'Aucun employé trouvé avec cet identifiant.' });
+      res
+        .status(404)
+        .json({ error: "Aucun employé trouvé avec cet identifiant." });
     } else {
-      res.status(200).json({ info: 'Informations de l\'employé mises à jour avec succès', employee: result.rows[0] });
+      res
+        .status(200)
+        .json({
+          info: "Informations de l'employé mises à jour avec succès",
+          employee: result.rows[0],
+        });
     }
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
 };
 
-
 exports.deleteEmployee = async (req, res) => {
   try {
     const { id } = req.params;
 
-    const query = 'DELETE FROM users WHERE user_id = $1 RETURNING *';
+    const query = "DELETE FROM users WHERE user_id = $1 RETURNING *";
     const values = [id];
 
     const result = await db.query(query, values);
 
-
-    res.status(200).json({ info: 'Employé supprimé avec succès', deletedEmployee: result.rows[0] });
-
+    res
+      .status(200)
+      .json({
+        info: "Employé supprimé avec succès",
+        deletedEmployee: result.rows[0],
+      });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }

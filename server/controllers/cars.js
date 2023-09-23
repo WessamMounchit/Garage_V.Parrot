@@ -1,7 +1,6 @@
-const { SERVER_URL } = require('../constants');
-const db = require('../db')
-const fs = require('fs');
-
+const { SERVER_URL } = require("../constants");
+const db = require("../db");
+const fs = require("fs");
 
 exports.addCar = async (req, res) => {
   try {
@@ -18,8 +17,8 @@ exports.addCar = async (req, res) => {
       description,
     } = req.body;
 
-    const image_path = req.files['image_path'][0].path;
-    const gallery = req.files['gallery'].map((file) => file.path);
+    const image_path = req.files["image_path"][0].path;
+    const gallery = req.files["gallery"].map((file) => file.path);
 
     const query = `
       INSERT INTO cars (
@@ -56,16 +55,15 @@ exports.addCar = async (req, res) => {
 
     await db.query(query, values);
 
-    res.status(201).json({ info: 'Voiture ajoutée avec succès' });
+    res.status(201).json({ info: "Voiture ajoutée avec succès" });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
 };
- 
 
-  exports.getCar = async (req, res) => {
+exports.getCar = async (req, res) => {
   try {
-    const query = 'SELECT * FROM cars';
+    const query = "SELECT * FROM cars";
     const result = await db.query(query);
     const cars = result.rows;
 
@@ -83,20 +81,19 @@ exports.addCar = async (req, res) => {
   }
 };
 
-
 exports.updateCar = async (req, res) => {
   try {
     const { id } = req.params;
     const updateFields = { ...req.body };
-    
-    if (req.files['image_path'] && req.files['image_path'][0]) {
-      updateFields.image_path = req.files['image_path'][0].path;
+
+    if (req.files["image_path"] && req.files["image_path"][0]) {
+      updateFields.image_path = req.files["image_path"][0].path;
     }
-    
-    if (req.files['gallery'] && req.files['gallery'].length > 0) {
-      updateFields.gallery = req.files['gallery'].map((file) => file.path);
+
+    if (req.files["gallery"] && req.files["gallery"].length > 0) {
+      updateFields.gallery = req.files["gallery"].map((file) => file.path);
     }
-    
+
     const emptyFields = [];
     Object.keys(updateFields).forEach((key) => {
       if (!updateFields[key]) {
@@ -105,26 +102,32 @@ exports.updateCar = async (req, res) => {
     });
 
     if (emptyFields.length > 0) {
-      return res.status(400).json({ error: `Les champs suivants sont vides : ${emptyFields.join(', ')}` });
+      return res
+        .status(400)
+        .json({
+          error: `Les champs suivants sont vides : ${emptyFields.join(", ")}`,
+        });
     }
 
-    let setQuery = '';
+    let setQuery = "";
     const values = [];
 
     Object.keys(updateFields).forEach((key, index) => {
       if (index !== 0) {
-        setQuery += ', ';
+        setQuery += ", ";
       }
       setQuery += `${key} = $${index + 1}`;
       values.push(updateFields[key]);
     });
 
-    const query = `UPDATE cars SET ${setQuery} WHERE car_id = $${values.length + 1} RETURNING *`;
+    const query = `UPDATE cars SET ${setQuery} WHERE car_id = $${
+      values.length + 1
+    } RETURNING *`;
     values.push(id);
 
     await db.query(query, values);
 
-    res.status(200).json({info: 'Voiture modifiée avec succès'});
+    res.status(200).json({ info: "Voiture modifiée avec succès" });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
@@ -134,12 +137,12 @@ exports.deleteCar = async (req, res) => {
   try {
     const { id } = req.params;
 
-    const query = 'SELECT image_path, gallery FROM cars WHERE car_id = $1';
+    const query = "SELECT image_path, gallery FROM cars WHERE car_id = $1";
     const values = [id];
     const result = await db.query(query, values);
 
     if (result.rows.length === 0) {
-      return res.status(404).json({ error: 'Voiture non trouvée' });
+      return res.status(404).json({ error: "Voiture non trouvée" });
     }
 
     const carData = result.rows[0];
@@ -148,16 +151,15 @@ exports.deleteCar = async (req, res) => {
     const deleteQuery = `DELETE FROM cars WHERE car_id = $1`;
     await db.query(deleteQuery, values);
 
-    fs.unlinkSync(image_path); 
-
+    fs.unlinkSync(image_path);
 
     for (const image of gallery) {
       if (image) {
-        fs.unlinkSync(image); 
+        fs.unlinkSync(image);
       }
     }
 
-    res.status(201).json({ info: 'Voiture supprimée avec succès' });
+    res.status(201).json({ info: "Voiture supprimée avec succès" });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
@@ -166,19 +168,17 @@ exports.deleteCar = async (req, res) => {
 exports.getSelectedCar = async (req, res) => {
   try {
     const { id } = req.params;
-    const query = 'SELECT * FROM cars WHERE car_id = $1';
+    const query = "SELECT * FROM cars WHERE car_id = $1";
     const values = [id];
     const result = await db.query(query, values);
     const car = result.rows[0];
 
-
     const carsWithLocalImagePath = {
-        ...car,
-        image_path: `${SERVER_URL}/${car.image_path}`,
-        gallery: car.gallery.map((imagePath) => `${SERVER_URL}/${imagePath}`),
-      };
+      ...car,
+      image_path: `${SERVER_URL}/${car.image_path}`,
+      gallery: car.gallery.map((imagePath) => `${SERVER_URL}/${imagePath}`),
+    };
 
-      
     res.json(carsWithLocalImagePath);
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -187,7 +187,7 @@ exports.getSelectedCar = async (req, res) => {
 
 exports.getLatestCars = async (req, res) => {
   try {
-    const query = 'SELECT * FROM cars ORDER BY car_id DESC LIMIT 6';
+    const query = "SELECT * FROM cars ORDER BY car_id DESC LIMIT 6";
     const result = await db.query(query);
     const cars = result.rows;
 
@@ -204,5 +204,3 @@ exports.getLatestCars = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
-
-

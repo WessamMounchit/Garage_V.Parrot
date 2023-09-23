@@ -9,7 +9,7 @@ import { fetchHours } from "../../redux/slices/hoursSlice";
 const quickLinks = [
   {
     path: "/",
-    display: "Acceuil",
+    display: "Accueil",
   },
   {
     path: "/cars",
