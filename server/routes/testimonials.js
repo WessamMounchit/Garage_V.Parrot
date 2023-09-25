@@ -15,7 +15,6 @@ router.get("/getTestimonials", getTestimonial);
 
 router.post(
   "/addTestimonials",
-  passport.authenticate("jwt", { session: false }),
   validationMiddleware,
   upload.single("image_path"),
   addTestimonial
