@@ -1,4 +1,4 @@
-# Evaluation en cours de formation, Garage de Vincent Parrot
+# Evaluation en cours de formation : Garage de Vincent Parrot.
 
 Lien vers site : https://garage-vincent-parrot.onrender.com/
 
@@ -12,7 +12,13 @@ Vous trouverez dans mon repository Github le lien vers le site déployé en lign
 
 Voici le lien vers mon Notion: Suivre [ce lien](https://pickled-raincoat-f6b.notion.site/D-velopper-l-application-web-Garage-Vincent-Parrot-6067ef53e06e4f2abd79fb53bf52d0ae)
 
-
+NB : Le fichier .env vous est fourni volontairement, ce n'est pas un oubli de ma part,
+il ne contient aucune donnée sensible, les données ainsi que le projet sont fictifs
+il permet aux examinateurs de tester toutes les fonctionnalités du site facilement,
+une base de données PostgreSQL hébergée sur https://api.elephantsql.com/ vous est fournie,
+en cas de problème avec cette BDD, vous pouvez créer votre propre base de données PostgreSQL,
+l'alimenter avec le fichier database.sql et la connecter à ce serveur,
+vous pouvez également modifier la variable "SECRET" et mettre ce que vous voulez à la place. 
 
 Ci dessous les démarches de déploiment en local.
 
