@@ -36,7 +36,9 @@ exports.login = async (req, res) => {
   try {
     const token = await sign(payload, SECRET);
 
-    return res.status(200).cookie("token", token, { httpOnly: true }).json({
+    /* res.setHeader("Authorization", `Bearer ${token}`); */
+
+    return res.status(200).header("Authorization", `Bearer ${token}`).json({
       success: true,
       info: "Connexion réalisée avec succès",
       role: user.role,
@@ -52,7 +54,7 @@ exports.login = async (req, res) => {
 
 exports.logout = async (req, res) => {
   try {
-    return res.status(200).clearCookie("token", { httpOnly: true }).json({
+    return res.status(200).json({
       success: true,
       message: "Déconnexion réalisée avec succès",
     });
@@ -111,23 +113,19 @@ exports.updateEmployee = async (req, res) => {
         checkEmailResult.rows.length > 0 &&
         checkEmailResult.rows[0].user_id !== id
       ) {
-        res
-          .status(400)
-          .json({
-            error: "Le nouvel e-mail existe déjà dans la base de données.",
-          });
+        res.status(400).json({
+          error: "Le nouvel e-mail existe déjà dans la base de données.",
+        });
         return;
       }
 
       query = "UPDATE users SET user_email = $1 WHERE user_id = $2 RETURNING *";
       values = [newEmail, id];
     } else {
-      res
-        .status(400)
-        .json({
-          error:
-            "Veuillez fournir soit le nom et l'e-mail, soit l'e-mail actuel et le nouvel e-mail.",
-        });
+      res.status(400).json({
+        error:
+          "Veuillez fournir soit le nom et l'e-mail, soit l'e-mail actuel et le nouvel e-mail.",
+      });
       return;
     }
 
@@ -138,12 +136,10 @@ exports.updateEmployee = async (req, res) => {
         .status(404)
         .json({ error: "Aucun employé trouvé avec cet identifiant." });
     } else {
-      res
-        .status(200)
-        .json({
-          info: "Informations de l'employé mises à jour avec succès",
-          employee: result.rows[0],
-        });
+      res.status(200).json({
+        info: "Informations de l'employé mises à jour avec succès",
+        employee: result.rows[0],
+      });
     }
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -159,12 +155,10 @@ exports.deleteEmployee = async (req, res) => {
 
     const result = await db.query(query, values);
 
-    res
-      .status(200)
-      .json({
-        info: "Employé supprimé avec succès",
-        deletedEmployee: result.rows[0],
-      });
+    res.status(200).json({
+      info: "Employé supprimé avec succès",
+      deletedEmployee: result.rows[0],
+    });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }

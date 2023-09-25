@@ -1,16 +1,14 @@
-import axios from "axios";
 import { apiBaseUrl } from "../config";
-
-axios.defaults.withCredentials = true;
+import axiosInstance from "../utils/axiosInstance";
 
 // GET OPENING HOURS
 export async function onGetOpeningHours() {
-  return await axios.get(`${apiBaseUrl}/api/getOpeningHours`);
+  return await axiosInstance.get(`${apiBaseUrl}/api/getOpeningHours`);
 }
 
 // UPDATE OPENING HOURS
 export async function onUpdateOpeningHours(openingHoursData) {
-  return await axios.put(
+  return await axiosInstance.put(
     `${apiBaseUrl}/api/updateOpeningHours`,
     openingHoursData
   );

@@ -1,25 +1,27 @@
-import axios from "axios";
 import { apiBaseUrl } from "../config";
-
-axios.defaults.withCredentials = true;
+import axiosInstance from "../utils/axiosInstance";
 
 //ADD TESTIMONIAL
 export async function onAddTestimonial(formData) {
-  return await axios.post(`${apiBaseUrl}/api/addTestimonials`, formData, {
-    headers: {
-      "Content-Type": "multipart/form-data",
-    },
-  });
+  return await axiosInstance.post(
+    `${apiBaseUrl}/api/addTestimonials`,
+    formData,
+    {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    }
+  );
 }
 
 //GET TESTIMONIALS
 export async function onGetTestimonials() {
-  return await axios.get(`${apiBaseUrl}/api/getTestimonials`);
+  return await axiosInstance.get(`${apiBaseUrl}/api/getTestimonials`);
 }
 
 //UPTADE TESTIMONIAL
 export async function onUpdateTestimonial(TestimonialId, formData) {
-  return await axios.put(
+  return await axiosInstance.put(
     `${apiBaseUrl}/api/updateTestimonial/${TestimonialId}`,
     formData,
     {
@@ -32,14 +34,14 @@ export async function onUpdateTestimonial(TestimonialId, formData) {
 
 //DELETE TESTIMONIAL
 export async function onDeleteTestimonial(TestimonialId) {
-  return await axios.delete(
+  return await axiosInstance.delete(
     `${apiBaseUrl}/api/deleteTestimonial/${TestimonialId}`
   );
 }
 
 //VALIDATE TESTIMONIAL
 export async function onValidateTestimonial(TestimonialId, validated) {
-  return await axios.put(
+  return await axiosInstance.put(
     `${apiBaseUrl}/api/validateTestimonial/${TestimonialId}`,
     { validated }
   );

@@ -1,11 +1,9 @@
-import axios from "axios";
 import { apiBaseUrl } from "../config";
-
-axios.defaults.withCredentials = true;
+import axiosInstance from "../utils/axiosInstance";
 
 //ADD SERVICE
 export async function onAddService(formData) {
-  return await axios.post(`${apiBaseUrl}/api/addServices`, formData, {
+  return await axiosInstance.post(`${apiBaseUrl}/api/addServices`, formData, {
     headers: {
       "Content-Type": "multipart/form-data",
     },
@@ -14,12 +12,12 @@ export async function onAddService(formData) {
 
 //GET SERVICES
 export async function onGetServices() {
-  return await axios.get(`${apiBaseUrl}/api/getServices`);
+  return await axiosInstance.get(`${apiBaseUrl}/api/getServices`);
 }
 
 //UPTADE SERVICE
 export async function onUpdateService(ServiceId, formData) {
-  return await axios.put(
+  return await axiosInstance.put(
     `${apiBaseUrl}/api/updateService/${ServiceId}`,
     formData,
     {
@@ -32,5 +30,7 @@ export async function onUpdateService(ServiceId, formData) {
 
 //DELETE SERVICE
 export async function onDeleteService(ServiceId) {
-  return await axios.delete(`${apiBaseUrl}/api/deleteService/${ServiceId}`);
+  return await axiosInstance.delete(
+    `${apiBaseUrl}/api/deleteService/${ServiceId}`
+  );
 }

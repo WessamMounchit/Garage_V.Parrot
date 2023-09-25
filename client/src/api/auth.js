@@ -1,22 +1,23 @@
-import axios from "axios";
 import { apiBaseUrl } from "../config";
-
-axios.defaults.withCredentials = true;
+import axiosInstance from "../utils/axiosInstance";
 
 //REGISTRATION
 
 export async function onEmployeeRegistration(registrationData) {
-  return await axios.post(`${apiBaseUrl}/api/addEmployee`, registrationData);
+  return await axiosInstance.post(
+    `${apiBaseUrl}/api/addEmployee`,
+    registrationData
+  );
 }
 
 //LOGIN
 
 export async function onLogin(registrationData) {
-  return await axios.post(`${apiBaseUrl}/api/login`, registrationData);
+  return await axiosInstance.post(`${apiBaseUrl}/api/login`, registrationData);
 }
 
 //LOGOUT
 
 export async function onLogout() {
-  return await axios.get(`${apiBaseUrl}/api/logout`);
+  return await axiosInstance.get(`${apiBaseUrl}/api/logout`);
 }

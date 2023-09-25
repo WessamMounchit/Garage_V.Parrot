@@ -1,16 +1,14 @@
-import axios from "axios";
 import { apiBaseUrl } from "../config";
-
-axios.defaults.withCredentials = true;
+import axiosInstance from "../utils/axiosInstance";
 
 // GET EMPLOYEES
 export async function onGetEmployees() {
-  return await axios.get(`${apiBaseUrl}/api/getEmployee`);
+  return await axiosInstance.get(`${apiBaseUrl}/api/getEmployee`);
 }
 
 // UPDATE EMPLOYEES INFOS
 export async function onUpdateEmployee(id, employeeData) {
-  return await axios.put(
+  return await axiosInstance.put(
     `${apiBaseUrl}/api/updateEmployee/${id}`,
     employeeData
   );
@@ -18,5 +16,5 @@ export async function onUpdateEmployee(id, employeeData) {
 
 // DELETE EMPLOYEE
 export async function onDeleteEmployee(id) {
-  return await axios.delete(`${apiBaseUrl}/api/deleteEmployee/${id}`);
+  return await axiosInstance.delete(`${apiBaseUrl}/api/deleteEmployee/${id}`);
 }

@@ -1,11 +1,9 @@
-import axios from "axios";
 import { apiBaseUrl } from "../config";
-
-axios.defaults.withCredentials = true;
+import axiosInstance from "../utils/axiosInstance";
 
 // ADD CAR
 export async function onAddCar(formData) {
-  return await axios.post(`${apiBaseUrl}/api/addCars`, formData, {
+  return await axiosInstance.post(`${apiBaseUrl}/api/addCars`, formData, {
     headers: {
       "Content-Type": "multipart/form-data",
     },
@@ -14,29 +12,33 @@ export async function onAddCar(formData) {
 
 // GET CARS
 export async function onGetCars() {
-  return await axios.get(`${apiBaseUrl}/api/getCars`);
+  return await axiosInstance.get(`${apiBaseUrl}/api/getCars`);
 }
 
 // GET SELECTED CAR
 export async function onGetSelectedCar(carId) {
-  return await axios.get(`${apiBaseUrl}/api/getSelectedCar/${carId}`);
+  return await axiosInstance.get(`${apiBaseUrl}/api/getSelectedCar/${carId}`);
 }
 
 // GET LATEST CARS
 export async function onGetLatestCars() {
-  return await axios.get(`${apiBaseUrl}/api/getLatestCars`);
+  return await axiosInstance.get(`${apiBaseUrl}/api/getLatestCars`);
 }
 
 // UPDATE CAR
 export async function onUpdateCar(carId, formData) {
-  return await axios.put(`${apiBaseUrl}/api/updateCar/${carId}`, formData, {
-    headers: {
-      "Content-Type": "multipart/form-data",
-    },
-  });
+  return await axiosInstance.put(
+    `${apiBaseUrl}/api/updateCar/${carId}`,
+    formData,
+    {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    }
+  );
 }
 
 // DELETE CAR
 export async function onDeleteCar(carId) {
-  return await axios.delete(`${apiBaseUrl}/api/deleteCar/${carId}`);
+  return await axiosInstance.delete(`${apiBaseUrl}/api/deleteCar/${carId}`);
 }

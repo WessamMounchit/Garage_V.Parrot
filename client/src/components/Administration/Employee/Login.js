@@ -22,9 +22,11 @@ const Login = ({ closeLoginModal }) => {
     e.preventDefault();
     try {
       const response = await onLogin({ email, password });
-      const { role, name } = response.data;
+      const { role, name, token } = response.data;
+      console.log(response)
 
       dispatch(authenticateUser());
+      secureLocalStorage.setItem("token", token);
       secureLocalStorage.setItem("isAuth", "true");
       secureLocalStorage.setItem("role", role);
       secureLocalStorage.setItem("email", email);
