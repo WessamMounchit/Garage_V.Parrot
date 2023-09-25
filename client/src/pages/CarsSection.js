@@ -5,7 +5,7 @@ import CarFilters from "../components/Cars/CarFilters";
 import CarPagination from "../components/Cars/CarPagination";
 import CommonSection from "../components/UI/CommonSection";
 import fetchData from "../utils/fetchData";
-import { onGetCars } from "../api/cars";
+import { getCars } from "../api/cars";
 import Helmet from "../components/UI/Helmet";
 
 const CarsSection = () => {
@@ -31,7 +31,7 @@ const CarsSection = () => {
   });
 
   useEffect(() => {
-    fetchData(setCars, onGetCars);
+    fetchData(setCars, getCars);
   }, []);
 
   useEffect(() => {

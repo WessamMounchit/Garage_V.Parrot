@@ -5,7 +5,7 @@ import CustomModal from "../../UI/CustomModal";
 import EditCar from "./EditCar";
 import AddCar from "./AddCar";
 import CarPagination from "../../Cars/CarPagination";
-import { onDeleteCar, onGetCars } from "../../../api/cars";
+import { deleteCar, getCars } from "../../../api/cars";
 import fetchData from "../../../utils/fetchData";
 import { Link } from "react-router-dom";
 import CarFilters from "../../Cars/CarFilters";
@@ -37,12 +37,12 @@ const CarsAdmin = () => {
   //////////  API   //////////
 
   useEffect(() => {
-    fetchData(setCars, onGetCars);
+    fetchData(setCars, getCars);
   }, []);
 
   const handleAddCar = () => {
     try {
-      fetchData(setCars, onGetCars);
+      fetchData(setCars, getCars);
       setIsAddModalOpen(false);
     } catch (error) {
       console.error(error);
@@ -51,7 +51,7 @@ const CarsAdmin = () => {
 
   const handleUpdateCar = async () => {
     try {
-      fetchData(setCars, onGetCars);
+      fetchData(setCars, getCars);
       handleModalClose();
     } catch (error) {
       console.error(error);
@@ -60,13 +60,13 @@ const CarsAdmin = () => {
 
   const handleDeleteCar = async (carId) => {
     try {
-      await onDeleteCar(carId);
+      await deleteCar(carId);
       toast.success("La voiture a été supprimée avec succès");
     } catch (error) {
       toast.error(error.response.data.error);
     }
 
-    fetchData(setCars, onGetCars);
+    fetchData(setCars, getCars);
   };
   //////////  MODAL   //////////
 

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Container } from "react-bootstrap";
 import fetchData from "../../../utils/fetchData";
-import { onDeleteEmployee, onGetEmployees } from "../../../api/employee";
+import { deleteEmployee, getEmployees } from "../../../api/employee";
 import { toast } from "react-toastify";
 import CustomModal from "../../UI/CustomModal";
 import EditEmployeeInfos from "./EditEmployeeInfos";
@@ -20,7 +20,7 @@ const UsersAdmin = () => {
   const [selectedEmployee, setSelectedEmployee] = useState(null);
 
   useEffect(() => {
-    fetchData(setEmployee, onGetEmployees);
+    fetchData(setEmployee, getEmployees);
   }, []);
 
   //////////  HANDLE MODALS   //////////
@@ -39,7 +39,7 @@ const UsersAdmin = () => {
 
   const handleAddEmployee = () => {
     try {
-      fetchData(setEmployee, onGetEmployees);
+      fetchData(setEmployee, getEmployees);
       setIsAddModalOpen(false);
     } catch (error) {
       console.error(error);
@@ -48,7 +48,7 @@ const UsersAdmin = () => {
 
   const handleUpdateEmployee = async () => {
     try {
-      fetchData(setEmployee, onGetEmployees);
+      fetchData(setEmployee, getEmployees);
       toast.success("Les infos de l'employé ont été mis à jour");
       handleModalClose();
     } catch (error) {
@@ -58,12 +58,12 @@ const UsersAdmin = () => {
 
   const handleDeleteEmployee = async (id) => {
     try {
-      const response = await onDeleteEmployee(id);
+      const response = await deleteEmployee(id);
       toast.success(response.data.info);
     } catch (error) {
       toast.error(error.response.data.error);
     }
-    fetchData(setEmployee, onGetEmployees);
+    fetchData(setEmployee, getEmployees);
   };
 
   const addIcon = (

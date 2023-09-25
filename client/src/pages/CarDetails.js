@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { onGetSelectedCar } from "../api/cars";
+import { getSelectedCar } from "../api/cars";
 import { Col, Container, Row } from "react-bootstrap";
 import FormContact from "../components/UI/FormContact";
 import "../styles/Cars/car-details.css";
@@ -8,6 +8,7 @@ import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import CommonSection from "../components/UI/CommonSection";
 import Helmet from "../components/UI/Helmet";
+import fetchData from '../utils/fetchData'
 
 const CarDetails = () => {
   const { carId } = useParams();
@@ -18,16 +19,11 @@ const CarDetails = () => {
     data: undefined,
   });
 
+
   useEffect(() => {
-    setCar((car) => ({ ...car, loading: true }));
-    onGetSelectedCar(carId)
-      .then((response) => {
-        setCar(() => ({ loading: false, error: false, data: response.data }));
-      })
-      .catch((error) => {
-        setCar(() => ({ loading: false, error: true, data: undefined }));
-      });
+    fetchData(setCar, () => getSelectedCar(carId));
   }, [carId]);
+
 
   useEffect(() => {
     window.scrollTo(0, 0);

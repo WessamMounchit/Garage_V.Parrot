@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Col, Container, Row } from "react-bootstrap";
 import CarItem from "./CarItem";
 import { Link } from "react-router-dom";
-import { onGetLatestCars } from "../../api/cars";
+import { getLatestCars } from "../../api/cars";
 import fetchData from "../../utils/fetchData";
 import "../../styles/Cars/car-home.css";
 
@@ -14,7 +14,7 @@ const CarsHome = () => {
   });
 
   useEffect(() => {
-    fetchData(setCars, onGetLatestCars);
+    fetchData(setCars, getLatestCars);
   }, []);
 
   let content;

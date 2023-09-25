@@ -36,27 +36,12 @@ exports.login = async (req, res) => {
   try {
     const token = await sign(payload, SECRET);
 
-    /* res.setHeader("Authorization", `Bearer ${token}`); */
-
-    return res.status(200).header("Authorization", `Bearer ${token}`).json({
+    return res.status(200).json({
       success: true,
       info: "Connexion réalisée avec succès",
       role: user.role,
       name: user.user_name,
-    });
-  } catch (error) {
-    console.log(error.message);
-    return res.status(500).json({
-      error: error.message,
-    });
-  }
-};
-
-exports.logout = async (req, res) => {
-  try {
-    return res.status(200).json({
-      success: true,
-      message: "Déconnexion réalisée avec succès",
+      token,
     });
   } catch (error) {
     console.log(error.message);

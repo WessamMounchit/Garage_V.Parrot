@@ -1,9 +1,8 @@
-import { apiBaseUrl } from "../config";
 import axiosInstance from "../utils/axiosInstance";
 
 //ADD SERVICE
-export async function onAddService(formData) {
-  return await axiosInstance.post(`${apiBaseUrl}/api/addServices`, formData, {
+export async function addService(formData) {
+  return await axiosInstance.post(`/api/addServices`, formData, {
     headers: {
       "Content-Type": "multipart/form-data",
     },
@@ -11,26 +10,20 @@ export async function onAddService(formData) {
 }
 
 //GET SERVICES
-export async function onGetServices() {
-  return await axiosInstance.get(`${apiBaseUrl}/api/getServices`);
+export async function getServices() {
+  return await axiosInstance.get(`/api/getServices`);
 }
 
-//UPTADE SERVICE
-export async function onUpdateService(ServiceId, formData) {
-  return await axiosInstance.put(
-    `${apiBaseUrl}/api/updateService/${ServiceId}`,
-    formData,
-    {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    }
-  );
+//UPDADE SERVICE
+export async function updateService(ServiceId, formData) {
+  return await axiosInstance.put(`/api/updateService/${ServiceId}`, formData, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
 }
 
 //DELETE SERVICE
-export async function onDeleteService(ServiceId) {
-  return await axiosInstance.delete(
-    `${apiBaseUrl}/api/deleteService/${ServiceId}`
-  );
+export async function deleteService(ServiceId) {
+  return await axiosInstance.delete(`/api/deleteService/${ServiceId}`);
 }

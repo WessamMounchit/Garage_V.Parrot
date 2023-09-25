@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import fetchData from "../../utils/fetchData";
-import { onGetTestimonials } from "../../api/testimonials";
+import { getTestimonials } from "../../api/testimonials";
 import { Col, Container, Row } from "react-bootstrap";
 import TestimonialItem from "./TestimonialItem";
 import CustomModal from "../UI/CustomModal";
@@ -16,12 +16,12 @@ const Testimonial = () => {
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
 
   useEffect(() => {
-    fetchData(setTestimonials, onGetTestimonials);
+    fetchData(setTestimonials, getTestimonials);
   }, []);
 
   const handleAddTestimonial = async () => {
     try {
-      fetchData(setTestimonials, onGetTestimonials);
+      fetchData(setTestimonials, getTestimonials);
 
       setIsAddModalOpen(false);
     } catch (error) {

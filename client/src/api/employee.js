@@ -1,20 +1,16 @@
-import { apiBaseUrl } from "../config";
 import axiosInstance from "../utils/axiosInstance";
 
 // GET EMPLOYEES
-export async function onGetEmployees() {
-  return await axiosInstance.get(`${apiBaseUrl}/api/getEmployee`);
+export async function getEmployees() {
+  return await axiosInstance.get(`/api/getEmployee`);
 }
 
 // UPDATE EMPLOYEES INFOS
-export async function onUpdateEmployee(id, employeeData) {
-  return await axiosInstance.put(
-    `${apiBaseUrl}/api/updateEmployee/${id}`,
-    employeeData
-  );
+export async function updateEmployee(id, employeeData) {
+  return await axiosInstance.put(`/api/updateEmployee/${id}`, employeeData);
 }
 
 // DELETE EMPLOYEE
-export async function onDeleteEmployee(id) {
-  return await axiosInstance.delete(`${apiBaseUrl}/api/deleteEmployee/${id}`);
+export async function deleteEmployee(id) {
+  return await axiosInstance.delete(`/api/deleteEmployee/${id}`);
 }

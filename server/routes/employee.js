@@ -23,8 +23,6 @@ router.post(
   createEmployee
 );
 router.post("/login", LoginValidation, validationMiddleware, login);
-router.get("/logout", logout);
-
 router.get(
   "/getEmployee",
   passport.authenticate("jwt", { session: false }),

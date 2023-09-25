@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { toast } from "react-toastify";
 import { Form } from "react-bootstrap";
-import { onAddCar } from "../../../api/cars";
+import { addCar } from "../../../api/cars";
 
 const AddCar = ({ onSubmit }) => {
   const [carData, setCarData] = useState({
@@ -53,7 +53,7 @@ const AddCar = ({ onSubmit }) => {
         formData.append(`gallery`, file);
       });
 
-      const response = await onAddCar(formData);
+      const response = await addCar(formData);
       toast.success(response.data.info);
       onSubmit();
     } catch (error) {

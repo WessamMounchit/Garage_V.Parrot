@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { toast } from "react-toastify";
 import { Form } from "react-bootstrap";
-import { onUpdateTestimonial } from "../../../api/testimonials";
+import { updateTestimonial } from "../../../api/testimonials";
 import { useSelector } from "react-redux";
 
 const EditTestimonial = ({ testimonial, onSubmit }) => {
@@ -38,7 +38,7 @@ const EditTestimonial = ({ testimonial, onSubmit }) => {
 
       if (formData.entries().next().done === false) {
         try {
-          const response = await onUpdateTestimonial(
+          const response = await updateTestimonial(
             testimonialData.testimonial_id,
             formData
           );

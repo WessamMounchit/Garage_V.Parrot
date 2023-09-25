@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { toast } from "react-toastify";
 import { Form } from "react-bootstrap";
-import { onAddTestimonial } from "../../../api/testimonials";
+import { addTestimonial } from "../../../api/testimonials";
 import { useSelector } from "react-redux";
 
 const AddTestimonial = ({ onSubmit }) => {
@@ -41,7 +41,7 @@ const AddTestimonial = ({ onSubmit }) => {
       formData.append("image_path", image_path);
       isAuth && formData.append("validated", true);
 
-      const response = await onAddTestimonial(formData);
+      const response = await addTestimonial(formData);
       toast.success(response.data.info);
       onSubmit();
     } catch (error) {

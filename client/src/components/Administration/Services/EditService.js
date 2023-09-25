@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { toast } from "react-toastify";
 import { Form } from "react-bootstrap";
-import { onUpdateService } from "../../../api/services";
+import { updateService } from "../../../api/services";
 
 const EditService = ({ service, onSubmit }) => {
   const [serviceData, setServiceData] = useState({
@@ -41,7 +41,7 @@ const EditService = ({ service, onSubmit }) => {
 
       if (!formData.entries().next().done) {
         try {
-          const response = await onUpdateService(
+          const response = await updateService(
             serviceData.service_id,
             formData
           );

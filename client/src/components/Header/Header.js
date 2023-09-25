@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { onLogout } from "../../api/auth";
 import secureLocalStorage from "react-secure-storage";
 import { unauthenticateUser } from "../../redux/slices/authSlice";
 import { toast } from "react-toastify";
@@ -22,11 +21,10 @@ function Header() {
     try {
       e.preventDefault();
 
-      const response = await onLogout();
       secureLocalStorage.clear();
       dispatch(unauthenticateUser());
 
-      toast.success(response.data.message, {
+      toast.success("Déconnexion réalisée avec succès", {
         position: toast.POSITION.TOP_CENTER,
       });
     } catch (error) {

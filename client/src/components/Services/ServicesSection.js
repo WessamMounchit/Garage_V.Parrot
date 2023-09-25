@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import fetchData from "../../utils/fetchData";
-import { onGetServices } from "../../api/services";
+import { getServices } from "../../api/services";
 import { Col, Container, Row } from "react-bootstrap";
 import ServiceItem from "./ServiceItem";
 import Carousel from "react-multi-carousel";
@@ -13,7 +13,7 @@ const ServicesSection = () => {
   });
 
   useEffect(() => {
-    fetchData(setServices, onGetServices);
+    fetchData(setServices, getServices);
   }, []);
 
   const responsive = {

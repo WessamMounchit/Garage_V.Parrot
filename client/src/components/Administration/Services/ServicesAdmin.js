@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Container } from "react-bootstrap";
 import fetchData from "../../../utils/fetchData";
-import { onDeleteService, onGetServices } from "../../../api/services";
+import { deleteService, getServices } from "../../../api/services";
 import { toast } from "react-toastify";
 import CustomModal from "../../UI/CustomModal";
 import AddService from "./AddService";
@@ -22,7 +22,7 @@ const ServicesAdmin = () => {
   const [selectedService, setSelectedService] = useState(null);
 
   useEffect(() => {
-    fetchData(setServices, onGetServices);
+    fetchData(setServices, getServices);
   }, []);
 
   //////////  HANDLE MODALS   //////////
@@ -51,7 +51,7 @@ const ServicesAdmin = () => {
 
   const handleAddService = async () => {
     try {
-      fetchData(setServices, onGetServices);
+      fetchData(setServices, getServices);
 
       setIsAddModalOpen(false);
     } catch (error) {
@@ -61,7 +61,7 @@ const ServicesAdmin = () => {
 
   const handleUpdateService = async () => {
     try {
-      fetchData(setServices, onGetServices);
+      fetchData(setServices, getServices);
       handleModalClose();
     } catch (error) {
       console.error(error);
@@ -70,12 +70,12 @@ const ServicesAdmin = () => {
 
   const handleDeleteService = async (serviceId) => {
     try {
-      const response = await onDeleteService(serviceId);
+      const response = await deleteService(serviceId);
       toast.success(response.data.info);
     } catch (error) {
       toast.error(error.response.data.error);
     }
-    fetchData(setServices, onGetServices);
+    fetchData(setServices, getServices);
   };
 
   const addIcon = (

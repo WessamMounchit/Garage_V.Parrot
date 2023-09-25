@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { toast } from "react-toastify";
 import { Form } from "react-bootstrap";
-import { onAddService } from "../../../api/services";
+import { addService } from "../../../api/services";
 
 const AddService = ({ onSubmit }) => {
   const [serviceData, setServiceData] = useState({
@@ -34,7 +34,7 @@ const AddService = ({ onSubmit }) => {
       formData.append("description", serviceData.description);
       formData.append("image_path", image_path);
 
-      const response = await onAddService(formData);
+      const response = await addService(formData);
       toast.success(response.data.info);
       onSubmit();
     } catch (error) {

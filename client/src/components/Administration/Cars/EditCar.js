@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { toast } from "react-toastify";
 import { Form } from "react-bootstrap";
-import { onUpdateCar } from "../../../api/cars";
+import { updateCar } from "../../../api/cars";
 
 const EditCar = ({ car, onSubmit }) => {
   const [carData, setCarData] = useState({ ...car });
@@ -46,7 +46,7 @@ const EditCar = ({ car, onSubmit }) => {
 
       if (formData.entries().next().done === false) {
         try {
-          const response = await onUpdateCar(carData.car_id, formData);
+          const response = await updateCar(carData.car_id, formData);
           onSubmit();
           toast.success(response.data.info);
         } catch (error) {

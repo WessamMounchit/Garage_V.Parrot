@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { toast } from "react-toastify";
-import { onEmployeeRegistration } from "../../../api/auth";
+import { employeeRegistration } from "../../../api/auth";
 
 const Register = ({ onSubmit }) => {
   const [inputs, setInputs] = useState({
@@ -20,7 +20,7 @@ const Register = ({ onSubmit }) => {
 
     try {
       const registrationData = { email, password, name };
-      const response = await onEmployeeRegistration(registrationData);
+      const response = await employeeRegistration(registrationData);
 
       if (response.data.success) {
         onSubmit();

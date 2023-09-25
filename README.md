@@ -45,7 +45,7 @@ Démarrer le front :
 Démarrer le back :
 
 ```bash
-    node index.js
+    npm run dev
 ```
 
 ### Vous retrouverez mes livrables ici :

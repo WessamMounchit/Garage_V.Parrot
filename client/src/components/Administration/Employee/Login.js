@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { toast } from "react-toastify";
-import { onLogin } from "../../../api/auth";
+import { login } from "../../../api/auth";
 import { useDispatch } from "react-redux";
 import { authenticateUser } from "../../../redux/slices/authSlice";
 import secureLocalStorage from "react-secure-storage";
@@ -21,7 +21,7 @@ const Login = ({ closeLoginModal }) => {
   const onSubmitForm = async (e) => {
     e.preventDefault();
     try {
-      const response = await onLogin({ email, password });
+      const response = await login({ email, password });
       const { role, name, token } = response.data;
       console.log(response)
 

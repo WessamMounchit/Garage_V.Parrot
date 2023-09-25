@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import {
-  onGetOpeningHours,
-  onUpdateOpeningHours,
+  getOpeningHours,
+  updateOpeningHours,
 } from "../../api/openingHours";
 
 const hoursSlice = createSlice({
@@ -31,7 +31,7 @@ export function fetchHours(action) {
     dispatch(hoursLoading());
 
     try {
-      const response = await onGetOpeningHours();
+      const response = await getOpeningHours();
       const data = response.data;
 
       dispatch(hoursLoaded(data));
@@ -46,7 +46,7 @@ export function updateHours(hourUpdated) {
     dispatch(hoursLoading());
 
     try {
-      const response = await onUpdateOpeningHours(hourUpdated);
+      const response = await updateOpeningHours(hourUpdated);
 
       if (response.status === 200) {
         dispatch(fetchHours());

@@ -2,9 +2,9 @@ import React, { useEffect, useState } from "react";
 import { Container, OverlayTrigger, Tooltip } from "react-bootstrap";
 import fetchData from "../../../utils/fetchData";
 import {
-  onDeleteTestimonial,
-  onGetTestimonials,
-  onValidateTestimonial,
+  deleteTestimonial,
+  getTestimonials,
+  validateTestimonial,
 } from "../../../api/testimonials";
 import CustomModal from "../../UI/CustomModal";
 import TestimonialItem from "../../Testimonials/TestimonialItem";
@@ -26,7 +26,7 @@ const TestimonialAdmin = () => {
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
 
   useEffect(() => {
-    fetchData(setTestimonials, onGetTestimonials);
+    fetchData(setTestimonials, getTestimonials);
   }, []);
 
   //////////  HANDLE MODALS   //////////
@@ -55,7 +55,7 @@ const TestimonialAdmin = () => {
 
   const handleAddTestimonial = async () => {
     try {
-      fetchData(setTestimonials, onGetTestimonials);
+      fetchData(setTestimonials, getTestimonials);
 
       setIsAddModalOpen(false);
     } catch (error) {
@@ -65,7 +65,7 @@ const TestimonialAdmin = () => {
 
   const handleUpdateTestimonial = async () => {
     try {
-      fetchData(setTestimonials, onGetTestimonials);
+      fetchData(setTestimonials, getTestimonials);
 
       handleModalClose();
     } catch (error) {
@@ -75,24 +75,24 @@ const TestimonialAdmin = () => {
 
   const handleDeleteTestimonial = async (testimonialId) => {
     try {
-      const response = await onDeleteTestimonial(testimonialId);
+      const response = await deleteTestimonial(testimonialId);
       toast.success(response.data.info);
     } catch (error) {
       toast.error(error.response.data.error);
     }
 
-    fetchData(setTestimonials, onGetTestimonials);
+    fetchData(setTestimonials, getTestimonials);
   };
 
   const handleValidateTestimonial = async (testimonialId, validated) => {
     try {
-      const response = await onValidateTestimonial(testimonialId, validated);
+      const response = await validateTestimonial(testimonialId, validated);
       toast.success(response.data.info);
     } catch (error) {
       toast.error(error.response.data.error);
     }
 
-    fetchData(setTestimonials, onGetTestimonials);
+    fetchData(setTestimonials, getTestimonials);
   };
 
   const addIcon = (
