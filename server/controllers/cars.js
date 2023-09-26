@@ -85,13 +85,36 @@ exports.updateCar = async (req, res) => {
   try {
     const { id } = req.params;
     const updateFields = { ...req.body };
+    const currentCarQuery =
+      "SELECT image_path, gallery FROM cars WHERE car_id = $1";
+    const currentCarResult = await db.query(currentCarQuery, [id]);
+    const { image_path: currentImagePath, gallery: currentGallery } =
+      currentCarResult.rows[0];
 
     if (req.files["image_path"] && req.files["image_path"][0]) {
       updateFields.image_path = req.files["image_path"][0].path;
+
+      try {
+        fs.unlinkSync(currentImagePath);
+      } catch (err) {
+        console.error(
+          `La suppression du fichier a échoué pour le chemin ${currentImagePath}: ${err}`
+        );
+      }
     }
 
     if (req.files["gallery"] && req.files["gallery"].length > 0) {
       updateFields.gallery = req.files["gallery"].map((file) => file.path);
+
+      currentGallery.forEach((imagePath) => {
+        try {
+          fs.unlinkSync(imagePath);
+        } catch (err) {
+          console.error(
+            `La suppression du fichier a échoué pour le chemin ${imagePath}: ${err}`
+          );
+        }
+      });
     }
 
     const emptyFields = [];
@@ -102,11 +125,9 @@ exports.updateCar = async (req, res) => {
     });
 
     if (emptyFields.length > 0) {
-      return res
-        .status(400)
-        .json({
-          error: `Les champs suivants sont vides : ${emptyFields.join(", ")}`,
-        });
+      return res.status(400).json({
+        error: `Les champs suivants sont vides : ${emptyFields.join(", ")}`,
+      });
     }
 
     let setQuery = "";
@@ -151,11 +172,23 @@ exports.deleteCar = async (req, res) => {
     const deleteQuery = `DELETE FROM cars WHERE car_id = $1`;
     await db.query(deleteQuery, values);
 
-    fs.unlinkSync(image_path);
+    try {
+      fs.unlinkSync(image_path);
+    } catch (err) {
+      console.error(
+        `La suppression du fichier a échoué pour le chemin ${image_path}: ${err}`
+      );
+    }
 
     for (const image of gallery) {
       if (image) {
-        fs.unlinkSync(image);
+        try {
+          fs.unlinkSync(image);
+        } catch (err) {
+          console.error(
+            `La suppression du fichier a échoué pour le chemin ${image}: ${err}`
+          );
+        }
       }
     }
 

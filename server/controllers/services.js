@@ -44,8 +44,21 @@ exports.updateService = async (req, res) => {
     const { id } = req.params;
     const updateFields = { ...req.body };
 
+    const currentServiceQuery =
+      "SELECT image_path FROM services WHERE service_id = $1";
+    const currentServiceResult = await db.query(currentServiceQuery, [id]);
+    const currentImagePath = currentServiceResult.rows[0].image_path;
+
     if (req.file) {
       updateFields.image_path = req.file.path;
+
+      try {
+        fs.unlinkSync(currentImagePath);
+      } catch (err) {
+        console.error(
+          `La suppression du fichier a échoué pour le chemin ${currentImagePath}: ${err}`
+        );
+      }
     }
 
     const emptyFields = [];
@@ -56,11 +69,9 @@ exports.updateService = async (req, res) => {
     });
 
     if (emptyFields.length > 0) {
-      return res
-        .status(400)
-        .json({
-          error: `Les champs suivants sont vides : ${emptyFields.join(", ")}`,
-        });
+      return res.status(400).json({
+        error: `Les champs suivants sont vides : ${emptyFields.join(", ")}`,
+      });
     }
 
     let setQuery = "";
@@ -105,7 +116,11 @@ exports.deleteService = async (req, res) => {
     const deleteQuery = `DELETE FROM services WHERE service_id = $1`;
     await db.query(deleteQuery, values);
 
-    fs.unlinkSync(image_path); 
+    try {
+      fs.unlinkSync(image_path);
+    } catch (err) {
+      console.error(`Failed to delete file at ${image_path}: ${err}`);
+    }
 
     res.status(201).json({ info: "Service supprimé avec succès" });
   } catch (err) {

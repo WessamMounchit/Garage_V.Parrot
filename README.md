@@ -17,8 +17,9 @@ il ne contient aucune donnée sensible, les données ainsi que le projet sont fi
 il permet aux examinateurs de tester toutes les fonctionnalités du site facilement,
 une base de données PostgreSQL hébergée sur https://api.elephantsql.com/ vous est fournie,
 en cas de problème avec cette BDD, vous pouvez créer votre propre base de données PostgreSQL,
-l'alimenter avec le fichier database.sql et la connecter à ce serveur,
-vous pouvez également modifier la variable "SECRET" et mettre ce que vous voulez à la place. 
+l'alimenter avec le fichier database.sql (où se touvent toutes les requêtes
+nécessaires y compris celle pour créer l'admin) et la connecter à ce serveur,
+vous pouvez également modifier la variable "SECRET" et mettre ce que vous voulez à la place.
 
 Ci dessous les démarches de déploiment en local.
 
@@ -29,12 +30,14 @@ Cloner le projet
 ```bash
     git clone https://github.com/WessamMounchit/Garage_V.Parrot.git
 ```
+
 Installer les dépendances pour le côté client
 
 ```bash
     cd client
     npm install
 ```
+
 Installer les dépendances pour le côté server
 
 ```bash
@@ -56,7 +59,7 @@ Démarrer le back :
 
 ### Vous retrouverez mes livrables ici :
 
-Suivre [ce lien](https://pickled-raincoat-f6b.notion.site/D-velopper-l-application-web-Garage-Vincent-Parrot-6067ef53e06e4f2abd79fb53bf52d0ae) 
+Suivre [ce lien](https://pickled-raincoat-f6b.notion.site/D-velopper-l-application-web-Garage-Vincent-Parrot-6067ef53e06e4f2abd79fb53bf52d0ae)
 
 ## Auteur
 

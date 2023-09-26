@@ -53,8 +53,23 @@ exports.updateTestimonial = async (req, res) => {
     const { id } = req.params;
     const updateFields = { ...req.body };
 
+    const currentTestimonialQuery =
+      "SELECT image_path FROM testimonials WHERE testimonial_id = $1";
+    const currentTestimonialResult = await db.query(currentTestimonialQuery, [
+      id,
+    ]);
+    const currentImagePath = currentTestimonialResult.rows[0].image_path;
+
     if (req.file) {
       updateFields.image_path = req.file.path;
+
+      try {
+        fs.unlinkSync(currentImagePath);
+      } catch (err) {
+        console.error(
+          `La suppression du fichier a échoué pour le chemin ${currentImagePath}: ${err}`
+        );
+      }
     }
 
     const emptyFields = [];
@@ -65,11 +80,9 @@ exports.updateTestimonial = async (req, res) => {
     });
 
     if (emptyFields.length > 0) {
-      return res
-        .status(400)
-        .json({
-          error: `Les champs suivants sont vides : ${emptyFields.join(", ")}`,
-        });
+      return res.status(400).json({
+        error: `Les champs suivants sont vides : ${emptyFields.join(", ")}`,
+      });
     }
 
     let setQuery = "";
@@ -114,7 +127,13 @@ exports.deleteTestimonial = async (req, res) => {
     const deleteQuery = `DELETE FROM testimonials WHERE testimonial_id = $1`;
     await db.query(deleteQuery, values);
 
-    fs.unlinkSync(imagePath);
+    try {
+      fs.unlinkSync(imagePath);
+    } catch (err) {
+      console.error(
+        `La suppression du fichier a échoué pour le chemin ${currentImagePath}: ${err}`
+      );
+    }
 
     res.status(201).json({ info: "Avis supprimé avec succès" });
   } catch (err) {

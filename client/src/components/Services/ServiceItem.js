@@ -4,12 +4,14 @@ import { Container } from "react-bootstrap";
 
 const ServiceItem = ({ service }) => {
   const { title, description, image_path } = service;
+  const correctedImagePath = image_path.replace(/\\/g, '/');
+  console.log(correctedImagePath)
 
   return (
     <Container>
       <div
         className="service__item"
-        style={{ backgroundImage: `url(${image_path})` }}
+        style={{ backgroundImage: `url(${correctedImagePath})` }}
       >
         <div className="service-content">
           <div className="service-title">
