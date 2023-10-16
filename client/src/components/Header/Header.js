@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import secureLocalStorage from "react-secure-storage";
 import { unauthenticateUser } from "../../redux/slices/authSlice";
 import { toast } from "react-toastify";
 import { Nav, Navbar, Container, Offcanvas } from "react-bootstrap";
 import Login from "../Administration/Employee/Login";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useLocation } from "react-router-dom";
 import logo from "../../assets/logo.png";
 import "./Header.css";
 import CustomModal from "../UI/CustomModal";
@@ -13,7 +13,12 @@ import CustomModal from "../UI/CustomModal";
 function Header() {
   const { isAuth } = useSelector((state) => state.auth);
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
+  const { pathname } = useLocation();
   const expand = "xl"; //false, 'sm', 'md', 'lg', 'xl', 'xxl'
+
+  useEffect(() => {
+    closeButton();
+  }, [pathname]);
 
   const dispatch = useDispatch();
 
@@ -75,20 +80,20 @@ function Header() {
             </Offcanvas.Header>
             <Offcanvas.Body className="canvas__body">
               <Nav className="nav nav__container">
-                <NavLink to="/" onClick={closeButton}>
+                <NavLink to="/" onClick={() => closeButton}>
                   Accueil
                 </NavLink>
-                <NavLink to="/cars" onClick={closeButton}>
+                <NavLink to="/cars" onClick={() => closeButton}>
                   Nos voitures
                 </NavLink>
-                <NavLink to="/about" onClick={closeButton}>
+                <NavLink to="/about" onClick={() => closeButton}>
                   À propos
                 </NavLink>
-                <NavLink to="/contact" onClick={closeButton}>
+                <NavLink to="/contact" onClick={() => closeButton}>
                   Contact
                 </NavLink>
                 {isAuth && (
-                  <NavLink to="/dashboard" onClick={closeButton}>
+                  <NavLink to="/dashboard" onClick={() => closeButton}>
                     Gestion
                   </NavLink>
                 )}
