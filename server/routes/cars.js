@@ -9,7 +9,7 @@ const {
   getLatestCars,
 } = require("../controllers/cars");
 const { validationMiddleware } = require("../middleware/validation-middleware");
-const passport = require("passport");
+const { passportAuth } = require("../middleware/passport-auth");
 const router = express.Router();
 
 router.get("/getCars", getCar);
@@ -18,7 +18,7 @@ router.get("/getLatestCars", getLatestCars);
 
 router.post(
   "/addCars",
-  passport.authenticate("jwt", { session: false }),
+  passportAuth,
   validationMiddleware,
   upload.fields([
     { name: "image_path", maxCount: 1 },
@@ -29,7 +29,7 @@ router.post(
 
 router.put(
   "/updateCar/:id",
-  passport.authenticate("jwt", { session: false }),
+  passportAuth,
   validationMiddleware,
   upload.fields([
     { name: "image_path", maxCount: 1 },
@@ -40,7 +40,7 @@ router.put(
 
 router.delete(
   "/deleteCar/:id",
-  passport.authenticate("jwt", { session: false }),
+  passportAuth,
   validationMiddleware,
   deleteCar
 );

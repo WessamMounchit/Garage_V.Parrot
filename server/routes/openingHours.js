@@ -4,12 +4,12 @@ const {
   getOpeningHours,
   updateOpeningHours,
 } = require("../controllers/openingHours");
-const passport = require("passport");
+const { passportAuth } = require("../middleware/passport-auth");
 
 router.get("/getOpeningHours", getOpeningHours);
 router.put(
   "/UpdateOpeningHours",
-  passport.authenticate("jwt", { session: false }),
+  passportAuth,
   updateOpeningHours
 );
 

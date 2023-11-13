@@ -8,16 +8,15 @@ const { validationMiddleware } = require("../middleware/validation-middleware");
 const {
   createEmployee,
   login,
-  logout,
   getEmployee,
   updateEmployee,
   deleteEmployee,
 } = require("../controllers/employee");
-const passport = require("passport");
+const { passportAuth } = require("../middleware/passport-auth");
 
 router.post(
   "/addEmployee",
-  passport.authenticate("jwt", { session: false }),
+  passportAuth,
   employeeRegisterValidation,
   validationMiddleware,
   createEmployee
@@ -25,17 +24,17 @@ router.post(
 router.post("/login", LoginValidation, validationMiddleware, login);
 router.get(
   "/getEmployee",
-  passport.authenticate("jwt", { session: false }),
+  passportAuth,
   getEmployee
 );
 router.put(
   "/updateEmployee/:id",
-  passport.authenticate("jwt", { session: false }),
+  passportAuth,
   updateEmployee
 );
 router.delete(
   "/deleteEmployee/:id",
-  passport.authenticate("jwt", { session: false }),
+  passportAuth,
   deleteEmployee
 );
 

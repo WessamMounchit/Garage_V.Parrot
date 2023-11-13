@@ -5,6 +5,7 @@ const { PORT, CLIENT_URL } = require("./constants");
 const cookieParser = require("cookie-parser");
 const passport = require("passport");
 const path = require("path");
+const multer = require("multer");
 
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
@@ -26,7 +27,6 @@ const carsRoutes = require("./routes/cars");
 const servicesRoutes = require("./routes/services");
 const testimonialsRoutes = require("./routes/testimonials");
 const openingHoursRoutes = require("./routes/openingHours");
-const multer = require("multer");
 
 //ROUTES//
 app.use("/api", employeeRoutes);

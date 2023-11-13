@@ -34,15 +34,21 @@ exports.login = async (req, res) => {
   };
 
   try {
-    const token = await sign(payload, SECRET);
+    const token = sign(payload, SECRET, { expiresIn: "2h" });
 
-    return res.status(200).json({
-      success: true,
-      info: "Connexion réalisée avec succès",
-      role: user.role,
-      name: user.user_name,
-      token,
-    });
+    return res
+      .status(200)
+      .cookie("token", token, {
+        httpOnly: true,
+        secure: true,
+        sameSite: "none",
+      })
+      .json({
+        success: true,
+        info: "Connexion réalisée avec succès",
+        role: user.role,
+        name: user.user_name,
+      });
   } catch (error) {
     console.log(error.message);
     return res.status(500).json({

@@ -8,7 +8,7 @@ const {
   deleteTestimonial,
   ValidateTestimonial,
 } = require("../controllers/testimonials");
-const passport = require("passport");
+const { passportAuth } = require("../middleware/passport-auth");
 const router = express.Router();
 
 router.get("/getTestimonials", getTestimonial);
@@ -22,7 +22,7 @@ router.post(
 
 router.put(
   "/updateTestimonial/:id",
-  passport.authenticate("jwt", { session: false }),
+  passportAuth,
   validationMiddleware,
   upload.single("image_path"),
   updateTestimonial
@@ -30,14 +30,14 @@ router.put(
 
 router.put(
   "/validateTestimonial/:id",
-  passport.authenticate("jwt", { session: false }),
+  passportAuth,
   validationMiddleware,
   ValidateTestimonial
 );
 
 router.delete(
   "/deleteTestimonial/:id",
-  passport.authenticate("jwt", { session: false }),
+  passportAuth,
   validationMiddleware,
   deleteTestimonial
 );

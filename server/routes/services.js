@@ -7,14 +7,14 @@ const {
   updateService,
   deleteService,
 } = require("../controllers/services");
-const passport = require("passport");
+const { passportAuth } = require("../middleware/passport-auth");
 const router = express.Router();
 
 router.get("/getServices", getService);
 
 router.post(
   "/addServices",
-  passport.authenticate("jwt", { session: false }),
+  passportAuth,
   validationMiddleware,
   upload.single("image_path"),
   addService
@@ -22,7 +22,7 @@ router.post(
 
 router.put(
   "/updateService/:id",
-  passport.authenticate("jwt", { session: false }),
+  passportAuth,
   validationMiddleware,
   upload.single("image_path"),
   updateService
@@ -30,7 +30,7 @@ router.put(
 
 router.delete(
   "/deleteService/:id",
-  passport.authenticate("jwt", { session: false }),
+  passportAuth,
   validationMiddleware,
   deleteService
 );
