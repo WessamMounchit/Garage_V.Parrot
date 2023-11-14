@@ -6,9 +6,9 @@ const {
 } = require("../controllers/openingHours");
 const { passportAuth } = require("../middleware/passport-auth");
 
-router.get("/getOpeningHours", getOpeningHours);
+router.get("/get", getOpeningHours);
 router.put(
-  "/UpdateOpeningHours",
+  "/update",
   passportAuth,
   updateOpeningHours
 );

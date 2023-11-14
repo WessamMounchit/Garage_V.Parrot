@@ -11,17 +11,17 @@ const {
 const { passportAuth } = require("../middleware/passport-auth");
 const router = express.Router();
 
-router.get("/getTestimonials", getTestimonial);
+router.get("/get", getTestimonial);
 
 router.post(
-  "/addTestimonials",
+  "/add",
   validationMiddleware,
   upload.single("image_path"),
   addTestimonial
 );
 
 router.put(
-  "/updateTestimonial/:id",
+  "/update/:id",
   passportAuth,
   validationMiddleware,
   upload.single("image_path"),
@@ -29,14 +29,14 @@ router.put(
 );
 
 router.put(
-  "/validateTestimonial/:id",
+  "/validate/:id",
   passportAuth,
   validationMiddleware,
   ValidateTestimonial
 );
 
 router.delete(
-  "/deleteTestimonial/:id",
+  "/delete/:id",
   passportAuth,
   validationMiddleware,
   deleteTestimonial

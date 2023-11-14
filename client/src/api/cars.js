@@ -2,7 +2,7 @@ import axiosInstance from "../utils/axiosInstance";
 
 // ADD CAR
 export async function addCar(formData) {
-  return await axiosInstance.post(`/api/addCars`, formData, {
+  return await axiosInstance.post(`/cars/add`, formData, {
     headers: {
       "Content-Type": "multipart/form-data",
     },
@@ -11,23 +11,23 @@ export async function addCar(formData) {
 
 // GET CARS
 export async function getCars() {
-  return await axiosInstance.get(`/api/getCars`);
+  return await axiosInstance.get(`/cars/get`);
 }
 
 // GET SELECTED CAR
 export async function getSelectedCar(carId) {
-  return await axiosInstance.get(`/api/getSelectedCar/${carId}`);
+  return await axiosInstance.get(`/cars/get/${carId}`);
 }
 
 // GET LATEST CARS
 export async function getLatestCars() {
-  return await axiosInstance.get(`/api/getLatestCars`);
+  return await axiosInstance.get(`/cars/get-latest`);
 }
 
 // UPDATE CAR
 export async function updateCar(carId, formData) {
   return await axiosInstance.put(
-    `/api/updateCar/${carId}`,
+    `/cars/update/${carId}`,
     formData,
     {
       headers: {
@@ -39,5 +39,5 @@ export async function updateCar(carId, formData) {
 
 // DELETE CAR
 export async function deleteCar(carId) {
-  return await axiosInstance.delete(`/api/deleteCar/${carId}`);
+  return await axiosInstance.delete(`/cars/delete/${carId}`);
 }

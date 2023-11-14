@@ -27,13 +27,15 @@ const carsRoutes = require("./routes/cars");
 const servicesRoutes = require("./routes/services");
 const testimonialsRoutes = require("./routes/testimonials");
 const openingHoursRoutes = require("./routes/openingHours");
+const authRoutes = require("./routes/auth");
 
 //ROUTES//
-app.use("/api", employeeRoutes);
-app.use("/api", carsRoutes);
-app.use("/api", servicesRoutes);
-app.use("/api", testimonialsRoutes);
-app.use("/api", openingHoursRoutes);
+app.use("/employee", employeeRoutes);
+app.use("/cars", carsRoutes);
+app.use("/services", servicesRoutes);
+app.use("/testimonials", testimonialsRoutes);
+app.use("/opening-hours", openingHoursRoutes);
+app.use("/auth", authRoutes);
 
 //MULTEUR ERRORS
 app.use((err, req, res, next) => {

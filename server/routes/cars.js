@@ -12,12 +12,12 @@ const { validationMiddleware } = require("../middleware/validation-middleware");
 const { passportAuth } = require("../middleware/passport-auth");
 const router = express.Router();
 
-router.get("/getCars", getCar);
-router.get("/getSelectedCar/:id", getSelectedCar);
-router.get("/getLatestCars", getLatestCars);
+router.get("/get", getCar);
+router.get("/get/:id", getSelectedCar);
+router.get("/get-latest", getLatestCars);
 
 router.post(
-  "/addCars",
+  "/add",
   passportAuth,
   validationMiddleware,
   upload.fields([
@@ -28,7 +28,7 @@ router.post(
 );
 
 router.put(
-  "/updateCar/:id",
+  "/update/:id",
   passportAuth,
   validationMiddleware,
   upload.fields([
@@ -39,7 +39,7 @@ router.put(
 );
 
 router.delete(
-  "/deleteCar/:id",
+  "/delete/:id",
   passportAuth,
   validationMiddleware,
   deleteCar

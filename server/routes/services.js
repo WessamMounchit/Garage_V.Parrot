@@ -10,10 +10,10 @@ const {
 const { passportAuth } = require("../middleware/passport-auth");
 const router = express.Router();
 
-router.get("/getServices", getService);
+router.get("/get", getService);
 
 router.post(
-  "/addServices",
+  "/add",
   passportAuth,
   validationMiddleware,
   upload.single("image_path"),
@@ -21,7 +21,7 @@ router.post(
 );
 
 router.put(
-  "/updateService/:id",
+  "/update/:id",
   passportAuth,
   validationMiddleware,
   upload.single("image_path"),
@@ -29,7 +29,7 @@ router.put(
 );
 
 router.delete(
-  "/deleteService/:id",
+  "/delete/:id",
   passportAuth,
   validationMiddleware,
   deleteService
