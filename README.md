@@ -1,6 +1,6 @@
 # Evaluation en cours de formation : Garage de Vincent Parrot.
 
-Lien vers le site : https://garage-vincent-parrot.onrender.com/
+Lien vers le site : https://garage-vincent-parrot.netlify.app
 
 Ce projet consiste en la création d'un site vitrine pour le Garage Automobile Vincent Parrot. L'objectif principal est de mettre en avant les services de réparation automobile proposés par le garage, ainsi que de présenter les voitures d'occasion disponibles à la vente.
 
@@ -12,14 +12,6 @@ Vous trouverez dans mon repository Github le lien vers le site déployé en lign
 
 Voici le lien vers mon Notion: Suivre [ce lien](https://pickled-raincoat-f6b.notion.site/D-velopper-l-application-web-Garage-Vincent-Parrot-6067ef53e06e4f2abd79fb53bf52d0ae)
 
-NB : Le fichier .env vous est fourni volontairement, ce n'est pas un oubli de ma part,
-il ne contient aucune donnée sensible, les données ainsi que le projet sont fictifs
-il permet aux examinateurs de tester toutes les fonctionnalités du site facilement,
-une base de données PostgreSQL hébergée sur https://api.elephantsql.com/ vous est fournie,
-en cas de problème avec cette BDD, vous pouvez créer votre propre base de données PostgreSQL,
-l'alimenter avec le fichier database.sql (où se touvent toutes les requêtes
-nécessaires y compris celle pour créer l'admin) et la connecter à ce serveur,
-vous pouvez également modifier la variable "SECRET" et mettre ce que vous voulez à la place.
 
 Ci dessous les démarches de déploiment en local.
 
@@ -37,6 +29,11 @@ Installer les dépendances pour le côté client
     cd client
     npm install
 ```
+Créer un fichier .env dans le dossier /client avec ce contenu : 
+
+```bash
+    REACT_APP_API_URL = http://localhost:8000
+```
 
 Installer les dépendances pour le côté server
 
@@ -44,6 +41,27 @@ Installer les dépendances pour le côté server
     cd server
     npm install
 ```
+
+Créer un fichier .env dans le dossier /server avec ce contenu : 
+
+```bash
+PORT: 5000
+SERVER_URL: http://localhost:5000
+CLIENT_URL: http://localhost:3000
+SECRET: ExempleMDP
+PG_CONNECTION_STRING: postgres://rezhiiha:bKqgN6IkbnO2dIObq7QIktz6E9_1svQK@cornelius.db.elephantsql.com/rezhiiha
+PG_USER: rezhiiha
+PG_HOST: cornelius.db.elephantsql.com
+PG_DATABASE: rezhiiha
+PG_PASSWORD: bKqgN6IkbnO2dIObq7QIktz6E9_1svQK
+PG_PORT: 5432
+```
+NB: une base de données PostgreSQL hébergée sur https://api.elephantsql.com/ vous est fournie,
+en cas de problème avec cette BDD, vous pouvez créer votre propre base de données PostgreSQL,
+l'alimenter avec le fichier database.sql (où se touvent toutes les requêtes
+nécessaires y compris celle pour créer l'admin) et la connecter à ce serveur,
+vous pouvez également modifier la variable "SECRET" et mettre ce que vous voulez à la place.
+
 
 Démarrer le front :
 
