@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { toast } from "react-toastify";
 import { Form } from "react-bootstrap";
 import { addCar } from "../../../api/cars";
+import Resizer from "react-image-file-resizer";
 
 const AddCar = ({ onSubmit }) => {
   const [carData, setCarData] = useState({
@@ -18,18 +19,48 @@ const AddCar = ({ onSubmit }) => {
   });
 
   const [gallery, setGallery] = useState([]);
-  const [image_path, setImage] = useState(null);
+  const [image_path, setImage_path] = useState(null);
 
   const handleImageChange = (e) => {
     const selectedFile = e.target.files[0];
-    setImage(selectedFile);
+
+    Resizer.imageFileResizer(
+      selectedFile,
+      374,
+      374,
+      "JPEG",
+      100,
+      0,
+      (blob) => {
+        setImage_path(blob);
+      },
+      "blob"
+    );
   };
 
-  const handleGalleryChange = (event) => {
-    const selectedFiles = [...event.target.files];
-    setGallery(selectedFiles);
-  };
+  const handleGalleryChange = (e) => {
+    const selectedFiles = [...e.target.files];
+    const resizedImages = [];
 
+    selectedFiles.forEach((file, index) => {
+      Resizer.imageFileResizer(
+        file,
+        374,
+        374,
+        "JPEG",
+        100,
+        0,
+        (blob) => {
+          resizedImages.push(blob);
+
+          if (resizedImages.length === selectedFiles.length) {
+            setGallery(resizedImages);
+          }
+        },
+        "blob"
+      );
+    });
+  };
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setCarData({

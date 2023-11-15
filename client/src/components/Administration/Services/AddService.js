@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { toast } from "react-toastify";
 import { Form } from "react-bootstrap";
 import { addService } from "../../../api/services";
+import Resizer from "react-image-file-resizer";
 
 const AddService = ({ onSubmit }) => {
   const [serviceData, setServiceData] = useState({
@@ -13,7 +14,20 @@ const AddService = ({ onSubmit }) => {
 
   const handleImageChange = (e) => {
     const selectedFile = e.target.files[0];
-    setImage_path(selectedFile);
+  
+    Resizer.imageFileResizer(
+      selectedFile,
+      500, 
+      750,
+      "JPEG",
+      100, 
+      0, 
+      (blob) => {
+        
+        setImage_path(blob);
+      },
+      "blob" 
+    );
   };
 
   const handleInputChange = (event) => {

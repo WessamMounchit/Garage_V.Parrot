@@ -3,6 +3,8 @@ import { toast } from "react-toastify";
 import { Form } from "react-bootstrap";
 import { addTestimonial } from "../../../api/testimonials";
 import { useSelector } from "react-redux";
+import Resizer from "react-image-file-resizer";
+
 
 const AddTestimonial = ({ onSubmit }) => {
   const { isAuth } = useSelector((state) => state.auth);
@@ -18,7 +20,20 @@ const AddTestimonial = ({ onSubmit }) => {
 
   const handleImageChange = (e) => {
     const selectedFile = e.target.files[0];
-    setImage_path(selectedFile);
+  
+    Resizer.imageFileResizer(
+      selectedFile,
+      200, 
+      200,
+      "JPEG",
+      100, 
+      0, 
+      (blob) => {
+        
+        setImage_path(blob);
+      },
+      "blob" 
+    );
   };
 
   const handleInputChange = (event) => {
