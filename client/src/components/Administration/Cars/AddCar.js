@@ -141,6 +141,8 @@ const AddCar = ({ onSubmit }) => {
         <Form.Control
           type="number"
           name="price"
+          min="0"
+          max="100000"
           value={carData.price}
           onChange={handleInputChange}
           placeholder="Entrez le prix"
@@ -165,6 +167,8 @@ const AddCar = ({ onSubmit }) => {
         <Form.Control
           type="number"
           name="mileage"
+          min="0"
+          max="500000"
           value={carData.mileage}
           onChange={handleInputChange}
           placeholder="Entrez le kilométrage"
