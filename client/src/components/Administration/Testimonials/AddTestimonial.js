@@ -25,7 +25,7 @@ const AddTestimonial = ({ onSubmit }) => {
       selectedFile,
       200, 
       200,
-      "JPEG",
+      "PNG",
       100, 
       0, 
       (blob) => {

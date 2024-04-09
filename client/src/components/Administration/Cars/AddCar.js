@@ -28,7 +28,7 @@ const AddCar = ({ onSubmit }) => {
       selectedFile,
       374,
       374,
-      "JPEG",
+      "PNG",
       100,
       0,
       (blob) => {
@@ -47,7 +47,7 @@ const AddCar = ({ onSubmit }) => {
         file,
         374,
         374,
-        "JPEG",
+        "PNG",
         100,
         0,
         (blob) => {

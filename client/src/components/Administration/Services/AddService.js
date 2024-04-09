@@ -19,7 +19,7 @@ const AddService = ({ onSubmit }) => {
       selectedFile,
       500, 
       750,
-      "JPEG",
+      "PNG",
       100, 
       0, 
       (blob) => {
